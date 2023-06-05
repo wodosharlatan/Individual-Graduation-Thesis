@@ -39,8 +39,6 @@ app.get("/*", (req, res) => {
 // Start server Based on environment
 const environment = process.env.NODE_ENV || "production";
 
-console.log("Environment:", environment);
-
 // Check if SSL is enabled based on environment
 if (environment === "production") {
 	const options = config.production.sslOptions;

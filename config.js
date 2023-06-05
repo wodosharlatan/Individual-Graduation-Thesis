@@ -1,4 +1,5 @@
-// config.js
+// Import .env variables
+require("dotenv").config();
 
 module.exports = {
     development: {
