@@ -42,6 +42,9 @@ const environment = process.env.NODE_ENV || "production";
 // Check if SSL is enabled based on environment
 if (environment === "production") {
 	const options = config.production.sslOptions;
+
+	console.log(options);
+
 	server = https.createServer(options, app);
 }
 
