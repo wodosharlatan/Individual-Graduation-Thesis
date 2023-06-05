@@ -1,0 +1,32 @@
+{
+  "name": "individual-graduation-thesis",
+  "version": "1.0.0",
+  "description": "Backend solution for E-Shop",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wodosharlatan/Individual-Graduation-Thesis.git"
+  },
+  "keywords": [
+    "NODE",
+    "API",
+    "NODEJS"
+  ],
+  "author": "wodosharlatan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wodosharlatan/Individual-Graduation-Thesis/issues"
+  },
+  "homepage": "https://github.com/wodosharlatan/Individual-Graduation-Thesis#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "mongoose": "^7.2.2",
+    "nodemon": "^2.0.22"
+  }
+}
