@@ -65,8 +65,6 @@ const dbConnection =
 		? config.production.dbConnection
 		: config.development.dbConnection;
 
-console.log("dbConnection", dbConnection);
-
 // Connect to MongoDB based on environment
 mongoose
 	.connect(dbConnection, { useNewUrlParser: true })

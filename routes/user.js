@@ -5,7 +5,7 @@ const User = require("../models/user_model");
 // Import .env variables
 require("dotenv/config");
 
-// Get all users
+// Save user ( This is just a test )
 router.post("/", async (req, res) => {
 	try {
 		const userData = req.body;
