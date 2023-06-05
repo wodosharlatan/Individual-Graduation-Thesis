@@ -132,3 +132,9 @@ dist
 # SSL private keys  
 cert.pem
 key.pem
+
+
+# Docker files
+.dockerignore
+Dockerfile
+docker-compose.yml
