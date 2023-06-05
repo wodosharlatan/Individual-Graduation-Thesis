@@ -15,6 +15,17 @@ app.use(cors());
 // Parse JSON
 app.use(bodyParser.json());
 
+
+// import routes
+const userRoute = require('./routes/user');
+
+
+// Use routes
+app.use('/users', userRoute);
+
+
+
+
 // Routes
 app.get("/*", (req, res) => {
 	res.json({ message: "Invalid URL" });
