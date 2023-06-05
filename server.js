@@ -1,4 +1,3 @@
-// import dotenv
 require("dotenv").config();
 
 const express = require("express");
@@ -10,16 +9,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const https = require("https");
 const fs = require("fs");
+const config = require("./config");
+let server;
 
 // SSL
 app.use(express.urlencoded({ extended: true, limit: "3mb" }));
 app.use(express.json({ limit: "3mb" }));
-
-// SSL options
-const options = {
-	key: fs.readFileSync("key.pem"),
-	cert: fs.readFileSync("cert.pem"),
-};
 
 // CORS
 app.use(cors());
@@ -27,7 +22,7 @@ app.use(cors());
 // Parse JSON
 app.use(bodyParser.json());
 
-// import routes
+// Import routes
 const userRoute = require("./routes/user");
 
 // Use routes
@@ -36,16 +31,36 @@ app.use("/users", userRoute);
 // Routes
 app.get("/*", (req, res) => {
 	res.json({ message: "Invalid URL" });
-	res.redirect("/");
 });
 
-https.createServer(options, app).listen(PORT, HOST, () => {
-	console.log(`Server running on http://${HOST}:${PORT}`);
+// Start server Based on environment
+const environment = process.env.NODE_ENV || "production";
+
+if (environment === "production") {
+	const options = config.production.sslOptions;
+	server = https.createServer(options, app);
+}
+
+else {
+	const options = {
+		key: fs.readFileSync("./key.pem"),
+		cert: fs.readFileSync("./cert.pem"),
+	};
+	server = https.createServer(options, app);
+}
+
+
+server.listen(PORT, HOST, () => {
+	console.log(`Server running on https://${HOST}:${PORT}`);
 });
 
 // Connect to MongoDB
+const dbConnection =
+	environment === "production"
+		? config.production.dbConnection
+		: config.development.dbConnection;
+
 mongoose
-	.connect(process.env.DB_CONNECTION_DEV, { useNewUrlParser: true })
-	.then(() => console.log("Connected To MongoDB !"))
-	.catch((error) => console.error("Error Connecting To MongoDB", error));
-// Connect to MongoDB
+	.connect(dbConnection, { useNewUrlParser: true })
+	.then(() => console.log("Connected to MongoDB!"))
+	.catch((error) => console.error("Error connecting to MongoDB", error));

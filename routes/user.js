@@ -15,7 +15,6 @@ router.post("/", async (req, res) => {
 		const createdUser = await newUser.save();
 
 		res.json(createdUser);
-        res.redirect("/");
 	} catch (error) {
 		console.error("Error creating user:", error);
 		res.status(500).json({ error: "Failed to create user" });
