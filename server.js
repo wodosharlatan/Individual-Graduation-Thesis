@@ -11,10 +11,6 @@ const cors = require("cors");
 const https = require("https");
 const fs = require("fs");
 
-// Import config file
-const config = require("./config");
-let server;
-
 // SSL
 app.use(express.urlencoded({ extended: true, limit: "3mb" }));
 app.use(express.json({ limit: "3mb" }));
@@ -41,35 +37,35 @@ const environment = process.env.NODE_ENV || "production";
 
 // Check if SSL is enabled based on environment
 if (environment === "production") {
-	const options = config.production.sslOptions;
+	app.listen(PORT, HOST, () => {
+		console.log(`Server is running on https://${HOST}:${PORT}`);
+	});
 
-	console.log(options);
-
-	server = https.createServer(options, app);
+	mongoose
+		.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
+		.then(() => console.log("Connected to MongoDB!"))
+		.catch((error) => console.error("Error connecting to MongoDB", error));
 }
 
 // Check if SSL is enabled based on environment
 else {
+	// SSL
 	const options = {
 		key: fs.readFileSync("./key.pem"),
 		cert: fs.readFileSync("./cert.pem"),
 	};
-	server = https.createServer(options, app);
+
+	// Create HTTPS server
+	const server = https.createServer(options, app);
+
+	// Start server
+	server.listen(PORT, HOST, () => {
+		console.log(`Server is running on https://${HOST}:${PORT}`);
+	});
+
+	// Connect to MongoDB based on environment
+	mongoose
+		.connect(process.env.DB_CONNECTION_DEV, { useNewUrlParser: true })
+		.then(() => console.log("Connected to MongoDB!"))
+		.catch((error) => console.error("Error connecting to MongoDB", error));
 }
-
-// Start server
-server.listen(PORT, HOST, () => {
-	console.log(`Server running on https://${HOST}:${PORT}`);
-});
-
-// Connect to MongoDB based on environment
-const dbConnection =
-	environment === "production"
-		? config.production.dbConnection
-		: config.development.dbConnection;
-
-// Connect to MongoDB based on environment
-mongoose
-	.connect(dbConnection, { useNewUrlParser: true })
-	.then(() => console.log("Connected to MongoDB!"))
-	.catch((error) => console.error("Error connecting to MongoDB", error));
