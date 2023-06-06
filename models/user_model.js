@@ -50,7 +50,7 @@ const userSchema = mongoose.Schema({
 	// System fields
 	UserToken: {
 		type: String,
-		required: false,
+		default: "",
 	},
 	IsAdmin: {
 		type: Boolean,

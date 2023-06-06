@@ -9,24 +9,41 @@ require("dotenv/config");
 router.post("/", async (req, res) => {
 	try {
 		// Check if user already exists by email
-		User.findOne({ Email: req.body.Email }, (user) => {
-			if (user) {
-				return res.json({ message: "User already exists" });
-			}
-		});
+		const user = await User.findOne({ Email: req.body.Email });
+		if (user) {
+			return res.json({ message: "User already exists" });
+		}
+
+		// Declare all User Data fields
+		const validPassword = req.body.Password;
+		const validEmail = req.body.Email;
+		const validName = req.body.Name;
+		const validSurname = req.body.Surname;
+		const validTelephone = req.body.Telephone;
+		const validStreetNumber = req.body.StreetNumber;
+		const validZipCode = req.body.ZipCode;
+		const validCity = req.body.City;
+		const validCountry = req.body.Country;
+		let validBirthDate = req.body.BirthDate;
+		let validGender = req.body.Gender;
 
 		// Check all User Data fields are provided and valid
-		//Password - Email - Name - Surname - Telephone - StreetNumber - ZipCode - City - Country
 
-		const validPassword = req.body.Password;
-		if (validPassword.trim().length >= 8 || validPassword.trim().length <= 20) {
+		if (
+			validPassword == undefined ||
+			validPassword.trim().length <= 8 ||
+			validPassword.trim().length >= 20
+		) {
 			return res.json({
 				message: "Password must be at between 8 20 characters long",
 			});
 		}
 
-		const validEmail = req.body.Email;
-		if (validEmail.trim().length >= 8 || validEmail.trim().length <= 100) {
+		if (
+			validEmail == undefined ||
+			validEmail.trim().length <= 8 ||
+			validEmail.trim().length >= 100
+		) {
 			return res.json({
 				message: "Email must be between 8 and 100 characters long",
 			});
@@ -37,75 +54,81 @@ router.post("/", async (req, res) => {
 		const regexPattern =
 			/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-		if (regexPattern.test(validEmail) !== true) {
+		if (regexPattern.test(validEmail.trim()) !== true) {
 			return res.json({ message: "Email is not valid" });
 		}
 
-		const validName = req.body.Name;
-		if (validName.trim().length >= 2 || valideName.trim().length <= 100) {
+		if (
+			validName == undefined ||
+			validName.trim().length <= 2 ||
+			validName.trim().length >= 100
+		) {
 			return res.json({
 				message: "Name must be at between 2 and 100 characters long",
 			});
 		}
 
-		const validSurname = req.body.Surname;
-		if (validSurname.trim().length >= 2 || validSurname.trim().length <= 100) {
+		if (
+			validSurname == undefined ||
+			validSurname.trim().length <= 2 ||
+			validSurname.trim().length >= 100
+		) {
 			return res.json({
 				message: "Surname must be at between 2 and 100 characters long",
 			});
 		}
 
-		const validTelephone = req.body.Telephone;
-		if (validTelephone.trim().length >= 9) {
+		if (validTelephone == undefined || validTelephone.trim().length <= 9) {
 			return res.json({
 				message: "Telephone must be at least 9 characters long",
 			});
 		}
 
+		// ACCEPTS ONLY FORMAT +420-123-456-789 OR 420-123-456-789 OR 123-456-789
 		// Check if telephone is valid using this regex ^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$
 		// https://www.regularnivyrazy.info/telefonni-cislo.html
 
 		const regexPattern2 = /^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/;
-		if (regexPattern2.test(validTelephone)) {
+		if (regexPattern2.test(validTelephone.trim())) {
 			return res.json({ message: "Telephone Number is not valid" });
 		}
 
-		const validStreetNumber = req.body.StreetNumber;
-		if (validStreetNumber.trim().length >= 2) {
+		if (
+			validStreetNumber == undefined ||
+			validStreetNumber.trim().length <= 2
+		) {
 			return res.json({
 				message: "Street Number must be at least 2 characters long",
 			});
 		}
 
-		const validZipCode = req.body.ZipCode;
-		if (validZipCode.trim().length >= 5 || validZipCode.trim().length <= 6) {
+		if (
+			validZipCode == undefined ||
+			validZipCode.trim().length <= 5 ||
+			validZipCode.trim().length >= 7
+		) {
 			return res.json({
-				message: "Zip Code must be between 5 and 6 characters long",
+				message: "Zip Code must be between 5 and 7 characters long",
 			});
 		}
 
-		const validCity = req.body.City;
-		if (validCity.trim().length >= 2) {
+		if (validCity == undefined || validCity.trim().length <= 2) {
 			return res.json({ message: "City must be at least 2 characters long" });
 		}
 
-		const validCountry = req.body.Country;
-		if (validCountry.trim().length >= 2) {
+		if (validCountry == undefined || validCountry.trim().length <= 2) {
 			return res.json({
 				message: "Country must be at least 2 characters long",
 			});
 		}
 
 		// check if is empty or not
-		let validGender = req.body.Gender;
-
-		if (validGender.trim().length === 0) {
+		if (validGender === undefined) {
 			validGender = "Not Specified";
 		}
 
-		let validBirthDate = req.body.BirthDate;
 		// check if is empty or not AND if is valid date
-		if (validBirthDate.trim().length === 0) {
+		if (validBirthDate === undefined) {
 			validBirthDate = "Not Specified";
 		}
 
