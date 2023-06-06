@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
 		required: true,
 	},
 	DateOfBirth: {
-		type: Date,
+		type: String,
 		required: false,
 	},
 	Gender: {
@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema({
 	ZipCode: {
 		type: String,
 		required: true,
-	},
+	}, 
 	City: {
 		type: String,
 		required: true,
@@ -50,7 +50,7 @@ const userSchema = mongoose.Schema({
 	// System fields
 	UserToken: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	IsAdmin: {
 		type: Boolean,
