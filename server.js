@@ -21,13 +21,25 @@ app.use(cors());
 // Parse JSON
 app.use(bodyParser.json());
 
+
+// Check API key 
+app.use((req, res, next) => {
+	const providedApiKey = req.headers["x-api-key"];
+	if (!providedApiKey || providedApiKey !== process.env.API_KEY) {
+		return res.status(401).json({ message: "Invalid API key" });
+	}
+	next();
+});
+
+
 // Import routes
 const userRoute = require("./routes/user");
 
 // Use routes
 app.use("/users", userRoute);
 
-// Routes
+
+// Handle invalid URL
 app.get("/*", (req, res) => {
 	res.json({ message: "Invalid URL" });
 });
