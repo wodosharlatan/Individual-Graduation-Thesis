@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user_model");
+const SHA256 = require("crypto-js/sha256");
 
 // Import .env variables
 require("dotenv/config");
@@ -132,9 +133,11 @@ router.post("/", async (req, res) => {
 			validBirthDate = "Not Specified";
 		}
 
+		const hashedPassword = SHA256(validPassword.trim());
+
 		// Create new user
 		const newUser = new User({
-			Password: validPassword.trim(),
+			Password: hashedPassword,
 			Email: validEmail.trim(),
 			Name: validName.trim(),
 			Surname: validSurname.trim(),
