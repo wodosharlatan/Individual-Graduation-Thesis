@@ -154,8 +154,7 @@ router.post("/", async (req, res) => {
 
 		res.json({ message: "User created successfully" });
 	} catch (error) {
-		console.error("Error creating user:", error);
-		return res.json({ error: "Failed to create user" });
+		return res.json({ message: error.toString() });
 	}
 });
 
