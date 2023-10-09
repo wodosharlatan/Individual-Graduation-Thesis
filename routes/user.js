@@ -158,4 +158,36 @@ router.post("/", async (req, res) => {
 	}
 });
 
+router.post("/login", async (req, res) => {
+	try {
+		// Check if user exists by email
+		if (req.body.Email == undefined || req.body.Password == undefined) {
+			return res.json({ message: "Email or Password is not provided" });
+		}
+		const user = await User.findOne({ Email: req.body.Email });
+		if (!user) {
+			return res.json({ message: "User does not exist" });
+		}
+
+		// Check if password is correct
+		if (SHA256(req.body.Password.trim()) != user.Password) {
+			return res.json({ message: "Password is not correct" });
+		}
+
+
+		// Generate new token
+		const newToken = SHA256(Math.floor(Math.random() * 1000)).toString();
+
+		// Update user token 
+		await User.updateOne(
+			{ Email: req.body.Email }, 
+			{ UserToken: newToken }
+		);
+
+		res.json({ token: newToken });
+	} catch (error) {
+		return res.json({ message: error.toString() });
+	}
+});
+
 module.exports = router;
