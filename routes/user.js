@@ -29,18 +29,21 @@ transporter.use("compile", hbs(handlebarOptions));
 
 async function SendMail(user) {
 	const mailOptions = {
-        from: '"My Company" <my@company.com>', // sender address
-        template: "email", // the name of the template file, i.e., email.handlebars
-        to: user.email,
-        subject: `Welcome to My Company, ${user.name}`,
-        context: {
-          name: user.name,
-          company: 'my company'
-        },
-      };
+		from: '"Moje Drevarstvi" <mojedrevarstvi@gmail.com>',
+		template: "verification",
+		to: user.email,
+		subject: `Vitej ${user.name}`,
+		context: {
+			name: user.name,
+			company: "my company",
+		},
+	};
+
 	try {
 		await transporter.sendMail(mailOptions);
-	} catch (error) {console.log(error);}
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 // Save user to database
@@ -165,7 +168,6 @@ router.post("/", async (req, res) => {
 
 		const hashedPassword = SHA256(validPassword.trim());
 
-
 		// Create new user
 		const newUser = new User({
 			Password: hashedPassword,
@@ -186,12 +188,7 @@ router.post("/", async (req, res) => {
 			verification: SHA256(Math.floor(Math.random() * 10)).toString(),
 			URL: "http://localhost:3000/verify",
 		};
-		  
-		console.log(emailTemplate);
 
-	
-
-		
 		// await newUser.save();
 		await SendMail(emailTemplate);
 
