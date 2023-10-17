@@ -42,10 +42,6 @@ const userSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	Country: {
-		type: String,
-		required: true,
-	},
 
 	// System fields
 	UserToken: {

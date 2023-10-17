@@ -1,10 +1,47 @@
+require("dotenv/config");
+
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user_model");
 const SHA256 = require("crypto-js/sha256");
+const hbs = require("nodemailer-express-handlebars");
+const nodemailer = require("nodemailer");
+const path = require("path");
 
-// Import .env variables
-require("dotenv/config");
+let transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: process.env.GMAIL_ADD,
+		pass: process.env.NODE_MAILER_PASSWORD,
+	},
+});
+
+const handlebarOptions = {
+	viewEngine: {
+		partialsDir: path.resolve("./email_templates"),
+		defaultLayout: false,
+	},
+	viewPath: path.resolve("./email_templates"),
+};
+
+// use a template file with nodemailer
+transporter.use("compile", hbs(handlebarOptions));
+
+async function SendMail(user) {
+	const mailOptions = {
+        from: '"My Company" <my@company.com>', // sender address
+        template: "email", // the name of the template file, i.e., email.handlebars
+        to: user.email,
+        subject: `Welcome to My Company, ${user.name}`,
+        context: {
+          name: user.name,
+          company: 'my company'
+        },
+      };
+	try {
+		await transporter.sendMail(mailOptions);
+	} catch (error) {console.log(error);}
+}
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -24,7 +61,6 @@ router.post("/", async (req, res) => {
 		const validStreetNumber = req.body.StreetNumber;
 		const validZipCode = req.body.ZipCode;
 		const validCity = req.body.City;
-		const validCountry = req.body.Country;
 		let validBirthDate = req.body.BirthDate;
 		let validGender = req.body.Gender;
 
@@ -117,12 +153,6 @@ router.post("/", async (req, res) => {
 			return res.json({ message: "City must be at least 2 characters long" });
 		}
 
-		if (validCountry == undefined || validCountry.trim().length <= 2) {
-			return res.json({
-				message: "Country must be at least 2 characters long",
-			});
-		}
-
 		// check if is empty or not
 		if (validGender === undefined) {
 			validGender = "Not Specified";
@@ -135,6 +165,7 @@ router.post("/", async (req, res) => {
 
 		const hashedPassword = SHA256(validPassword.trim());
 
+
 		// Create new user
 		const newUser = new User({
 			Password: hashedPassword,
@@ -145,14 +176,26 @@ router.post("/", async (req, res) => {
 			StreetNumber: validStreetNumber.trim(),
 			ZipCode: validZipCode.trim(),
 			City: validCity.trim(),
-			Country: validCountry.trim(),
 			DateOfBirth: validBirthDate.trim(),
 			Gender: validGender.trim(),
 		});
 
-		await newUser.save();
+		const emailTemplate = {
+			name: validName,
+			email: validEmail,
+			verification: SHA256(Math.floor(Math.random() * 10)).toString(),
+			URL: "http://localhost:3000/verify",
+		};
+		  
+		console.log(emailTemplate);
 
-		res.json({ message: "User created successfully" });
+	
+
+		
+		// await newUser.save();
+		await SendMail(emailTemplate);
+
+		res.json({ message: "User created successfully, Check your email" });
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
@@ -174,15 +217,11 @@ router.post("/login", async (req, res) => {
 			return res.json({ message: "Password is not correct" });
 		}
 
-
 		// Generate new token
 		const newToken = SHA256(Math.floor(Math.random() * 1000)).toString();
 
-		// Update user token 
-		await User.updateOne(
-			{ Email: req.body.Email }, 
-			{ UserToken: newToken }
-		);
+		// Update user token
+		await User.updateOne({ Email: req.body.Email }, { UserToken: newToken });
 
 		res.json({ token: newToken });
 	} catch (error) {
