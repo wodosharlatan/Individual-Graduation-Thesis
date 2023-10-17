@@ -35,7 +35,8 @@ async function SendMail(user) {
 		subject: `Vitej ${user.name}`,
 		context: {
 			name: user.name,
-			company: "my company",
+			URL: user.URL,
+			verification: user.verification,
 		},
 	};
 
@@ -185,8 +186,8 @@ router.post("/", async (req, res) => {
 		const emailTemplate = {
 			name: validName,
 			email: validEmail,
-			verification: SHA256(Math.floor(Math.random() * 10)).toString(),
-			URL: "http://localhost:3000/verify",
+			verification: Math.floor(Math.random() * 100000 + 1),
+			URL: "https://google.com",
 		};
 
 		// await newUser.save();
