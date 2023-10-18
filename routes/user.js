@@ -24,7 +24,6 @@ const handlebarOptions = {
 	viewPath: path.resolve("./email_templates"),
 };
 
-// use a template file with nodemailer
 transporter.use("compile", hbs(handlebarOptions));
 
 async function SendMail(user) {
@@ -167,7 +166,9 @@ router.post("/", async (req, res) => {
 			validBirthDate = "Not Specified";
 		}
 
-		const hashedPassword = SHA256(validPassword.trim());
+		const hashedPassword = SHA256(validPassword.trim()); 
+
+		const verificationCode = Math.floor(Math.random() * 1000000000).toString();
 
 		// Create new user
 		const newUser = new User({
@@ -180,17 +181,17 @@ router.post("/", async (req, res) => {
 			ZipCode: validZipCode.trim(),
 			City: validCity.trim(),
 			DateOfBirth: validBirthDate.trim(),
+			VerificationCode: verificationCode,
 			Gender: validGender.trim(),
 		});
 
 		const emailTemplate = {
 			name: validName,
 			email: validEmail,
-			verification: Math.floor(Math.random() * 100000 + 1),
-			URL: "https://google.com",
+			URL: `https://${process.env.HOST}:${process.env.PORT}/users/verify/${verificationCode}`,
 		};
 
-		// await newUser.save();
+		await newUser.save();
 		await SendMail(emailTemplate);
 
 		res.json({ message: "User created successfully, Check your email" });
@@ -225,6 +226,26 @@ router.post("/login", async (req, res) => {
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
+});
+
+router.get("/verify/:CODE", async (req, res) => {
+	try {
+		const user = await User.findOne({ VerificationCode: req.params.CODE });
+		if (!user) {
+			return res.json({ message: "User does not exist" });
+		}
+
+		if (user.Verified) {
+			return res.json({ message: "User is already verified" });
+		}
+
+		await User.updateOne({ VerificationCode: req.params.CODE }, { Verified: true });
+
+		res.json({ message: "User got verified" });
+	} catch (error) {
+		return res.json({ message: error.toString() });
+	}
+
 });
 
 module.exports = router;

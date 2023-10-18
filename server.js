@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 
 
 // Check API key 
+/*
+
 app.use((req, res, next) => {
 	const providedApiKey = req.headers["x-api-key"];
 	if (!providedApiKey || providedApiKey !== process.env.API_KEY) {
@@ -31,6 +33,7 @@ app.use((req, res, next) => {
 	next();
 });
 
+*/
 
 // Import routes
 const userRoute = require("./routes/user");
