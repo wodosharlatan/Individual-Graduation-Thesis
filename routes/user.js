@@ -185,11 +185,14 @@ router.post("/", async (req, res) => {
 			Gender: validGender.trim(),
 		});
 
+		const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
 		const emailTemplate = {
 			name: validName,
 			email: validEmail,
-			URL: `https://${process.env.HOST}:${process.env.PORT}/users/verify/${verificationCode}`,
+			URL: `${fullUrl}/verify/${verificationCode}`,
 		};
+		
 
 		await newUser.save();
 		await SendMail(emailTemplate);
