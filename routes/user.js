@@ -26,17 +26,13 @@ const handlebarOptions = {
 
 transporter.use("compile", hbs(handlebarOptions));
 
-async function SendMail(user) {
+async function SendEmail(user, template, context) {
 	const mailOptions = {
 		from: '"Dárky z pedigu" <darky_z_pedigu@gmail.com>',
-		template: "verification",
+		template: template,
 		to: user.email,
 		subject: `Ahoj ${user.name}`,
-		context: {
-			name: user.name,
-			URL: user.URL,
-			verification: user.verification,
-		},
+		context: context,
 	};
 
 	try {
@@ -166,9 +162,11 @@ router.post("/", async (req, res) => {
 			validBirthDate = "Not Specified";
 		}
 
-		const hashedPassword = SHA256(validPassword.trim()); 
+		const hashedPassword = SHA256(validPassword.trim());
 
-		const verificationCode = Math.floor(Math.random() * 100000000000000000000).toString();
+		const verificationCode = Math.floor(
+			Math.random() * 100000000000000000000
+		).toString();
 
 		// Create new user
 		const newUser = new User({
@@ -185,17 +183,19 @@ router.post("/", async (req, res) => {
 			Gender: validGender.trim(),
 		});
 
-		const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+		const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
 
-		const emailTemplate = {
+		const email_user = {
 			name: validName,
 			email: validEmail,
+		};
+
+		const context = {
 			URL: `${fullUrl}/verify/${verificationCode}`,
 		};
-		
 
 		await newUser.save();
-		await SendMail(emailTemplate);
+		await SendEmail(email_user, "verification", context);
 
 		res.json({ message: "User created successfully, Check your email" });
 	} catch (error) {
@@ -242,13 +242,50 @@ router.get("/verify/:CODE", async (req, res) => {
 			return res.json({ message: "User is already verified" });
 		}
 
-		await User.updateOne({ VerificationCode: req.params.CODE }, { Verified: true });
+		await User.updateOne(
+			{ VerificationCode: req.params.CODE },
+			{ Verified: true }
+		);
 
 		res.json({ message: "User got verified" });
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
+});
+
+router.post("/forgot-password/:EMAIL", async (req, res) => {
+	try {
+		const user = await User.findOne({ Email: req.params.EMAIL });
+		if (!user) {
+			return res.json({ message: "User does not exist" });
+		}
+
+		const email_user = {
+			name: user.Name,
+			email: user.Email,
+		};
+
+		const fullUrl = req.protocol + "://" + req.get("host");
+
+		// ??? WHAT THE FUCK IS THIS ???
+
+		const context = {
+			URL: `${fullUrl}/reset-password/${user._id}`,
+		};
+
+		// ??? WHAT THE FUCK IS THIS ???
+
+		await SendEmail(email_user, "password_reset", context);
+
+		res.json({ message: "Email with password reset sent" });
+	} catch (error) {
+		return res.json({ message: error.toString() });
+	}
+});
+
+router.post("/reset-password/:ID", async (req, res) => {
 
 });
+
 
 module.exports = router;
