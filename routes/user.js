@@ -28,10 +28,10 @@ transporter.use("compile", hbs(handlebarOptions));
 
 async function SendMail(user) {
 	const mailOptions = {
-		from: '"Moje Drevarstvi" <mojedrevarstvi@gmail.com>',
+		from: '"Dárky z pedigu" <darky_z_pedigu@gmail.com>',
 		template: "verification",
 		to: user.email,
-		subject: `Vitej ${user.name}`,
+		subject: `Ahoj ${user.name}`,
 		context: {
 			name: user.name,
 			URL: user.URL,
@@ -168,7 +168,7 @@ router.post("/", async (req, res) => {
 
 		const hashedPassword = SHA256(validPassword.trim()); 
 
-		const verificationCode = Math.floor(Math.random() * 1000000000).toString();
+		const verificationCode = Math.floor(Math.random() * 100000000000000000000).toString();
 
 		// Create new user
 		const newUser = new User({
