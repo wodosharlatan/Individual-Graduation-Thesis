@@ -186,9 +186,7 @@ router.post("/", async (req, res) => {
 			email: validEmail,
 		};
 
-		const verificationCode = Math.floor(
-			Math.random() * 100000000000000000000
-		).toString();
+		const verificationCode = SHA256(Math.floor(Math.random() * 1000)).toString();
 
 		const context = {
 			URL: `${fullUrl}/verify/${verificationCode}`,
