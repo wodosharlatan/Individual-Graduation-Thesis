@@ -164,10 +164,6 @@ router.post("/", async (req, res) => {
 
 		const hashedPassword = SHA256(validPassword.trim());
 
-		const verificationCode = Math.floor(
-			Math.random() * 100000000000000000000
-		).toString();
-
 		// Create new user
 		const newUser = new User({
 			Password: hashedPassword,
@@ -189,6 +185,10 @@ router.post("/", async (req, res) => {
 			name: validName,
 			email: validEmail,
 		};
+
+		const verificationCode = Math.floor(
+			Math.random() * 100000000000000000000
+		).toString();
 
 		const context = {
 			URL: `${fullUrl}/verify/${verificationCode}`,
@@ -229,62 +229,6 @@ router.post("/login", async (req, res) => {
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
-});
-
-router.get("/verify/:CODE", async (req, res) => {
-	try {
-		const user = await User.findOne({ VerificationCode: req.params.CODE });
-		if (!user) {
-			return res.json({ message: "User does not exist" });
-		}
-
-		if (user.Verified) {
-			return res.json({ message: "User is already verified" });
-		}
-
-		await User.updateOne(
-			{ VerificationCode: req.params.CODE },
-			{ Verified: true }
-		);
-
-		res.json({ message: "User got verified" });
-	} catch (error) {
-		return res.json({ message: error.toString() });
-	}
-});
-
-router.post("/forgot-password/:EMAIL", async (req, res) => {
-	try {
-		const user = await User.findOne({ Email: req.params.EMAIL });
-		if (!user) {
-			return res.json({ message: "User does not exist" });
-		}
-
-		const email_user = {
-			name: user.Name,
-			email: user.Email,
-		};
-
-		const fullUrl = req.protocol + "://" + req.get("host");
-
-		// ??? WHAT THE FUCK IS THIS ???
-
-		const context = {
-			URL: `${fullUrl}/reset-password/${user._id}`,
-		};
-
-		// ??? WHAT THE FUCK IS THIS ???
-
-		await SendEmail(email_user, "password_reset", context);
-
-		res.json({ message: "Email with password reset sent" });
-	} catch (error) {
-		return res.json({ message: error.toString() });
-	}
-});
-
-router.post("/reset-password/:ID", async (req, res) => {
-
 });
 
 

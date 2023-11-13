@@ -23,9 +23,11 @@ app.use(bodyParser.json());
 
 // Import routes
 const userRoute = require("./routes/user");
+const verificationRoute = require("./routes/verification/verify");
 
 // Use routes
 app.use("/users", userRoute);
+app.use("/verify", verificationRoute);
 
 
 // Handle invalid URL
