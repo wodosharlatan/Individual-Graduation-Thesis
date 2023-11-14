@@ -164,6 +164,8 @@ router.post("/", async (req, res) => {
 
 		const hashedPassword = SHA256(validPassword.trim());
 
+		const verificationCode = SHA256(Math.floor(Math.random() * 1000)).toString();
+
 		// Create new user
 		const newUser = new User({
 			Password: hashedPassword,
@@ -186,7 +188,7 @@ router.post("/", async (req, res) => {
 			email: validEmail,
 		};
 
-		const verificationCode = SHA256(Math.floor(Math.random() * 1000)).toString();
+		
 
 		const context = {
 			URL: `${fullUrl}/verify/${verificationCode}`,
