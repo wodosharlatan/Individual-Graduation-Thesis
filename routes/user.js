@@ -4,43 +4,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user_model");
 const SHA256 = require("crypto-js/sha256");
-const hbs = require("nodemailer-express-handlebars");
-const nodemailer = require("nodemailer");
-const path = require("path");
+const SendEmail = require("../functions/send_email");
 
-let transporter = nodemailer.createTransport({
-	service: "gmail",
-	auth: {
-		user: process.env.GMAIL_ADD,
-		pass: process.env.NODE_MAILER_PASSWORD,
-	},
-});
 
-const handlebarOptions = {
-	viewEngine: {
-		partialsDir: path.resolve("./email_templates"),
-		defaultLayout: false,
-	},
-	viewPath: path.resolve("./email_templates"),
-};
-
-transporter.use("compile", hbs(handlebarOptions));
-
-async function SendEmail(user, template, context) {
-	const mailOptions = {
-		from: '"Dárky z pedigu" <darky_z_pedigu@gmail.com>',
-		template: template,
-		to: user.email,
-		subject: `Ahoj ${user.name}`,
-		context: context,
-	};
-
-	try {
-		await transporter.sendMail(mailOptions);
-	} catch (error) {
-		console.log(error);
-	}
-}
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -166,8 +132,6 @@ router.post("/", async (req, res) => {
 
 		const verificationCode = SHA256(Math.floor(Math.random() * 1000)).toString();
 
-		console.log(verificationCode);
-
 		// Create new user
 		const newUser = new User({
 			Password: hashedPassword,
@@ -184,12 +148,6 @@ router.post("/", async (req, res) => {
 		});
 
 		const fullUrl = req.protocol + "://" + req.get("host")
-
-		const email_user = {
-			name: validName,
-			email: validEmail,
-		};
-
 		
 
 		const context = {
@@ -197,7 +155,7 @@ router.post("/", async (req, res) => {
 		};
 
 		await newUser.save();
-		await SendEmail(email_user, "verification", context);
+		await SendEmail(validEmail,`Ahoj ${validName}`, "verification", context);
 
 		res.json({ message: "User created successfully, Check your email" });
 	} catch (error) {

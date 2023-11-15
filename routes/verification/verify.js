@@ -31,34 +31,4 @@ router.get("/:CODE", async (req, res) => {
 	}
 });
 
-router.post("/reset-password", async (req, res) => {
-	try {
-		const email = req.body.Email;
-		const password = req.body.Password;
-		const verification = req.body.VerificationPassword;
-
-		if (
-			email == undefined ||
-			password == undefined ||
-			verification == undefined
-		) {
-			return res.json({ message: "Email or Password is not provided" });
-		}
-
-		if (password.trim().length <= 8 || password.trim().length >= 20) {
-			return res.json({
-				message: "Password must be at between 8 20 characters long",
-			});
-		}
-
-		if (password != verification) {
-			return res.json({ message: "Passwords are not the same" });
-		}
-
-		res.json({ message: "Email with password reset sent" });
-	} catch (error) {
-		return res.json({ message: error.toString() });
-	}
-});
-
 module.exports = router;

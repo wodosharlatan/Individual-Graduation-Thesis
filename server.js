@@ -23,16 +23,19 @@ app.use(bodyParser.json());
 
 // Import routes
 const userRoute = require("./routes/user");
+const passwordResetRoute = require("./routes/password_reset");
 const verificationRoute = require("./routes/verification/verify");
+
 
 // Use routes
 app.use("/users", userRoute);
 app.use("/verify", verificationRoute);
+app.use("/password-reset", passwordResetRoute);
 
 
 // Handle invalid URL
 app.get("/*", (req, res) => {
-	res.json({ message: "Invalid URL" });
+	res.status(404).json({ message: "Invalid URL" });
 });
 
 // Start server Based on environment
