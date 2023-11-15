@@ -2,9 +2,10 @@ require("dotenv/config");
 
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user_model");
-const SendEmail = require("../functions/send_email");
-const GenerateHash = require("../functions/generate_hash");
+const User = require("../../models/user_model");
+const SendEmail = require("../../functions/send_email");
+const GenerateHash = require("../../functions/generate_hash");
+const path = require("path");
 
 router.post("/", async (req, res) => {
 	try {
@@ -41,10 +42,16 @@ router.post("/", async (req, res) => {
 
 		const verificationCode = GenerateHash();
 
-		await User.updateOne(
+		await User.updateMany(
 			{ Email: email },
-			{ VerificationCode: verificationCode }
-		);
+			{
+			  $set: {
+				VerificationCode: verificationCode,
+				TemporaryPassword: password
+			  }
+			}
+		  );
+		  
 
 		console.log(verificationCode);
 
@@ -61,5 +68,35 @@ router.post("/", async (req, res) => {
 		return res.json({ message: error.toString() });
 	}
 });
+
+
+
+router.get("/:CODE", async (req, res) => {
+	try {
+		const user = await User.findOne({ VerificationCode: req.params.CODE });
+		if (!user) {
+			return res.status(404).sendFile(
+				path.join(__dirname, "public", "user_does_not_exist.html")
+			);
+		}
+
+		await User.updateMany(
+			{ VerificationCode: req.params.CODE },
+			{
+			  $set: {
+				Password: user.TemporaryPassword,
+				VerificationCode: GenerateHash()
+			  }
+			}
+		  );
+
+		res.json({ message: "Password reset successfully" });
+	} catch (error) {
+		return res.json({ message: error.toString() });
+	}
+});
+
+module.exports = router;
+
 
 module.exports = router;

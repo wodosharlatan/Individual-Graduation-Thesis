@@ -55,6 +55,10 @@ const userSchema = mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+	TemporaryPassword: {
+		type: String,
+		default: "",
+	},
 });
 
 module.exports = mongoose.model("Users", userSchema);

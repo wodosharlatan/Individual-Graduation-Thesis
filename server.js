@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // Import routes
 const userRoute = require("./routes/user");
-const passwordResetRoute = require("./routes/password_reset");
+const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 
 

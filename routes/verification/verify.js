@@ -14,8 +14,6 @@ router.get("/:CODE", async (req, res) => {
 			);
 		}
 
-		console.log(user.Verified);
-
 		if (user.Verified == true) {
 			return res.sendFile(
 				path.join(__dirname, "public", "user_already_verified.html")
