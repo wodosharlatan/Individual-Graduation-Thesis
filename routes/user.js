@@ -175,7 +175,7 @@ router.post("/login", async (req, res) => {
 		const newToken = GenerateHash();
 
 		// Update user token
-		await User.updateOne({ Email: req.body.Email }, { UserToken: newToken });
+		await User.updateOne({ Email: req.body.Email }, { VerificationCode: newToken });
 
 		res.json({ token: newToken });
 	} catch (error) {

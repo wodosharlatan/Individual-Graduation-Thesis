@@ -44,10 +44,6 @@ const userSchema = mongoose.Schema({
 	},
 
 	// System fields
-	UserToken: {
-		type: String,
-		default: "",
-	},
 	VerificationCode: {
 		type: String,
 	},
