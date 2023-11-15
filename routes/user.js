@@ -5,8 +5,7 @@ const router = express.Router();
 const User = require("../models/user_model");
 const SHA256 = require("crypto-js/sha256");
 const SendEmail = require("../functions/send_email");
-
-
+const GenerateHash = require("../functions/generate_hash");
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -33,8 +32,8 @@ router.post("/", async (req, res) => {
 
 		if (
 			validPassword == undefined ||
-			validPassword.trim().length <= 8 ||
-			validPassword.trim().length >= 20
+			validPassword.trim().length < 8 ||
+			validPassword.trim().length > 20
 		) {
 			return res.json({
 				message: "Password must be at between 8 20 characters long",
@@ -43,8 +42,8 @@ router.post("/", async (req, res) => {
 
 		if (
 			validEmail == undefined ||
-			validEmail.trim().length <= 8 ||
-			validEmail.trim().length >= 100
+			validEmail.trim().length < 8 ||
+			validEmail.trim().length > 100
 		) {
 			return res.json({
 				message: "Email must be between 8 and 100 characters long",
@@ -62,8 +61,8 @@ router.post("/", async (req, res) => {
 
 		if (
 			validName == undefined ||
-			validName.trim().length <= 2 ||
-			validName.trim().length >= 100
+			validName.trim().length < 2 ||
+			validName.trim().length > 100
 		) {
 			return res.json({
 				message: "Name must be at between 2 and 100 characters long",
@@ -72,15 +71,15 @@ router.post("/", async (req, res) => {
 
 		if (
 			validSurname == undefined ||
-			validSurname.trim().length <= 2 ||
-			validSurname.trim().length >= 100
+			validSurname.trim().length < 2 ||
+			validSurname.trim().length > 100
 		) {
 			return res.json({
 				message: "Surname must be at between 2 and 100 characters long",
 			});
 		}
 
-		if (validTelephone == undefined || validTelephone.trim().length <= 9) {
+		if (validTelephone == undefined || validTelephone.trim().length < 9) {
 			return res.json({
 				message: "Telephone must be at least 9 characters long",
 			});
@@ -95,10 +94,7 @@ router.post("/", async (req, res) => {
 			return res.json({ message: "Telephone Number is not valid" });
 		}
 
-		if (
-			validStreetNumber == undefined ||
-			validStreetNumber.trim().length <= 2
-		) {
+		if (validStreetNumber == undefined || validStreetNumber.trim().length < 2) {
 			return res.json({
 				message: "Street Number must be at least 2 characters long",
 			});
@@ -106,8 +102,8 @@ router.post("/", async (req, res) => {
 
 		if (
 			validZipCode == undefined ||
-			validZipCode.trim().length <= 5 ||
-			validZipCode.trim().length >= 7
+			validZipCode.trim().length < 5 ||
+			validZipCode.trim().length > 7
 		) {
 			return res.json({
 				message: "Zip Code must be between 5 and 7 characters long",
@@ -129,8 +125,7 @@ router.post("/", async (req, res) => {
 		}
 
 		const hashedPassword = SHA256(validPassword.trim());
-
-		const verificationCode = SHA256(Math.floor(Math.random() * 1000)).toString();
+		const verificationCode = GenerateHash();
 
 		// Create new user
 		const newUser = new User({
@@ -147,15 +142,14 @@ router.post("/", async (req, res) => {
 			Gender: validGender.trim(),
 		});
 
-		const fullUrl = req.protocol + "://" + req.get("host")
-		
+		const fullUrl = req.protocol + "://" + req.get("host");
 
 		const context = {
 			URL: `${fullUrl}/verify/${verificationCode}`,
 		};
 
 		await newUser.save();
-		await SendEmail(validEmail,`Ahoj ${validName}`, "verification", context);
+		await SendEmail(validEmail, `Ahoj ${validName}`, "verification", context);
 
 		res.json({ message: "User created successfully, Check your email" });
 	} catch (error) {
@@ -180,7 +174,7 @@ router.post("/login", async (req, res) => {
 		}
 
 		// Generate new token
-		const newToken = SHA256(Math.floor(Math.random() * 1000)).toString();
+		const newToken = GenerateHash();
 
 		// Update user token
 		await User.updateOne({ Email: req.body.Email }, { UserToken: newToken });
@@ -190,6 +184,5 @@ router.post("/login", async (req, res) => {
 		return res.json({ message: error.toString() });
 	}
 });
-
 
 module.exports = router;

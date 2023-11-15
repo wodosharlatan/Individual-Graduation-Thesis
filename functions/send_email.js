@@ -24,8 +24,6 @@ transporter.use("compile", hbs(handlebarOptions));
 
 async function SendEmail(user, subject, template, context) {
 
-    console.log(user, subject, template, context);
-
 	const mailOptions = {
 		from: '"Dárky z pedigu" <darky_z_pedigu@gmail.com>',
 		template: template,
