@@ -90,13 +90,10 @@ router.get("/:CODE", async (req, res) => {
 			}
 		  );
 
-		res.json({ message: "Password reset successfully" });
+		res.sendFile(path.join(__dirname, "public", "password_reseted.html"));
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
 });
-
-module.exports = router;
-
 
 module.exports = router;
