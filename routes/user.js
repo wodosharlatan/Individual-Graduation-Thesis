@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
 
 		// Declare all User Data fields
 		const validPassword = req.body.Password;
+		const verification = req.body.Verification;
 		const validEmail = req.body.Email;
 		const validName = req.body.Name;
 		const validSurname = req.body.Surname;
@@ -38,6 +39,16 @@ router.post("/", async (req, res) => {
 			return res.json({
 				message: "Password must be at between 8 20 characters long",
 			});
+		}
+
+		if (verification == undefined || verification.trim().length < 8) {
+			return res.json({
+				message: "Verification must be at least 8 characters long",
+			});
+		}
+
+		if (verification != validPassword) {
+			return res.json({ message: "Passwords do not match" });
 		}
 
 		if (
