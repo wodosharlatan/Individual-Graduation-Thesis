@@ -87,15 +87,6 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		// ACCEPTS ONLY FORMAT +420-123-456-789 OR 420-123-456-789 OR 123-456-789
-		// Check if telephone is valid using this regex ^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$
-		// https://www.regularnivyrazy.info/telefonni-cislo.html
-
-		const regexPattern2 = /^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/;
-		if (regexPattern2.test(validTelephone.trim())) {
-			return res.json({ message: "Telephone Number is not valid" });
-		}
-
 		if (validStreetNumber == undefined || validStreetNumber.trim().length < 2) {
 			return res.json({
 				message: "Street Number must be at least 2 characters long",
