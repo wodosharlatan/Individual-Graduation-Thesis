@@ -21,7 +21,6 @@ router.post("/", async (req, res) => {
 		const verification = req.body.Verification;
 		const validEmail = req.body.Email;
 		const validName = req.body.Name;
-		const validSurname = req.body.Surname;
 		const validTelephone = req.body.Telephone;
 		const validStreetNumber = req.body.StreetNumber;
 		const validZipCode = req.body.ZipCode;
@@ -80,15 +79,7 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		if (
-			validSurname == undefined ||
-			validSurname.trim().length < 2 ||
-			validSurname.trim().length > 100
-		) {
-			return res.json({
-				message: "Surname must be at between 2 and 100 characters long",
-			});
-		}
+		
 
 		if (validTelephone == undefined || validTelephone.trim().length < 9) {
 			return res.json({
@@ -143,7 +134,6 @@ router.post("/", async (req, res) => {
 			Password: hashedPassword,
 			Email: validEmail.trim(),
 			Name: validName.trim(),
-			Surname: validSurname.trim(),
 			Telephone: validTelephone.trim(),
 			StreetNumber: validStreetNumber.trim(),
 			ZipCode: validZipCode.trim(),

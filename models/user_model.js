@@ -22,10 +22,6 @@ const userSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	Surname: {
-		type: String,
-		required: true,
-	},
 	Telephone: {
 		type: String,
 		required: true,
