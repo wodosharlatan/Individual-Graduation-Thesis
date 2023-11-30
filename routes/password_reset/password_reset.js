@@ -6,6 +6,7 @@ const User = require("../../models/user_model");
 const SendEmail = require("../../functions/send_email");
 const GenerateHash = require("../../functions/generate_hash");
 const path = require("path");
+const SHA256 = require("crypto-js/sha256");
 
 router.post("/", async (req, res) => {
 	try {
@@ -41,13 +42,14 @@ router.post("/", async (req, res) => {
 		}
 
 		const verificationCode = GenerateHash();
+		const hashedPassword = SHA256(password.trim());
 
 		await User.updateMany(
 			{ Email: email },
 			{
 			  $set: {
 				VerificationCode: verificationCode,
-				TemporaryPassword: password
+				TemporaryPassword: hashedPassword
 			  }
 			}
 		  );

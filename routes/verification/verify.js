@@ -20,11 +20,6 @@ router.get("/:CODE", async (req, res) => {
 			);
 		}
 
-		await User.updateOne(
-			{ VerificationCode: req.params.CODE },
-			{ Verified: true }
-		);
-
 		res.sendFile(path.join(__dirname, "public", "user_verified.html"));
 	} catch (error) {
 		return res.json({ message: error.toString() });
