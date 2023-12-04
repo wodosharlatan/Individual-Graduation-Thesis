@@ -54,12 +54,13 @@ router.post("/", async (req, res) => {
 		const verificationCode = GenerateHash();
 		const hashedPassword = SHA256(validPassword.trim());
 
+
 		await User.updateMany(
 			{ Email: email },
 			{
 				$set: {
 					VerificationCode: verificationCode,
-					TemporaryPassword: hashedPassword,
+					TemporaryPassword: hashedPassword.toString(),
 				},
 			}
 		);
