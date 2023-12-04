@@ -52,7 +52,6 @@ router.post("/", async (req, res) => {
 		}
 
 		const verificationCode = GenerateHash();
-		const hashedPassword = SHA256(validPassword.trim());
 
 
 		await User.updateMany(
@@ -60,12 +59,11 @@ router.post("/", async (req, res) => {
 			{
 				$set: {
 					VerificationCode: verificationCode,
-					TemporaryPassword: hashedPassword.toString(),
+					TemporaryPassword: validPassword,
 				},
 			}
 		);
 
-		console.log(verificationCode);
 
 		const fullUrl = req.protocol + "://" + req.get("host");
 
