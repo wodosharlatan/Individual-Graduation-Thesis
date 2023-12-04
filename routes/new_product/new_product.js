@@ -3,18 +3,20 @@ require("dotenv/config");
 const express = require("express");
 const router = express.Router();
 const Product = require("../../models/product_model");
+const SaveImage = require("../../functions/save_image");
 
-router.post('/', (req, res) => {
-    const { image } = req.files;
 
-    if (!image) return res.sendStatus(400);
 
-    // If does not have image mime type prevent from uploading
-    if (!/^image/.test(image.mimetype)) return res.sendStatus(400);
+router.post('/', async (req, res) => {
 
-    image.mv(__dirname + '/images/' + image.name);
+    if(SaveImage(req.files, __dirname) != "image saved") {
+        return res.json({ error: SaveImage(req.files, __dirname) });
+    }
+ 
+    return res.json({ message: "Image saved" });
+    
+    
 
-    res.sendStatus(200);
 });
 
 router.get('/', (req, res) => {
