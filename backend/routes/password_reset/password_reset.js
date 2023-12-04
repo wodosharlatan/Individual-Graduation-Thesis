@@ -75,11 +75,12 @@ router.post("/", async (req, res) => {
 
 router.get("/:CODE", async (req, res) => {
 	try {
+
+		console.log(req.params.CODE);
+
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
-			return res.status(404).sendFile(
-				path.join(__dirname, "public", "user_does_not_exist.html")
-			);
+			return res.status(404).json({ message: "User does not exist" })
 		}
 
 		await User.updateMany(
@@ -87,11 +88,12 @@ router.get("/:CODE", async (req, res) => {
 			{
 			  $set: {
 				Password: SHA256(user.TemporaryPassword),
+				TemporaryPassword: "",
 			  }
 			}
 		  );
 
-		res.sendFile(path.join(__dirname, "public", "password_reseted.html"));
+		  res.status(200).sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}

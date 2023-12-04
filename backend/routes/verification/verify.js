@@ -9,12 +9,10 @@ router.get("/:CODE", async (req, res) => {
 	try {
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
-			return res.status(404).sendFile(
-				path.join(__dirname, "public", "user_does_not_exist.html")
-			);
+			return res.status(404).json({ message: "User not found" });
 		}
 
-		res.sendFile(path.join(__dirname, "public", "user_verified.html"));
+		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}

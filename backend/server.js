@@ -55,10 +55,11 @@ app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-// Handle invalid URL
-app.get("/*", (req, res) => {
+// 404 route
+app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
+
 
 // Start server Based on environment
 const environment = process.env.NODE_ENV || "production";
