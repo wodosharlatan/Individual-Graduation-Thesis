@@ -48,7 +48,7 @@ app.use("/products", ProductRoute);
 
 // Handle invalid URL
 app.get("/*", (req, res) => {
-	res.status(404).json({ message: "Invalid URL" });
+	res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // Start server Based on environment
