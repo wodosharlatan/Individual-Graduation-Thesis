@@ -81,18 +81,21 @@ router.post("/", async (req, res) => {
 
 router.get("/:CODE", async (req, res) => {
 	try {
-		console.log(req.params.CODE);
+		
 
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
 			return res.status(404).json({ message: "User does not exist" });
 		}
 
+
+		const validPassword = SHA256(user.TemporaryPassword).toString();
+
 		await User.updateMany(
 			{ VerificationCode: req.params.CODE },
 			{
 				$set: {
-					Password: SHA256(user.TemporaryPassword),
+					Password: validPassword,
 					TemporaryPassword: "",
 				},
 			}

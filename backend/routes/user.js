@@ -117,7 +117,7 @@ router.post("/", async (req, res) => {
 			validBirthDate = "Not Specified";
 		}
 
-		const hashedPassword = SHA256(validPassword.trim());
+		const hashedPassword = SHA256(validPassword.trim()).toString();
 		const verificationCode = GenerateHash();
 
 		// Create new user
@@ -159,7 +159,7 @@ router.post("/login", async (req, res) => {
 		}
 
 		// Check if password is correct
-		if (SHA256(req.body.Password.trim()) != user.Password) {
+		if (SHA256(req.body.Password.trim()).toString() != user.Password) {
 			return res.json({ message: "Password is not correct" });
 		}
 
