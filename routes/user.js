@@ -169,7 +169,7 @@ router.post("/login", async (req, res) => {
 		// Update user token
 		await User.updateOne({ Email: req.body.Email }, { VerificationCode: newToken });
 
-		res.json({ token: newToken });
+		res.json({ VerificationCode: newToken });
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}

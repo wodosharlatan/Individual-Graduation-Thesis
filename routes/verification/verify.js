@@ -14,12 +14,6 @@ router.get("/:CODE", async (req, res) => {
 			);
 		}
 
-		if (user.Verified == true) {
-			return res.sendFile(
-				path.join(__dirname, "public", "user_already_verified.html")
-			);
-		}
-
 		res.sendFile(path.join(__dirname, "public", "user_verified.html"));
 	} catch (error) {
 		return res.json({ message: error.toString() });

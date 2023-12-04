@@ -86,8 +86,7 @@ router.get("/:CODE", async (req, res) => {
 			{ VerificationCode: req.params.CODE },
 			{
 			  $set: {
-				Password: user.TemporaryPassword,
-				VerificationCode: GenerateHash()
+				Password: SHA256(user.TemporaryPassword),
 			  }
 			}
 		  );
