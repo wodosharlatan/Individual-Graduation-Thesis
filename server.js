@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const https = require("https");
 const fs = require("fs");
+const fileUpload = require('express-fileupload');
 
 // SSL
 app.use(express.urlencoded({ extended: true, limit: "3mb" }));
@@ -21,16 +22,45 @@ app.use(cors());
 // Parse JSON
 app.use(bodyParser.json());
 
+// File upload
+app.use(
+    fileUpload({
+        limits: {
+            fileSize: 10000000, // Around 10MB
+        },
+        abortOnLimit: true,
+    })
+);
+
+app.post('/upload', (req, res) => {
+    const { image } = req.files;
+
+    if (!image) return res.sendStatus(400);
+
+    // If does not have image mime type prevent from uploading
+    if (!/^image/.test(image.mimetype)) return res.sendStatus(400);
+
+    image.mv(__dirname + '/upload/' + image.name);
+
+    res.sendStatus(200);
+});
+
+app.get('/upload', (req, res) => {
+	res.sendFile(__dirname + '/test.html');
+});
+
 // Import routes
 const userRoute = require("./routes/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
+// const imageSaveRoute = require("./routes/image_save");
 
 
 // Use routes
 app.use("/users", userRoute);
 app.use("/verify", verificationRoute);
 app.use("/password-reset", passwordResetRoute);
+// app.use("/upload", imageSaveRoute);
 
 
 // Handle invalid URL
