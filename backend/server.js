@@ -33,11 +33,15 @@ app.use(
     })
 );
 
+// Serve static files
+app.use(express.static(path.join(__dirname, 'dist')));
+
 // Import routes
 const userRoute = require("./routes/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");
+
 
 
 // Use routes
@@ -46,6 +50,10 @@ app.use("/verify", verificationRoute);
 app.use("/password-reset", passwordResetRoute);
 app.use("/products", ProductRoute);
 
+// Home route
+app.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 // Handle invalid URL
 app.get("/*", (req, res) => {
