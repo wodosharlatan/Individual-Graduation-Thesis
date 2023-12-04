@@ -81,11 +81,15 @@ router.post("/", async (req, res) => {
 
 router.get("/:CODE", async (req, res) => {
 	try {
-		
-
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
 			return res.status(404).json({ message: "User does not exist" });
+		}
+		if(user.Verified == false){
+			return res.status(404).json({ message: "User is not verified" });
+		}
+		if (user.TemporaryPassword == "") {
+			return res.status(404).json({ message: "User does not have temporary password" });
 		}
 
 
