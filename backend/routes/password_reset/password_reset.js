@@ -11,12 +11,12 @@ const SHA256 = require("crypto-js/sha256");
 router.post("/", async (req, res) => {
 	try {
 		const email = req.body.Email;
-		const password = req.body.Password;
+		const validPassword = req.body.Password;
 		const verification = req.body.VerificationPassword;
 
 		if (
 			email == undefined ||
-			password == undefined ||
+			validPassword == undefined ||
 			verification == undefined
 		) {
 			return res.json({ message: "Email or Password is not provided" });
@@ -31,29 +31,38 @@ router.post("/", async (req, res) => {
 			return res.json({ message: "User is not verified" });
 		}
 
-		if (password.trim().length < 8 || password.trim().length > 20) {
+		if (
+			validPassword == undefined ||
+			validPassword.trim().length < 8 ||
+			validPassword.trim().length > 20
+		) {
 			return res.json({
 				message: "Password must be at between 8 20 characters long",
 			});
 		}
 
-		if (password != verification) {
-			return res.json({ message: "Passwords are not the same" });
+		if (verification == undefined || verification.trim().length < 8) {
+			return res.json({
+				message: "Verification must be at least 8 characters long",
+			});
+		}
+
+		if (verification != validPassword) {
+			return res.json({ message: "Passwords do not match" });
 		}
 
 		const verificationCode = GenerateHash();
-		const hashedPassword = SHA256(password.trim());
+		const hashedPassword = SHA256(validPassword.trim());
 
 		await User.updateMany(
 			{ Email: email },
 			{
-			  $set: {
-				VerificationCode: verificationCode,
-				TemporaryPassword: hashedPassword
-			  }
+				$set: {
+					VerificationCode: verificationCode,
+					TemporaryPassword: hashedPassword,
+				},
 			}
-		  );
-		  
+		);
 
 		console.log(verificationCode);
 
@@ -71,29 +80,28 @@ router.post("/", async (req, res) => {
 	}
 });
 
-
-
 router.get("/:CODE", async (req, res) => {
 	try {
-
 		console.log(req.params.CODE);
 
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
-			return res.status(404).json({ message: "User does not exist" })
+			return res.status(404).json({ message: "User does not exist" });
 		}
 
 		await User.updateMany(
 			{ VerificationCode: req.params.CODE },
 			{
-			  $set: {
-				Password: SHA256(user.TemporaryPassword),
-				TemporaryPassword: "",
-			  }
+				$set: {
+					Password: SHA256(user.TemporaryPassword),
+					TemporaryPassword: "",
+				},
 			}
-		  );
+		);
 
-		  res.status(200).sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
+		res
+			.status(200)
+			.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
