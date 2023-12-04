@@ -1,7 +1,6 @@
-import "./App.css";
 import React from "react";
 
-function PasswordReset() {
+function Password_reset() {
   const [email, setEmail] = React.useState("");
   const [newpassword, setnewpassword] = React.useState("");
   const [newpassword_again, setnewpassword_again] = React.useState("");
@@ -84,4 +83,4 @@ function PasswordReset() {
   );
 }
 
-export default PasswordReset;
+export default Password_reset;

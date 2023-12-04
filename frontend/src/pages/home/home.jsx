@@ -1,4 +1,3 @@
-import "./App.css";
 import React from "react";
 
 function Home() {
@@ -201,6 +200,7 @@ function Home() {
         <br></br>
 
         <button type="submit">Odeslat</button>
+
       </form>
     </>
   );
