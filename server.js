@@ -32,35 +32,18 @@ app.use(
     })
 );
 
-app.post('/upload', (req, res) => {
-    const { image } = req.files;
-
-    if (!image) return res.sendStatus(400);
-
-    // If does not have image mime type prevent from uploading
-    if (!/^image/.test(image.mimetype)) return res.sendStatus(400);
-
-    image.mv(__dirname + '/upload/' + image.name);
-
-    res.sendStatus(200);
-});
-
-app.get('/upload', (req, res) => {
-	res.sendFile(__dirname + '/test.html');
-});
-
 // Import routes
 const userRoute = require("./routes/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
-// const imageSaveRoute = require("./routes/image_save");
+const ProductRoute = require("./routes/new_product/new_product");
 
 
 // Use routes
 app.use("/users", userRoute);
 app.use("/verify", verificationRoute);
 app.use("/password-reset", passwordResetRoute);
-// app.use("/upload", imageSaveRoute);
+app.use("/products", ProductRoute);
 
 
 // Handle invalid URL
