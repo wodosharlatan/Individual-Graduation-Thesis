@@ -103,7 +103,7 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		if (validCity == undefined || validCity.trim().length <= 2) {
+		if (validCity == undefined || validCity.trim().length < 2) {
 			return res.json({ message: "City must be at least 2 characters long" });
 		}
 
