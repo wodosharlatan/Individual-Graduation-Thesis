@@ -37,7 +37,7 @@ app.use(
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Import routes
-const userRoute = require("./routes/user");
+const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");

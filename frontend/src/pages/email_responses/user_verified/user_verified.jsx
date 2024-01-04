@@ -2,6 +2,13 @@ import React from "react";
 import "./user_verified.css";
 
 function User_verified() {
+
+  // remove hash from url and redirect to home page
+  window.history.pushState("", "", "/");
+
+  
+
+
   return (
     <>
       <div class="centered">

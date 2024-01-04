@@ -2,10 +2,10 @@ require("dotenv/config");
 
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user_model");
+const User = require("../../models/user_model");
 const SHA256 = require("crypto-js/sha256");
-const SendEmail = require("../functions/send_email");
-const GenerateHash = require("../functions/generate_hash");
+const SendEmail = require("../../functions/send_email");
+const GenerateHash = require("../../functions/generate_hash");
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -135,6 +135,7 @@ router.post("/", async (req, res) => {
 		});
 
 		const fullUrl = req.protocol + "://" + req.get("host");
+
 
 		const context = { URL: `${fullUrl}/verify/${verificationCode}` };
 
