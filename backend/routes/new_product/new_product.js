@@ -13,13 +13,16 @@ router.post("/", async (req, res) => {
 			return res.json({ error: result.status });
 		}
        
-        const ImagePath = result.path;
+        const ImagePath = result.path.split("/backend")[1];
 
-        console.log(ImagePath)
+        const webImagePath  = req.protocol + "://" + req.get("host") + "/API" + ImagePath;
+
+        
+        
         
 		
 
-		return res.json({ message: result.status });
+		return res.json({ message: webImagePath });
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}

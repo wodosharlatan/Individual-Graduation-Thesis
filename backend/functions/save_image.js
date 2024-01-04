@@ -17,7 +17,7 @@ function SaveImage(files, rootPath) {
             }
         });
 
-        return { status: "Image saved", path: destinationPath };
+        return { status: "image saved", path: destinationPath };
     } catch (error) {
         return { status: error.toString() };
     }
