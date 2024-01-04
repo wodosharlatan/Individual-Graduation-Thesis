@@ -19,16 +19,19 @@ router.post("/", async (req, res) => {
 			validPassword == undefined ||
 			verification == undefined
 		) {
-			return res.json({ message: "Email or Password is not provided" });
+			return res.json({
+				message: "Email or Password is not provided",
+				status: 400,
+			});
 		}
 
 		const user = await User.findOne({ Email: email });
 
 		if (!user) {
-			return res.json({ message: "User does not exist" });
+			return res.json({ message: "User does not exist", status: 400 });
 		}
 		if (user.Verified == false) {
-			return res.json({ message: "User is not verified" });
+			return res.json({ message: "User is not verified", status: 400 });
 		}
 
 		if (
@@ -38,21 +41,22 @@ router.post("/", async (req, res) => {
 		) {
 			return res.json({
 				message: "Password must be at between 8 20 characters long",
+				status: 400,
 			});
 		}
 
 		if (verification == undefined || verification.trim().length < 8) {
 			return res.json({
 				message: "Verification must be at least 8 characters long",
+				status: 400,
 			});
 		}
 
 		if (verification != validPassword) {
-			return res.json({ message: "Passwords do not match" });
+			return res.json({ message: "Passwords do not match", status: 400 });
 		}
 
 		const verificationCode = GenerateHash();
-
 
 		await User.updateMany(
 			{ Email: email },
@@ -64,7 +68,6 @@ router.post("/", async (req, res) => {
 			}
 		);
 
-
 		const fullUrl = req.protocol + "://" + req.get("host");
 
 		const context = {
@@ -73,7 +76,7 @@ router.post("/", async (req, res) => {
 
 		SendEmail(email, "Password reset", "password_reset", context);
 
-		res.json({ message: "Email with password reset sent" });
+		res.json({ message: "Email with password reset sent", status: 200 });
 	} catch (error) {
 		return res.json({ message: error.toString() });
 	}
@@ -83,15 +86,17 @@ router.get("/:CODE", async (req, res) => {
 	try {
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
-			return res.status(404).json({ message: "User does not exist" });
+			return res.json({ message: "User does not exist", status: 400 });
 		}
-		if(user.Verified == false){
-			return res.status(404).json({ message: "User is not verified" });
+		if (user.Verified == false) {
+			return res.json({ message: "User is not verified", status: 400 });
 		}
 		if (user.TemporaryPassword == "") {
-			return res.status(404).json({ message: "User does not have temporary password" });
+			return res.json({
+				message: "User does not have temporary password",
+				status: 400,
+			});
 		}
-
 
 		const validPassword = SHA256(user.TemporaryPassword).toString();
 
@@ -105,11 +110,9 @@ router.get("/:CODE", async (req, res) => {
 			}
 		);
 
-		res
-			.status(200)
-			.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
+		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
-		return res.json({ message: error.toString() });
+		return res.json({ message: error.toString(), status: 500 });
 	}
 });
 
