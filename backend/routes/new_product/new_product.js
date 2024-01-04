@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
         const webImagePath  = req.protocol + "://" + req.get("host") + "/API" + ImagePath;
 
-        
+        console.log(req.body);
         
         
 		
@@ -31,5 +31,6 @@ router.post("/", async (req, res) => {
 router.get("/", (req, res) => {
 	res.sendFile(__dirname + "/test.html");
 });
+
 
 module.exports = router;

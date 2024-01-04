@@ -1,46 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 
 function New_Product() {
-	const [file, setFile] = React.useState(null);
+    const [file, setFile] = useState(null);
+    const [productName, setProductName] = useState("");
 
-	const handleFile = (event) => {
-		setFile(event.target.files[0]);
-	};
+    const handleFile = (event) => {
+        setFile(event.target.files[0]);
+    };
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
+    const handleProductNameChange = (event) => {
+        setProductName(event.target.value);
+    };
 
-		if (!file) {
-			console.log("No file selected");
-			return;
-		}
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-		const formData = new FormData();
+        if (!file) {
+            console.log("No file selected");
+            return;
+        }
 
-		formData.append("image", file);
+        const formData = new FormData();
 
-		const requestOptions = {
-			method: "POST",
-			body: formData,
-			// Add headers
-			redirect: "follow",
-		};
+        formData.append("image", file);
+        formData.append("productName", productName);
 
-		fetch("/API/products", requestOptions)
-			.then((response) => response.json())
-			.then((result) => console.log(result))
-			.catch((error) => console.error("Error:", error));
-	};
+        const requestOptions = {
+            method: "POST",
+            body: formData,
+            // Add headers
+            redirect: "follow",
+        };
 
-	return (
-		<form onSubmit={handleSubmit}>
-			<label>Select File</label>
-			<input id="image" type="file" onChange={handleFile} />
-			<br />
-			<br />
-			<button type="submit">Upload</button>
-		</form>
-	);
+        fetch("/API/products", requestOptions)
+            .then((response) => response.json())
+            .then((result) => console.log(result))
+            .catch((error) => console.error("Error:", error));
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>Select File</label>
+            <input id="image" type="file" onChange={handleFile} />
+            <br />
+            <label>Product Name</label>
+            <input
+                id="productName"
+                type="text"
+                value={productName}
+                onChange={handleProductNameChange}
+            />
+            <br />
+            <br />
+            <button type="submit">Upload</button>
+        </form>
+    );
 }
 
 export default New_Product;

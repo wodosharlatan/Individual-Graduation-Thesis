@@ -43,7 +43,7 @@ const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");
-const imageRoute = require("./routes/images/images");
+const imageRoute = require("./routes/image_route/images");
 
 
 // Use routes
