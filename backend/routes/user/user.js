@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
 		// Check if user already exists by email
 		const user = await User.findOne({ Email: req.body.Email });
 		if (user) {
-			return res.status(400).json({ message: "User already exists" });
+			return res.json({ message: "User already exists", status: 400 });
 		}
 
 		// Declare all User Data fields
@@ -35,19 +35,21 @@ router.post("/", async (req, res) => {
 			validPassword.trim().length < 8 ||
 			validPassword.trim().length > 20
 		) {
-			return res.status(400).json({
+			return res.json({
 				message: "Password must be at between 8 20 characters long",
+				status: 400,
 			});
 		}
 
 		if (verification == undefined || verification.trim().length < 8) {
-			return res.status(400).json({
+			return res.json({
 				message: "Verification must be at least 8 characters long",
+				status: 400,
 			});
 		}
 
 		if (verification != validPassword) {
-			return res.status(400).json({ message: "Passwords do not match" });
+			return res.json({ message: "Passwords do not match", status: 400 });
 		}
 
 		if (
@@ -55,8 +57,9 @@ router.post("/", async (req, res) => {
 			validEmail.trim().length < 8 ||
 			validEmail.trim().length > 100
 		) {
-			return res.status(400).json({
+			return res.json({
 				message: "Email must be between 8 and 100 characters long",
+				status: 400,
 			});
 		}
 
@@ -66,7 +69,7 @@ router.post("/", async (req, res) => {
 			/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 		if (regexPattern.test(validEmail.trim()) !== true) {
-			return res.status(400).json({ message: "Email is not valid" });
+			return res.json({ message: "Email is not valid", status: 400 });
 		}
 
 		if (
@@ -74,22 +77,23 @@ router.post("/", async (req, res) => {
 			validName.trim().length < 2 ||
 			validName.trim().length > 100
 		) {
-			return res.status(400).json({
+			return res.json({
 				message: "Name must be at between 2 and 100 characters long",
+				status: 400,
 			});
 		}
 
-		
-
 		if (validTelephone == undefined || validTelephone.trim().length < 9) {
-			return res.status(400).json({
+			return res.json({
 				message: "Telephone must be at least 9 characters long",
+				status: 400,
 			});
 		}
 
 		if (validStreetNumber == undefined || validStreetNumber.trim().length < 2) {
-			return res.status(400).json({
+			return res.json({
 				message: "Street Number must be at least 2 characters long",
+				status: 400,
 			});
 		}
 
@@ -98,13 +102,17 @@ router.post("/", async (req, res) => {
 			validZipCode.trim().length < 5 ||
 			validZipCode.trim().length > 7
 		) {
-			return res.status(400).json({
+			return res.json({
 				message: "Zip Code must be between 5 and 7 characters long",
+				status: 400,
 			});
 		}
 
 		if (validCity == undefined || validCity.trim().length < 2) {
-			return res.status(400).json({ message: "City must be at least 2 characters long" });
+			return res.json({
+				message: "City must be at least 2 characters long",
+				status: 400,
+			});
 		}
 
 		// check if is empty or not
@@ -136,15 +144,17 @@ router.post("/", async (req, res) => {
 
 		const fullUrl = req.protocol + "://" + req.get("host");
 
-
 		const context = { URL: `${fullUrl}/verify/${verificationCode}` };
 
 		await newUser.save();
 		await SendEmail(validEmail, `Ahoj ${validName}`, "verification", context);
 
-		res.status(200).json({ message: "User created successfully, Check your email" });
+		res.json({
+			message: "User created successfully, Check your email",
+			status: 200,
+		});
 	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
+		return res.json({ message: error.toString(), status: 500 });
 	}
 });
 
@@ -152,27 +162,33 @@ router.post("/login", async (req, res) => {
 	try {
 		// Check if user exists by email
 		if (req.body.Email == undefined || req.body.Password == undefined) {
-			return res.status(400).json({ message: "Email or Password is not provided" });
+			return res.json({
+				message: "Email or Password is not provided",
+				status: 400,
+			});
 		}
 		const user = await User.findOne({ Email: req.body.Email });
 		if (!user) {
-			return res.status(400).json({ message: "User does not exist" });
+			return res.json({ message: "User does not exist", status: 400 });
 		}
 
 		// Check if password is correct
 		if (SHA256(req.body.Password.trim()).toString() != user.Password) {
-			return res.status(400).json({ message: "Password is not correct" });
+			return res.json({ message: "Password is not correct", status: 400 });
 		}
 
 		// Generate new token
 		const newToken = GenerateHash();
 
 		// Update user token
-		await User.updateOne({ Email: req.body.Email }, { VerificationCode: newToken });
+		await User.updateOne(
+			{ Email: req.body.Email },
+			{ VerificationCode: newToken }
+		);
 
-		res.status(200).json({ VerificationCode: newToken });
+		res.json({ VerificationCode: newToken, status: 200 });
 	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
+		return res.json({ message: error.toString(), status: 500 });
 	}
 });
 
