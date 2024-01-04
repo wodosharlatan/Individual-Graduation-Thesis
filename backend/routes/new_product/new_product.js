@@ -1,26 +1,32 @@
 require("dotenv/config");
 
+const path = require("path");   
 const express = require("express");
 const router = express.Router();
-const Product = require("../../models/product_model");
 const SaveImage = require("../../functions/save_image");
 
+router.post("/", async (req, res) => {
+	try {
+        const result = SaveImage(req.files, path.join(__dirname + "/../../"))
 
+		if (result.status != "image saved") {
+			return res.json({ error: result.status });
+		}
+       
+        const ImagePath = result.path;
 
-router.post('/', async (req, res) => {
+        console.log(ImagePath)
+        
+		
 
-    if(SaveImage(req.files, __dirname) != "image saved") {
-        return res.json({ error: SaveImage(req.files, __dirname) });
-    }
- 
-    return res.json({ message: "Image saved" });
-    
-    
-
+		return res.json({ message: result.status });
+	} catch (error) {
+		return res.json({ message: error.toString() });
+	}
 });
 
-router.get('/', (req, res) => {
-	res.sendFile(__dirname + '/test.html');
+router.get("/", (req, res) => {
+	res.sendFile(__dirname + "/test.html");
 });
 
 module.exports = router;
