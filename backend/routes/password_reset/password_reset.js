@@ -8,12 +8,7 @@ const GenerateHash = require("../../functions/generate_hash");
 const path = require("path");
 const SHA256 = require("crypto-js/sha256");
 
-router.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
-});
-
 router.post("/", async (req, res) => {
-
 	try {
 		const email = req.body.Email;
 		const validPassword = req.body.Password;

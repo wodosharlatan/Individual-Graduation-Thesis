@@ -50,8 +50,11 @@ router.post("/", async (req, res) => {
 			return res.json({ message: "Passwords do not match" });
 		}
 
-		if (validEmail == undefined || validEmail.trim().length < 8 || validEmail.trim().length > 100)
-		{
+		if (
+			validEmail == undefined ||
+			validEmail.trim().length < 8 ||
+			validEmail.trim().length > 100
+		) {
 			return res.json({
 				message: "Email must be between 8 and 100 characters long",
 			});

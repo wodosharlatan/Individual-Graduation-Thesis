@@ -38,7 +38,7 @@ function Home() {
       redirect: "follow",
     };
 
-    fetch("https://imp.up.railway.app/users", requestOptions)
+    fetch("/users", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
