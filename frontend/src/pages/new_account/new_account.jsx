@@ -38,7 +38,7 @@ function New_Account() {
       redirect: "follow",
     };
 
-    fetch("api/users", requestOptions)
+    fetch("/API/users", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));

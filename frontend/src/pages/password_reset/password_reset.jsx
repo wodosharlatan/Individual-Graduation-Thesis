@@ -35,7 +35,7 @@ function Password_reset() {
       redirect: "follow",
     };
 
-    fetch("api/password-reset", requestOptions)
+    fetch("/API/password-reset", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
