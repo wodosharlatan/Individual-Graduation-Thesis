@@ -43,10 +43,11 @@ const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");
-
+const imageRoute = require("./routes/images/images");
 
 
 // Use routes
+app.use("/API/images", imageRoute);
 app.use("/API/users", userRoute);
 app.use("/API/verify", verificationRoute);
 app.use("/API/password-reset", passwordResetRoute);
