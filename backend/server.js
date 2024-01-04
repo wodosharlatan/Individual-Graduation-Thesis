@@ -45,10 +45,10 @@ const ProductRoute = require("./routes/new_product/new_product");
 
 
 // Use routes
-app.use("/users", userRoute);
-app.use("/verify", verificationRoute);
-app.use("/password-reset", passwordResetRoute);
-app.use("/products", ProductRoute);
+app.use("api/users", userRoute);
+app.use("api/verify", verificationRoute);
+app.use("api/password-reset", passwordResetRoute);
+app.use("api/products", ProductRoute);
 
 // Home route
 app.get("/", (req, res) => {
