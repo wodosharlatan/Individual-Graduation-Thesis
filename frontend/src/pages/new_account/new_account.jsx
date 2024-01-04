@@ -1,6 +1,6 @@
 import React from "react";
 
-function Home() {
+function New_Account() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [Telephone, settelephone] = React.useState("");
@@ -206,4 +206,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default New_Account;
