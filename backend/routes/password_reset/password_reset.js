@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
 		const fullUrl = req.protocol + "://" + req.get("host");
 
 		const context = {
-			URL: `${fullUrl}/password-reset/${verificationCode}`,
+			URL: `${fullUrl}/API/password-reset/${verificationCode}`,
 		};
 
 		SendEmail(email, "Password reset", "password_reset", context);

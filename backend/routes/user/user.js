@@ -136,7 +136,7 @@ router.post("/", async (req, res) => {
 
 		const fullUrl = req.protocol + "://" + req.get("host");
 
-		const context = { URL: `${fullUrl}/verify/${verificationCode}` };
+		const context = { URL: `${fullUrl}/API/verify/${verificationCode}` };
 
 		await newUser.save();
 		await SendEmail(validEmail, `Ahoj ${validName}`, "verification", context);

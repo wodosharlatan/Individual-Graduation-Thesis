@@ -8,19 +8,16 @@ const path = require("path");
 router.get("/:CODE", async (req, res) => {
 	try {
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
-		
+
 		if (!user) {
 			return res.status(404).json({ message: "User not found" });
 		}
 
-		await User.updateMany(
+		await User.updateOne(
 			{ VerificationCode: req.params.CODE },
-			{
-			  $set: {
-				Verified: "true",
-			  }
-			}
-		);
+			{ $set: { Verified: true } }
+		  );
+
 
 		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {

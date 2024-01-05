@@ -39,15 +39,9 @@ function New_Account() {
 		};
 
 		fetch("/API/users", requestOptions)
-			.then((response) => {
-				if (response.ok) {
-					return response.json(); // Parse the JSON body
-				} else {
-					throw new Error(`HTTP error! Status: ${response.status}`);
-				}
-			})
+			.then((response) => {return response.text()})
 			.then((data) => {
-				console.log("Data:", data);
+				console.log(data);
 			})
 			.catch((error) => console.error("Error:", error));
 	};
