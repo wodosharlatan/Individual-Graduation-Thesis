@@ -30,6 +30,9 @@ const ProductSchema = mongoose.Schema({
         type: Array,
         default: [],
     },
+
+
+    // System generated
     productStatus: {
         type: String,
         required: true,
