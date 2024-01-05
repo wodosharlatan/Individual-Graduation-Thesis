@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
 		const result = SaveImage(req.files, path.join(__dirname + "/../../"));
 
 		if (result.status != "image saved") {
-			return res.json({ error: result.status });
+			return res.status(400).json({ error: result.status });
 		}
 
 		const ImagePath = result.path.split("/backend")[1];
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
 
 		return res.json(savedProduct);
 	} catch (error) {
-		return res.json({ message: error.toString() });
+		return res.status(500).json({ message: error.toString() });
 	}
 });
 
@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
 		const products = await Products.find();
 		return res.json(products);
 	} catch (error) {
-		return res.json({ message: error.toString() });
+		return res.status(500).json({ message: error.toString() });
 	}
 });
 

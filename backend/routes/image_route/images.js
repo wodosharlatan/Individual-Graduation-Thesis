@@ -11,7 +11,7 @@ router.get("/:IMAGE_CODE", (req, res) => {
 
         res.sendFile(path.join(rootPath, 'images', req.params.IMAGE_CODE));
     } catch (error) {
-        res.json({ message: error.toString() });
+        res.status(500).json({ message: error.toString() });
     }
 });
 

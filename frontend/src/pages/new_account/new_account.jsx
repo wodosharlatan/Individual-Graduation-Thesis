@@ -39,7 +39,7 @@ function New_Account() {
     };
 
     fetch("/API/users", requestOptions)
-      .then((response) => console.log(response))
+      .then((response) => (response))
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   };

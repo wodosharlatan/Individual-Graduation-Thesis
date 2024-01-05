@@ -23,7 +23,7 @@ router.get("/:CODE", async (req, res) => {
 
 		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
-		return res.json({ message: error.toString() });
+		return res.status(500).json({ message: error.toString() });
 	}
 });
 

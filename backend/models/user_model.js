@@ -40,6 +40,10 @@ const userSchema = mongoose.Schema({
 	},
 
 	// System fields
+	IsAdmin: {
+		type: Boolean,
+		default: false,
+	},
 	VerificationCode: {
 		type: String,
 	},
