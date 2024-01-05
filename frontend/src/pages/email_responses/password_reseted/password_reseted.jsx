@@ -3,7 +3,6 @@ import "./password_reseted.css";
 
 function Password_reseted() {
 
-	// remove hash from url and redirect to home page
 	window.history.pushState("", "", "/");
 
 	return (

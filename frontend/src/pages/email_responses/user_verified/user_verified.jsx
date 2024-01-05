@@ -3,6 +3,10 @@ import "./user_verified.css";
 
 function User_verified() {
 
+
+	window.history.pushState("", "", "/");
+
+
 	return (
 		<>
 			<div class="centered">
