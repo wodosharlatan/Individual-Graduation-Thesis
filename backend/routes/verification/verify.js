@@ -8,6 +8,7 @@ const path = require("path");
 router.get("/:CODE", async (req, res) => {
 	try {
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
+		
 		if (!user) {
 			return res.status(404).json({ message: "User not found" });
 		}
@@ -19,7 +20,7 @@ router.get("/:CODE", async (req, res) => {
 				Verified: "true",
 			  }
 			}
-		  );
+		);
 
 		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {

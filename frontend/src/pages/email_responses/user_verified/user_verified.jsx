@@ -3,10 +3,6 @@ import "./user_verified.css";
 
 function User_verified() {
 
-	setTimeout(function () {
-		window.history.pushState("", "", "/");
-	}, 50);
-
 	return (
 		<>
 			<div class="centered">
