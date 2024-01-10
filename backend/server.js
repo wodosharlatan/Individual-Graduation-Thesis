@@ -12,6 +12,7 @@ const https = require("https");
 const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const path = require("path");
+const ejs = require("ejs");
 
 // EJS for image rendering
 app.set('view engine', 'ejs');
