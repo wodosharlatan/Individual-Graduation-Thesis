@@ -34,7 +34,9 @@ router.post("/", async (req, res) => {
 			return { status: "Error processing the image" };
 		}
 
-		
+		setTimeout(() => {
+			fs.unlinkSync(destinationPath);
+		}, 2000);
 
 		const productDescription = req.body.productDescription;
 
