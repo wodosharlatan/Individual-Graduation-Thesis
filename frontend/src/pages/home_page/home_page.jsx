@@ -9,7 +9,6 @@ function Home() {
         const response = await fetch("/API/products");
         const result = await response.json();
 
-        console.log(result[0].productImage);
 
         setProducts(result);
       } catch (error) {

@@ -22,9 +22,19 @@ router.post("/", async (req, res) => {
 		if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
 
 		const destinationPath = path.join(__dirname, "images", image.name);
-		await image.mv(destinationPath)
-		const fileData =  await fs.promises.readFile(destinationPath);
-		const binary = new Buffer.from(fileData);
+
+		let binary;
+
+		try {
+			image.mv(destinationPath);
+			const fileData = fs.readFileSync(destinationPath);
+			binary = Buffer.from(fileData);
+		} catch (error) {
+			console.error(error.message);
+			return { status: "Error processing the image" };
+		}
+
+		
 
 		const productDescription = req.body.productDescription;
 
@@ -33,6 +43,8 @@ router.post("/", async (req, res) => {
 				.status(400)
 				.json({ message: "Product description is required" });
 		}
+
+
 
 		const productPrice = req.body.productPrice;
 		const productCategory = req.body.productCategory;
@@ -55,10 +67,6 @@ router.post("/", async (req, res) => {
 		});
 
 		const savedProduct = await product.save();
-		
-		// Delete image from server
-		await fs.unlink(destinationPath);
-
 
 		return res.json(savedProduct);
 	} catch (error) {
