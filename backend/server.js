@@ -12,11 +12,6 @@ const https = require("https");
 const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const path = require("path");
-const ejs = require("ejs");
-
-// EJS for image rendering
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'routes', "image_route", "views"));
 
 // SSL
 app.use(express.urlencoded({ extended: true, limit: "3mb" }));
@@ -46,11 +41,9 @@ const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");
-const imageRoute = require("./routes/image_route/images");
 
 
 // Use routes
-app.use("/API/images", imageRoute);
 app.use("/API/users", userRoute);
 app.use("/API/verify", verificationRoute);
 app.use("/API/password-reset", passwordResetRoute);
@@ -65,7 +58,6 @@ app.get("/", (req, res) => {
 app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
-
 
 // Start server Based on environment
 const environment = process.env.NODE_ENV || "production";

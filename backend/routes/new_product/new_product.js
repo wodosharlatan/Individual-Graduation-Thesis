@@ -3,7 +3,6 @@ require("dotenv/config");
 const express = require("express");
 const router = express.Router();
 const Products = require("../../models/product_model");
-const GenerateHash = require("../../functions/generate_hash");
 const fs = require("fs");
 const path = require("path");
 
@@ -27,11 +26,6 @@ router.post("/", async (req, res) => {
 		const fileData =  await fs.promises.readFile(destinationPath);
 		const binary = new Buffer.from(fileData);
 
-		const randomCode = GenerateHash();
-
-		const webImagePath =
-			req.protocol + "://" + req.get("host") + "/API/images/" + randomCode;
-
 		const productDescription = req.body.productDescription;
 
 		if (!productDescription) {
@@ -46,7 +40,6 @@ router.post("/", async (req, res) => {
 		const productRating = req.body.productRating;
 		const productReviews = req.body.productReviews;
 		const productStatus = req.body.productStatus;
-		const productImagePath = webImagePath;
 		const productImage = binary;
 
 		const product = new Products({
@@ -58,7 +51,6 @@ router.post("/", async (req, res) => {
 			productRating: productRating,
 			productReviews: productReviews,
 			productStatus: productStatus,
-			productImagePath: productImagePath,
 			productImage: productImage,
 		});
 
