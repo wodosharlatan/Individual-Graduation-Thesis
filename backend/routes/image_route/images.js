@@ -6,10 +6,9 @@ const path = require('path');
 
 router.get("/:IMAGE_CODE", (req, res) => {
     try {
-        // Assuming rootPath is the root directory of your project
-        const rootPath = path.join(__dirname, '../../');
-
-        res.sendFile(path.join(rootPath, 'images', req.params.IMAGE_CODE));
+        return res.json(req.params.IMAGE_CODE)
+        
+       
     } catch (error) {
         res.status(500).json({ message: error.toString() });
     }

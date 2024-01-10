@@ -1,26 +1,56 @@
 require("dotenv/config");
 
-const path = require("path");
 const express = require("express");
 const router = express.Router();
 const Products = require("../../models/product_model");
-const SaveImage = require("../../functions/save_image");
+const GenerateHash = require("../../functions/generate_hash");
+const fs = require("fs");
+const path = require("path");
+
 
 router.post("/", async (req, res) => {
 	try {
-		const result = SaveImage(req.files, path.join(__dirname + "/../../"));
+		const productName = req.body.productName;
+		const existingProduct = await Products.findOne({
+			productName: productName,
+		});
 
-		if (result.status != "image saved") {
-			return res.status(400).json({ error: result.status });
+		if (existingProduct) {
+			return res.status(400).json({ message: "Product already exists" });
 		}
 
-		const ImagePath = result.path.split("/backend")[1];
+		const { image } = req.files;
+
+        if (!image) return { status: "No image found" };
+
+        if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
+
+        
+        const destinationPath = path.join(__dirname,"images", image.name);
+
+
+        await image.mv(destinationPath, (err) => {
+            if (err) {
+                return { status: "Error saving the image" };
+            }
+        });
+
+		const fileData = await fs.promises.readFile(destinationPath);
+		const binary = new Buffer.from(fileData);
+
+		const randomCode = GenerateHash();
 
 		const webImagePath =
-			req.protocol + "://" + req.get("host") + "/API" + ImagePath;
+			req.protocol + "://" + req.get("host") + "/API/images/" + randomCode;
 
-		const productName = req.body.productName;
 		const productDescription = req.body.productDescription;
+
+		if (!productDescription) {
+			return res
+				.status(400)
+				.json({ message: "Product description is required" });
+		}
+
 		const productPrice = req.body.productPrice;
 		const productCategory = req.body.productCategory;
 		const productQuantity = req.body.productQuantity;
@@ -28,6 +58,7 @@ router.post("/", async (req, res) => {
 		const productReviews = req.body.productReviews;
 		const productStatus = req.body.productStatus;
 		const productImagePath = webImagePath;
+		const productImage = binary;
 
 		const product = new Products({
 			productName: productName,
@@ -39,20 +70,12 @@ router.post("/", async (req, res) => {
 			productReviews: productReviews,
 			productStatus: productStatus,
 			productImagePath: productImagePath,
+			productImage: productImage,
 		});
 
 		const savedProduct = await product.save();
 
 		return res.json(savedProduct);
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
-});
-
-router.get("/", async (req, res) => {
-	try {
-		const products = await Products.find();
-		return res.json(products);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
