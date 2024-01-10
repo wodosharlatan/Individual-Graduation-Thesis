@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 
 		setTimeout(() => {
 			fs.unlinkSync(destinationPath);
-		}, 2000);
+		}, 250);
 
 		const productDescription = req.body.productDescription;
 
