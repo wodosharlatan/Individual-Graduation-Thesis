@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 		if (existingProduct) {
 			return res.status(400).json({ message: "Product already exists" });
 		}
-		
+
 		const { image } = req.files;
 		if (!image) return { status: "No image found" };
 		if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
@@ -63,6 +63,10 @@ router.post("/", async (req, res) => {
 		});
 
 		const savedProduct = await product.save();
+		
+		// Delete image from server
+		await fs.unlink(destinationPath);
+
 
 		return res.json(savedProduct);
 	} catch (error) {

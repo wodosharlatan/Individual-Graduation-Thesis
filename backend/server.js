@@ -13,7 +13,9 @@ const fs = require("fs");
 const fileUpload = require('express-fileupload');
 const path = require("path");
 
-
+// EJS for image rendering
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'routes', "image_route", "views"));
 
 // SSL
 app.use(express.urlencoded({ extended: true, limit: "3mb" }));

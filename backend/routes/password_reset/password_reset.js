@@ -19,19 +19,18 @@ router.post("/", async (req, res) => {
 			validPassword == undefined ||
 			verification == undefined
 		) {
-			return res.json({
+			return res.status(400).json({
 				message: "Email or Password is not provided",
-				status: 400,
 			});
 		}
 
 		const user = await User.findOne({ Email: email });
 
 		if (!user) {
-			return res.json({ message: "User does not exist", status: 400 });
+			return res.status(400).json({ message: "User does not exist" });
 		}
 		if (user.Verified == false) {
-			return res.json({ message: "User is not verified", status: 400 });
+			return res.status(400).json({ message: "User is not verified" });
 		}
 
 		if (
@@ -39,21 +38,19 @@ router.post("/", async (req, res) => {
 			validPassword.trim().length < 8 ||
 			validPassword.trim().length > 20
 		) {
-			return res.json({
+			return res.status(400).json({
 				message: "Password must be at between 8 20 characters long",
-				status: 400,
 			});
 		}
 
 		if (verification == undefined || verification.trim().length < 8) {
-			return res.json({
+			return res.status(400).json({
 				message: "Verification must be at least 8 characters long",
-				status: 400,
 			});
 		}
 
 		if (verification != validPassword) {
-			return res.json({ message: "Passwords do not match", status: 400 });
+			return res.status(400).json({ message: "Passwords do not match" });
 		}
 
 		const verificationCode = GenerateHash();
@@ -86,15 +83,14 @@ router.get("/:CODE", async (req, res) => {
 	try {
 		const user = await User.findOne({ VerificationCode: req.params.CODE });
 		if (!user) {
-			return res.json({ message: "User does not exist", status: 400 });
+			return res.status(400).json({ message: "User does not exist" });
 		}
 		if (user.Verified == false) {
-			return res.json({ message: "User is not verified", status: 400 });
+			return res.status(400).json({ message: "User is not verified" });
 		}
 		if (user.TemporaryPassword == "") {
-			return res.json({
+			return res.status(400).json({
 				message: "User does not have temporary password",
-				status: 400,
 			});
 		}
 
@@ -112,7 +108,7 @@ router.get("/:CODE", async (req, res) => {
 
 		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
-		return res.json({ message: error.toString(), status: 500 });
+		return res.status(500).json({ message: error.toString() });
 	}
 });
 
