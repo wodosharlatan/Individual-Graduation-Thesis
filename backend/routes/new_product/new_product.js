@@ -4,9 +4,8 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../../models/product_model");
 const GenerateHash = require("../../functions/generate_hash");
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
-
 
 router.post("/", async (req, res) => {
 	try {
@@ -18,24 +17,14 @@ router.post("/", async (req, res) => {
 		if (existingProduct) {
 			return res.status(400).json({ message: "Product already exists" });
 		}
-
+		
 		const { image } = req.files;
+		if (!image) return { status: "No image found" };
+		if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
 
-        if (!image) return { status: "No image found" };
-
-        if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
-
-        
-        const destinationPath = path.join(__dirname,"images", image.name);
-
-
-        await image.mv(destinationPath, (err) => {
-            if (err) {
-                return { status: "Error saving the image" };
-            }
-        });
-
-		const fileData = await fs.promises.readFile(destinationPath);
+		const destinationPath = path.join(__dirname, "images", image.name);
+		await image.mv(destinationPath)
+		const fileData =  await fs.promises.readFile(destinationPath);
 		const binary = new Buffer.from(fileData);
 
 		const randomCode = GenerateHash();
@@ -79,6 +68,10 @@ router.post("/", async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
+});
+
+router.get("/", async (req, res) => {
+	return res.json(await Products.find());
 });
 
 module.exports = router;
