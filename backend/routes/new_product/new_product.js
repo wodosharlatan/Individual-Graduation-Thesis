@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const Products = require("../../models/product_model");
 const GenerateHash = require("../../functions/generate_hash");
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require("path");
 
 router.post("/", async (req, res) => {
