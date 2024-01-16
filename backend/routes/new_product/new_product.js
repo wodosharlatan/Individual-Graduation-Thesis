@@ -3,9 +3,17 @@ require("dotenv/config");
 const express = require("express");
 const router = express.Router();
 const Products = require("../../models/product_model");
-const fs = require("fs");
+const { Storage } = require("@google-cloud/storage");
 const path = require("path");
-const axios = require("axios");
+const fs = require("fs");
+
+const projectId = process.env.GCLOUD_PROJECT_ID;
+const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
+
+const storage = new Storage({
+	projectId: projectId,
+	keyFilename: __dirname + "/key.json",
+});
 
 router.post("/", async (req, res) => {
 	try {
@@ -27,20 +35,22 @@ router.post("/", async (req, res) => {
 
 		const destinationPath = path.join(__dirname, "images", image.name);
 
-		const buffer = await fs.promises.readFile(destinationPath);
+		image.mv(destinationPath, (err) => {
+			if (err) return res.status(500).json({ status: "Error saving file" });
+		});
 
-		await image.mv(destinationPath);
-		await fetch("http://localhost:3001/API/upload", {
-			method: "POST",
-			body: "22",
-			headers: { "Content-Type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((json) => {
-				console.log(json);
+		const gcsFileName = `products/${Date.now()}-${image.name}`;
+		const bucket = storage.bucket(bucketName);
+		const file = bucket.file(gcsFileName);
+
+		fs.createReadStream(destinationPath)
+			.pipe(file.createWriteStream())
+			.on("error", (err) => {
+				console.log("Error uploading image to GCS", err);
+				console.log();
 			})
-			.catch((err) => {
-				console.log(err);
+			.on("finish", () => {
+				console.log(`Image uploaded to GCS: gs://${bucketName}/${gcsFileName}`);
 			});
 
 		const productDescription = req.body.productDescription;

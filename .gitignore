@@ -142,3 +142,4 @@ data
 
 # VSCode files
 .vscode
+backend/routes/new_product/key.json
