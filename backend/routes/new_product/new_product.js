@@ -5,10 +5,12 @@ const router = express.Router();
 const Products = require("../../models/product_model");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 router.post("/", async (req, res) => {
 	try {
 		const productName = req.body.productName;
+
 		const existingProduct = await Products.findOne({
 			productName: productName,
 		});
@@ -18,22 +20,28 @@ router.post("/", async (req, res) => {
 		}
 
 		const { image } = req.files;
-		if (!image) return { status: "No image found" };
-		if (!/^image/.test(image.mimetype)) return { status: "Wrong file type" };
+		if (!image) return res.status(400).json({ status: "No image found" });
+
+		if (!/^image/.test(image.mimetype))
+			return res.status(400).json({ status: "Wrong file type" });
 
 		const destinationPath = path.join(__dirname, "images", image.name);
 
-		let binary;
+		const buffer = await fs.promises.readFile(destinationPath);
 
-		try {
-			await image.mv(destinationPath);
-			const fileData = await fs.promises.readFile(destinationPath);
-			binary = Buffer.from(fileData);
-			fs.unlinkSync(destinationPath);
-		} catch (error) {
-			console.error(error.message);
-			return { status: "Error processing the image" };
-		}
+		await image.mv(destinationPath);
+		await fetch("http://localhost:3001/API/upload", {
+			method: "POST",
+			body: "22",
+			headers: { "Content-Type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((json) => {
+				console.log(json);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 
 		const productDescription = req.body.productDescription;
 
@@ -43,15 +51,13 @@ router.post("/", async (req, res) => {
 				.json({ message: "Product description is required" });
 		}
 
-
-
 		const productPrice = req.body.productPrice;
 		const productCategory = req.body.productCategory;
 		const productQuantity = req.body.productQuantity;
 		const productRating = req.body.productRating;
 		const productReviews = req.body.productReviews;
 		const productStatus = req.body.productStatus;
-		const productImage = binary;
+		const productImagePath = "binary data";
 
 		const product = new Products({
 			productName: productName,
@@ -62,7 +68,7 @@ router.post("/", async (req, res) => {
 			productRating: productRating,
 			productReviews: productReviews,
 			productStatus: productStatus,
-			productImage: productImage,
+			productImagePath: productImagePath,
 		});
 
 		const savedProduct = await product.save();
