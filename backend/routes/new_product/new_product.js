@@ -9,11 +9,19 @@ const fs = require("fs");
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
 const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
+const keyFilename = process.env.GCLOUD_APPLICATION_CREDENTIALS;
+
+const parsedCredentials = JSON.parse(keyFilename);
+
+
+
 
 const storage = new Storage({
 	projectId: projectId,
-	keyFilename: __dirname + "/key.json",
+	credentials: parsedCredentials,
 });
+
+
 
 router.post("/", async (req, res) => {
 	try {
