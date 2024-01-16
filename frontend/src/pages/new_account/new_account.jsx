@@ -41,7 +41,7 @@ function New_Account() {
 		fetch("/API/users", requestOptions)
 			.then((response) => {return response.text()})
 			.then((data) => {
-				console.log(data);
+				alert(data);
 			})
 			.catch((error) => console.error("Error:", error));
 	};

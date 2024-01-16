@@ -76,8 +76,8 @@ function New_Product() {
 
         fetch("/API/products", requestOptions)
             .then((response) => response.json())
-            .then((result) => console.log(result))
-            .catch((error) => console.error("Error:", error));
+            .then((result) => alert(result))
+            .catch((error) => alert("Error:", error));
     };
 
     return (

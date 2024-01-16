@@ -37,8 +37,8 @@ function Password_reset() {
 
     fetch("/API/password-reset", requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      .then((result) => alert(result))
+      .catch((error) => alert("error", error));
   };
 
   return (
