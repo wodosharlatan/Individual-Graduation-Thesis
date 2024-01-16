@@ -13,7 +13,6 @@ const keyFilename = process.env.GCLOUD_APPLICATION_CREDENTIALS;
 
 const parsedCredentials = JSON.parse(keyFilename);
 
-
 const storage = new Storage({
 	projectId: projectId,
 	credentials: parsedCredentials,
@@ -41,22 +40,23 @@ router.post("/", async (req, res) => {
 
 		image.mv(destinationPath, (err) => {
 			if (err) return res.status(500).json({ status: "Error saving file" });
+			const gcsFileName = `${Date.now()}-${image.name}`;
+			const bucket = storage.bucket(bucketName);
+			const file = bucket.file(gcsFileName);
+
+			fs.createReadStream(destinationPath)
+				.pipe(file.createWriteStream())
+				.on("error", (err) => {
+					console.log("Error uploading image to GCS", err);
+					console.log();
+					return res.status(500).json({ status: "Error uploading image" });
+				})
+				.on("finish", () => {
+					console.log(
+						`Image uploaded to GCS: gs://${bucketName}/${gcsFileName}`
+					);
+				});
 		});
-
-		const gcsFileName = `${Date.now()}-${image.name}`;
-		const bucket = storage.bucket(bucketName);
-		const file = bucket.file(gcsFileName);
-
-		fs.createReadStream(destinationPath)
-			.pipe(file.createWriteStream())
-			.on("error", (err) => {
-				console.log("Error uploading image to GCS", err);
-				console.log();
-				return res.status(500).json({ status: "Error uploading image" });
-			})
-			.on("finish", () => {
-				console.log(`Image uploaded to GCS: gs://${bucketName}/${gcsFileName}`);
-			});
 
 		const productDescription = req.body.productDescription;
 
