@@ -26,17 +26,14 @@ router.post("/", async (req, res) => {
 		let binary;
 
 		try {
-			image.mv(destinationPath);
-			const fileData = fs.readFileSync(destinationPath);
+			await image.mv(destinationPath);
+			const fileData = await fs.promises.readFile(destinationPath);
 			binary = Buffer.from(fileData);
+			fs.unlinkSync(destinationPath);
 		} catch (error) {
 			console.error(error.message);
 			return { status: "Error processing the image" };
 		}
-
-		setTimeout(() => {
-			fs.unlinkSync(destinationPath);
-		}, 250);
 
 		const productDescription = req.body.productDescription;
 
