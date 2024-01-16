@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
 			.on("error", (err) => {
 				console.log("Error uploading image to GCS", err);
 				console.log();
+				return res.status(500).json({ status: "Error uploading image" });
 			})
 			.on("finish", () => {
 				console.log(`Image uploaded to GCS: gs://${bucketName}/${gcsFileName}`);
