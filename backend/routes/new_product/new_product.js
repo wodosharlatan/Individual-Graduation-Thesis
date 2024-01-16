@@ -14,14 +14,10 @@ const keyFilename = process.env.GCLOUD_APPLICATION_CREDENTIALS;
 const parsedCredentials = JSON.parse(keyFilename);
 
 
-
-
 const storage = new Storage({
 	projectId: projectId,
 	credentials: parsedCredentials,
 });
-
-
 
 router.post("/", async (req, res) => {
 	try {
