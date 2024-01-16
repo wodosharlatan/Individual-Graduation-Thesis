@@ -37,10 +37,12 @@ router.post("/", async (req, res) => {
 			return res.status(400).json({ status: "Wrong file type" });
 
 		const destinationPath = path.join(__dirname, "images", image.name);
+		const gcsFileName = `${Date.now()}-${image.name}`;
+
+		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`
 
 		image.mv(destinationPath, (err) => {
 			if (err) return res.status(500).json({ status: "Error saving file" });
-			const gcsFileName = `${Date.now()}-${image.name}`;
 			const bucket = storage.bucket(bucketName);
 			const file = bucket.file(gcsFileName);
 
@@ -52,9 +54,7 @@ router.post("/", async (req, res) => {
 					return res.status(500).json({ status: "Error uploading image" });
 				})
 				.on("finish", () => {
-					console.log(
-						`Image uploaded to GCS: gs://${bucketName}/${gcsFileName}`
-					);
+					console.log(finalURL);
 				});
 		});
 
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
 		const productRating = req.body.productRating;
 		const productReviews = req.body.productReviews;
 		const productStatus = req.body.productStatus;
-		const productImagePath = "binary data";
+		const productImagePath = finalURL;
 
 		const product = new Products({
 			productName: productName,
