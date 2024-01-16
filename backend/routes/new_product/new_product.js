@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 			if (err) return res.status(500).json({ status: "Error saving file" });
 		});
 
-		const gcsFileName = `products/${Date.now()}-${image.name}`;
+		const gcsFileName = `${Date.now()}-${image.name}`;
 		const bucket = storage.bucket(bucketName);
 		const file = bucket.file(gcsFileName);
 
