@@ -1,4 +1,5 @@
 import React from "react";
+import "./_mainstyle.scss";
 
 function Password_reset() {
   const [email, setEmail] = React.useState("");
@@ -43,6 +44,33 @@ function Password_reset() {
 
   return (
     <>
+
+
+<body class="body_res">
+    <h1 class="Nadpis_Stranky1_res">Dárky z Pedigu</h1>
+    <div class="Tabulka_1_res">
+      <a class="Nadpis_Stranky2_res">Obnovení hesla</a>
+
+      <div class="inputDuo_res">
+        <a class="Nadpis_Stranky3_res">E-mail:</a> <br /><br />
+        <input class="inputclass_res" type="text" />
+      </div>
+
+      <div class="inputDuo_res">
+        <a class="Nadpis_Stranky3_res">Heslo:</a><br /><br />
+        <input class="inputclass_res" type="password" />
+      </div>
+
+      <div class="loginbutton_res custom-btn_res btn-1_res">
+        <a>Obnovit</a>
+      </div>
+
+      <a class="text_res" href="">Přihlásit se</a>
+      <a class="text2_res" href="">Registrovat</a>
+    </div>
+  </body>
+
+
       <form onSubmit={handleSubmit}>
         <label>email</label>
         <input
