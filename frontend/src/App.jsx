@@ -19,7 +19,7 @@ function App() {
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/password-reset" element={<Password_reset/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/API/password-reset/:CODE" element={<Password_reseted/>}/>
+        <Route path="/API/password-reseted/:CODE" element={<Password_reseted/>}/>
         <Route path="/API/verify/:CODE" element={<User_verified/>}/>
         <Route path="*" element={<h1>Not Found</h1>}/>
       </Routes>

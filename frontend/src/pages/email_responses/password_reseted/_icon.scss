@@ -1,0 +1,17 @@
+.success_verify {
+  font-size: 150px;
+  color: #a9b388;
+  align-self: center;
+}
+
+@media only screen and (max-width: 640px) {
+  .success_verify {
+    font-size: 120px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+    .success_verify {
+      font-size: 100px;
+    }
+}

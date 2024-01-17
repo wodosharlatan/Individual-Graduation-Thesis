@@ -46,7 +46,7 @@ const ProductRoute = require("./routes/new_product/new_product");
 // Use routes
 app.use("/API/users", userRoute);
 app.use("/API/verify", verificationRoute);
-app.use("/API/password-reset", passwordResetRoute);
+app.use("/API/password-reseted", passwordResetRoute);
 app.use("/API/products", ProductRoute);
 
 // Home route
