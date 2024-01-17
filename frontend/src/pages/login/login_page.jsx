@@ -90,10 +90,10 @@ function Login() {
             <a>Přihlásit se</a>
           </div>
 
-          <a className="text_log" href="">
-            Zapomenuté heslo
+          <a className="text_log" href="/password-reset">
+            Zapomněli jste heslo?
           </a>
-          <a className="text2_log" href="">
+          <a className="text2_log" href="/registration">
             Registrovat
           </a>
         </div>

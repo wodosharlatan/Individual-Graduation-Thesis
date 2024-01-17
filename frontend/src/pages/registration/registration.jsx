@@ -244,7 +244,7 @@ function Registration() {
           <div onClick={handleSubmit} className="loginbutton_reg custom-btn_reg btn-1_reg">
             <a>Registrovat</a>
           </div>
-          <a className="text2_reg" href="">
+          <a className="text2_reg" href="/login">
             Přihlásit se
           </a>
         </div>

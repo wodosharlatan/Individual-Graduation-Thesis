@@ -96,13 +96,6 @@ function Password_reset() {
           >
             <a>Obnovit</a>
           </div>
-
-          <a className="text_res" href="">
-            Přihlásit se
-          </a>
-          <a className="text2_res" href="">
-            Registrovat
-          </a>
         </div>
       </div>
     </>
