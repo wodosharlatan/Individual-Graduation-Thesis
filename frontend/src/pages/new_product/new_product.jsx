@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function New_Product() {
-	handleAccess();
-
+	const [isAdmin, setIsAdmin] = useState(false);
 	const [file, setFile] = useState(null);
 	const [productName, setProductName] = useState("");
 	const [productDescription, setProductDescription] = useState("");
@@ -13,23 +12,25 @@ function New_Product() {
 	const [productReviews, setProductReviews] = useState("");
 	const [productStatus, setProductStatus] = useState("");
 
+	useEffect(() => {
+		handleAccess();
+	}, []);
+
 	function handleAccess() {
 		const UserTokenValue = getCookie("UserToken");
-
-
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 		};
 
-        const path = `/API/verify/${UserTokenValue}`;
-
-
+		const path = `/API/verify/${UserTokenValue}`;
 
 		fetch(path, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.status != 200 && data.message != "true") {
+				if (data.message == "true") {
+					setIsAdmin(true);
+				} else {
 					alert("Nemáte přístup k této stránce");
 					window.location.href = "/";
 				}
@@ -126,88 +127,93 @@ function New_Product() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>Select File</label>
-			<input id="image" type="file" onChange={handleFile} />
-			<br />
-			<label>Product Name</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productName}
-				onChange={handleProductNameChange}
-			/>
-			<br />
-			<label>Product Description</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productDescription}
-				onChange={handleProductDescriptionChange}
-			/>
-			<br />
-			<label>Product Price</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productPrice}
-				onChange={handleProductPriceChange}
-			/>
-			<br />
-			<label>Product Category</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productCategory}
-				onChange={handleProductCategory}
-			/>
-			<br />
-			<label>Product Quantity</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productQuantity}
-				onChange={handleProductQuantityChange}
-			/>
-			<br />
+		<>
+			{" "}
+			{isAdmin && (
+				<form onSubmit={handleSubmit}>
+					<label>Select File</label>
+					<input id="image" type="file" onChange={handleFile} />
+					<br />
+					<label>Product Name</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productName}
+						onChange={handleProductNameChange}
+					/>
+					<br />
+					<label>Product Description</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productDescription}
+						onChange={handleProductDescriptionChange}
+					/>
+					<br />
+					<label>Product Price</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productPrice}
+						onChange={handleProductPriceChange}
+					/>
+					<br />
+					<label>Product Category</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productCategory}
+						onChange={handleProductCategory}
+					/>
+					<br />
+					<label>Product Quantity</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productQuantity}
+						onChange={handleProductQuantityChange}
+					/>
+					<br />
 
-			<label>Product Rating</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productRating}
-				onChange={handleProductRatingChange}
-			/>
-			<br />
+					<label>Product Rating</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productRating}
+						onChange={handleProductRatingChange}
+					/>
+					<br />
 
-			<label>Product Reviews</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productReviews}
-				onChange={handleProductReviewsChange}
-			/>
-			<br />
+					<label>Product Reviews</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productReviews}
+						onChange={handleProductReviewsChange}
+					/>
+					<br />
 
-			<label>Product Status</label>
-			<input
-				id="productName"
-				type="text"
-				required
-				value={productStatus}
-				onChange={handleProductStatusChange}
-			/>
+					<label>Product Status</label>
+					<input
+						id="productName"
+						type="text"
+						required
+						value={productStatus}
+						onChange={handleProductStatusChange}
+					/>
 
-			<br />
-			<button type="submit">Upload</button>
-		</form>
+					<br />
+					<button type="submit">Upload</button>
+				</form>
+			)}
+		</>
 	);
 }
 
