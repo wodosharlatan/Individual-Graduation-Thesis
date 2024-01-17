@@ -1,9 +1,9 @@
-.Tabulka_1_log {
+.Tabulka_1_verify {
   padding: 40px;
   border-radius: 20px;
   background: #d9d9d9;
-  width: 500px;
-  height: 300px;
+  width: 60vw;
+  height: 400px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -19,23 +19,23 @@
   }
 }
 
-.btn-1_log {
+.btn-1_verify {
   background: #5f6f52;
   background: linear-gradient(0deg, #5f6f52 0%, rgba#4a5740 100%);
   border: none;
 }
-.btn-1_log:hover {
+.btn-1_verify:hover {
   background: #5f6f52;
   background: linear-gradient(0deg, #4b5543 0%, #49573c 100%);
 }
 
-.inputDuo_log {
+.inputDuo_verify {
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.loginbutton_log {
+.loginbutton_verify {
   margin-bottom: 20px;
   margin-top: 20px;
   width: 100%;
@@ -53,12 +53,12 @@
 }
 
 @media only screen and (max-width: 640px) {
-  .Tabulka_1_log {
+  .Tabulka_1_verify {
     padding: 50px;
     border-radius: 20px;
     background: #d9d9d9;
-    width: 350px;
-    height: 520px;
+    width: 50vw;
+    height: 380px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -73,23 +73,23 @@
       margin-bottom: 30px;
     }
   }
-  .btn-1_log {
+  .btn-1_verify {
     background: #5f6f52;
     background: linear-gradient(0deg, #5f6f52 0%, rgba#4a5740 100%);
     border: none;
   }
-  .btn-1_log:hover {
+  .btn-1_verify:hover {
     background: #5f6f52;
     background: linear-gradient(0deg, #4b5543 0%, #49573c 100%);
   }
 
-  .inputDuo_log {
+  .inputDuo_verify {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .loginbutton_log {
+  .loginbutton_verify {
     margin-bottom: 20px;
     margin-top: 20px;
     width: 100%;
@@ -108,12 +108,12 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .Tabulka_1_log {
+  .Tabulka_1_verify {
     padding: 50px;
     border-radius: 20px;
     background: #d9d9d9;
-    width: 200px;
-    height: 480px;
+    width: 50vw;
+    height: 360px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -129,23 +129,23 @@
     }
   }
 
-  .btn-1_log {
+  .btn-1_verify {
     background: #5f6f52;
     background: linear-gradient(0deg, #5f6f52 0%, rgba#4a5740 100%);
     border: none;
   }
-  .btn-1_log:hover {
+  .btn-1_verify:hover {
     background: #5f6f52;
     background: linear-gradient(0deg, #4b5543 0%, #49573c 100%);
   }
 
-  .inputDuo_log {
+  .inputDuo_verify {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .loginbutton_log {
+  .loginbutton_verify {
     margin-bottom: 20px;
     margin-top: 20px;
     width: 100%;
