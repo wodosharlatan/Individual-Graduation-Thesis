@@ -16,6 +16,8 @@ router.post("/", async (req, res) => {
 			return res.status(400).json({ message: "User already exists" });
 		}
 
+		console.log(req.body);
+
 		// Declare all User Data fields
 		const validPassword = req.body.Password;
 		const verification = req.body.Verification;
@@ -32,11 +34,11 @@ router.post("/", async (req, res) => {
 
 		if (
 			validPassword == undefined ||
-			validPassword.trim().length < 8 ||
-			validPassword.trim().length > 20
+			validPassword.trim().length <= 8 ||
+			validPassword.trim().length >= 20
 		) {
 			return res.status(400).json({
-				message: "Password must be at between 8 20 characters long",
+				message: "Password must be at between 8 and 20 characters long",
 			});
 		}
 
