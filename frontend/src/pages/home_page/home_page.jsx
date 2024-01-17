@@ -21,6 +21,8 @@ function Home() {
 
 	return (
 		<>
+
+		<h1>HOME</h1>
 			{products.map((product) => (
 				<div key={product._id}>
 					<h1>{product.productName}</h1>
