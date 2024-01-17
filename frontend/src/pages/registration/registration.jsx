@@ -1,22 +1,23 @@
-import React from "react";
+import { useState } from "react";
 import "./_mainstyle.scss";
 
 function Registration() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [Telephone, settelephone] = React.useState("");
-  const [password_again, setPassword_again] = React.useState("");
-  const [dateOfBirth, setdateOfBirth] = React.useState("");
-  const [name_surname, setname_surname] = React.useState("");
-  const [gender, setgender] = React.useState("");
-  const [street_number, setstreet_number] = React.useState("");
-  const [zipcode, setzipcode] = React.useState("");
-  const [city, setcity] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [Telephone, settelephone] =  useState("");
+  const [password_again, setPassword_again] =  useState("");
+  const [dateOfBirth, setdateOfBirth] =  useState("");
+  const [name_surname, setname_surname] =  useState("");
+  const [gender, setgender] =  useState("");
+  const [street_number, setstreet_number] =  useState("");
+  const [zipcode, setzipcode] =  useState("");
+  const [city, setcity] =  useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
       Password: password,
@@ -43,7 +44,7 @@ function Registration() {
         return response.text();
       })
       .then((data) => {
-        alert(data);
+        console.log(data);
       })
       .catch((error) => console.error("Error:", error));
   };

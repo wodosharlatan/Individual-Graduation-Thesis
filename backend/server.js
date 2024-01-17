@@ -14,8 +14,8 @@ const fileUpload = require('express-fileupload');
 const path = require("path");
 
 // SSL
-app.use(express.urlencoded({ extended: true, limit: "3mb" }));
-app.use(express.json({ limit: "3mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.json({ limit: "10mb" }));
 
 // CORS
 app.use(cors());
