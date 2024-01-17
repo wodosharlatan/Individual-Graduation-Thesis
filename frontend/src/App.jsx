@@ -5,6 +5,7 @@ import Password_reseted from "./pages/email_responses/password_reseted/password_
 import User_verified from "./pages/email_responses/user_verified/user_verified";
 import New_Product from "./pages/new_product/new_product";
 import HomePage from "./pages/home_page/home_page";
+import Login from "./pages/login/login_page";
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
         <Route path="/new-product" element={<New_Product/>}/>
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/password-reset" element={<Password_reset/>}/>
+        <Route path="/user-verified" element={<User_verified/>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/API/password-reset/:CODE" element={<Password_reseted/>}/>
         <Route path="/API/verify/:CODE" element={<User_verified/>}/>
         <Route path="*" element={<h1>Not Found</h1>}/>

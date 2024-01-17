@@ -34,8 +34,8 @@ router.post("/", async (req, res) => {
 
 		if (
 			validPassword == undefined ||
-			validPassword.trim().length <= 8 ||
-			validPassword.trim().length >= 20
+			validPassword.trim().length < 8 ||
+			validPassword.trim().length > 20
 		) {
 			return res.status(400).json({
 				message: "Password must be at between 8 and 20 characters long",

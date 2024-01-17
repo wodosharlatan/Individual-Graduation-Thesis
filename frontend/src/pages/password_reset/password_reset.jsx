@@ -44,69 +44,67 @@ function Password_reset() {
 
   return (
     <>
+      <div className="body_res">
+        <h1 className="Nadpis_Stranky1_res">Dárky z Pedigu</h1>
+        <div className="Tabulka_1_res">
+          <a className="Nadpis_Stranky2_res">Obnovení hesla</a>
 
+          <div className="inputDuo_res">
+            <a className="Nadpis_Stranky3_res">E-mail:</a> <br />
+            <br />
+            <input
+              className="inputclass_res"
+              id="email"
+              type="text"
+              required
+              value={email}
+              onChange={handleEmail}
+            />
+          </div>
 
-<body class="body_res">
-    <h1 class="Nadpis_Stranky1_res">Dárky z Pedigu</h1>
-    <div class="Tabulka_1_res">
-      <a class="Nadpis_Stranky2_res">Obnovení hesla</a>
+          <div className="inputDuo_res">
+            <a className="Nadpis_Stranky3_res">Nové heslo:</a>
+            <br />
+            <br />
+            <input
+              className="inputclass_res"
+              id="newpassword"
+              type="password"
+              required
+              value={newpassword}
+              onChange={handlenewpassword}
+            />
+          </div>
 
-      <div class="inputDuo_res">
-        <a class="Nadpis_Stranky3_res">E-mail:</a> <br /><br />
-        <input class="inputclass_res" type="text" />
+          <div className="inputDuo_res">
+            <a className="Nadpis_Stranky3_res">Heslo znovu:</a>
+            <br />
+            <br />
+            <input
+              className="inputclass_res"
+              id="newpassword_again"
+              type="password"
+              required
+              value={newpassword_again}
+              onChange={handlenewpassword_again}
+            />
+          </div>
+
+          <div
+            onClick={handleSubmit}
+            className="loginbutton_res custom-btn_res btn-1_res"
+          >
+            <a>Obnovit</a>
+          </div>
+
+          <a className="text_res" href="">
+            Přihlásit se
+          </a>
+          <a className="text2_res" href="">
+            Registrovat
+          </a>
+        </div>
       </div>
-
-      <div class="inputDuo_res">
-        <a class="Nadpis_Stranky3_res">Heslo:</a><br /><br />
-        <input class="inputclass_res" type="password" />
-      </div>
-
-      <div class="loginbutton_res custom-btn_res btn-1_res">
-        <a>Obnovit</a>
-      </div>
-
-      <a class="text_res" href="">Přihlásit se</a>
-      <a class="text2_res" href="">Registrovat</a>
-    </div>
-  </body>
-
-
-      <form onSubmit={handleSubmit}>
-        <label>email</label>
-        <input
-          id="email"
-          type="text"
-          required
-          value={email}
-          onChange={handleEmail}
-        ></input>
-        <br></br>
-        <br></br>
-
-        <label>Nové heslo</label>
-        <input
-          id="newpassword"
-          type="password"
-          required
-          value={newpassword}
-          onChange={handlenewpassword}
-        ></input>
-        <br></br>
-        <br></br>
-
-        <label>Nové heslo znovu</label>
-        <input
-          id="newpassword_again"
-          type="password"
-          required
-          value={newpassword_again}
-          onChange={handlenewpassword_again}
-        ></input>
-        <br></br>
-        <br></br>
-
-        <button type="submit">Odeslat</button>
-      </form>
     </>
   );
 }
