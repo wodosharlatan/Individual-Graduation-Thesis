@@ -18,7 +18,6 @@ function App() {
         <Route path="/new-product" element={<New_Product/>}/>
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/password-reset" element={<Password_reset/>}/>
-        <Route path="/user-verified" element={<User_verified/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/API/password-reset/:CODE" element={<Password_reseted/>}/>
         <Route path="/API/verify/:CODE" element={<User_verified/>}/>
