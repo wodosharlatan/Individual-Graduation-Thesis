@@ -5,18 +5,34 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  
+  const setCookie = (name, value, days) => {
+    let expires = "";
+    if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  };
+
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    var myHeaders = new Headers();
+    let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
+    let raw = JSON.stringify({
       Password: password,
       Email: email,
     });
 
-    var requestOptions = {
+    let requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
@@ -25,10 +41,11 @@ function Login() {
 
     fetch("/API/users/login", requestOptions)
       .then((response) => {
-        return response.text();
+        return response.json();
       })
       .then((data) => {
-        console.log(data);
+        setCookie("UserToken", data.VerificationCode, 7);
+        alert("Přihlášení proběhlo úspěšně");
       })
       .catch((error) => console.error("Error:", error));
   };
