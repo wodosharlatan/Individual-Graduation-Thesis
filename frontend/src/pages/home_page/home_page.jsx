@@ -25,42 +25,69 @@ function Home() {
     <>
       <Navbar />
 
-      <div>
+      <div className="divhome">
+        <div className="divcat">
+        <aside className="kategorie">
+          <h1 className="nadpis">Kategorie</h1>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+          <a className="text1_kat">g</a>
+          <br></br>
+        </aside>
+        </div>
 
-      <aside className="kategorie">
-        <h1 className="nadpis">Kategorie</h1>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
-        <a className="text1_kat">g</a><br></br>
+        <div className="divproductspage">
 
-      
-      
-      
-      
-      </aside>
+<div className="divproduct"><h1>dkdoskds</h1></div>
+<div className="divproduct"><h1>dkdoskds</h1></div>
+<div className="divproduct"><h1>dkdoskds</h1></div>
+<div className="divproduct"><h1>dkdoskds</h1></div>
 
-
+        </div>
       </div>
 
       {products.map((product) => (
