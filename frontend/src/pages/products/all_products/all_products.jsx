@@ -58,26 +58,40 @@ function All_Products() {
 
 		fetch("/API/products", requestOptions)
 			.then((response) => response.json())
-			.then((result) => setProducts(result))
+			.then((result) => {
+				setProducts(result);
+				console.log(result);
+			})
 			.catch((error) => alert("Error:", error));
 	}
 
 	return (
 		<>
-			{" "}
 			{isAdmin &&
 				products.map((product) => (
 					<div key={product.id}>
-                        <img src={product.productImagePath} alt="product image" />
+						<img src={product.productImagePath} alt="product image" />
 						<h1>Nazev: {product.productName}</h1>
 						<h1>Popisek: {product.productDescription}</h1>
 						<h1>Cena: {product.productPrice}</h1>
 						<h1>Kategorie: {product.productCategory}</h1>
 						<h1>Mnozstvi: {product.productQuantity}</h1>
-						<h1>Hodnoceni: {product.productRating}</h1>
-						<h1>Recenze: {product.productReviews}</h1>
+
+						{product.productReviews && product.productReviews.length > 0 && (
+							<>
+								<h1>Hodnocení:</h1>
+								{product.productReviews.map((rating, index) => (
+									<div key={index}>
+										<h1> Rating {index}: {rating}</h1>
+									
+									</div>
+								))}
+							</>
+						)}
+
+						<h1>Recenze: {product.productRating}</h1>
 						<h1>Dostupnost: {product.productStatus}</h1>
-						
+						<hr />
 					</div>
 				))}
 		</>
