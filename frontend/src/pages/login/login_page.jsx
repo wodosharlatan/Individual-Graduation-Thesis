@@ -44,8 +44,13 @@ function Login() {
         return response.json();
       })
       .then((data) => {
-        setCookie("UserToken", data.VerificationCode, 7);
-        alert("Přihlášení proběhlo úspěšně");
+        if(data.VerificationCode){
+          setCookie("UserToken", data.VerificationCode, 7);
+          alert("Přihlášení proběhlo úspěšně");
+        }
+        else{
+          alert("Přihlášení se nezdařilo" + data.message);
+        }
       })
       .catch((error) => console.error("Error:", error));
   };

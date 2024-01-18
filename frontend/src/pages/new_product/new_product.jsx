@@ -122,7 +122,7 @@ function New_Product() {
 
 		fetch("/API/products", requestOptions)
 			.then((response) => response.json())
-			.then((result) => alert(result))
+			.then((result) => console.log(result))
 			.catch((error) => alert("Error:", error));
 	};
 
