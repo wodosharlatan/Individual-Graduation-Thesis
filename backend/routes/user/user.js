@@ -152,9 +152,6 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-
-	console.log(req.body);
-
 	try {
 		// Check if user exists by email
 		if (req.body.Email == undefined || req.body.Password == undefined) {
