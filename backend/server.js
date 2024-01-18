@@ -41,13 +41,14 @@ const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
 const ProductRoute = require("./routes/new_product/new_product");
-
+const CategoryRoute = require("./routes/categories/category");
 
 // Use routes
 app.use("/API/users", userRoute);
 app.use("/API/verify", verificationRoute);
 app.use("/API/password-reseted", passwordResetRoute);
 app.use("/API/products", ProductRoute);
+app.use("/API/categories", CategoryRoute);
 
 // Home route
 app.get("/", (req, res) => {
