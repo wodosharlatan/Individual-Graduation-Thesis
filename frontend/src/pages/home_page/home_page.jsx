@@ -80,25 +80,24 @@ function Home() {
         </aside>
         </div>
 
-        <div className="divproductspage">
+        <div className="divproductspage2">
 
-<div className="divproduct"><h1>dkdoskds</h1></div>
-<div className="divproduct"><h1>dkdoskds</h1></div>
-<div className="divproduct"><h1>dkdoskds</h1></div>
-<div className="divproduct"><h1>dkdoskds</h1></div>
-
-        </div>
-      </div>
-
-      {products.map((product) => (
-        <div key={product._id}>
+        {products.map((product) => (
+          <div className="divproduct" key={product.id}><h1></h1>
           <h1>{product.productName}</h1>
+          <h2>{product.productRating}</h2>
           <img
             src={product.productImagePath}
             alt={`Image for ${product.productName}`}
+            
           />
-        </div>
+          </div>
+        
       ))}
+        </div>
+      </div>
+
+      
     </>
   );
 }
