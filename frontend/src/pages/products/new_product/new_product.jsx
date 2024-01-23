@@ -80,15 +80,6 @@ function New_Product() {
 	const handleProductQuantityChange = (event) => {
 		setProductQuantity(event.target.value);
 	};
-
-	const handleProductRatingChange = (event) => {
-		setProductRating(event.target.value);
-	};
-
-	const handleProductReviewsChange = (event) => {
-		setProductReviews(event.target.value);
-	};
-
 	const handleProductStatusChange = (event) => {
 		setProductStatus(event.target.value);
 	};
@@ -109,8 +100,6 @@ function New_Product() {
 		formData.append("productPrice", productPrice);
 		formData.append("productCategory", productCategory);
 		formData.append("productQuantity", productQuantity);
-		formData.append("productRating", productRating);
-		formData.append("productReviews", productReviews);
 		formData.append("productStatus", productStatus);
 
 		const requestOptions = {
@@ -177,26 +166,6 @@ function New_Product() {
 						required
 						value={productQuantity}
 						onChange={handleProductQuantityChange}
-					/>
-					<br />
-
-					<label>Product Rating</label>
-					<input
-						id="productName"
-						type="text"
-						required
-						value={productRating}
-						onChange={handleProductRatingChange}
-					/>
-					<br />
-
-					<label>Product Reviews</label>
-					<input
-						id="productName"
-						type="text"
-						required
-						value={productReviews}
-						onChange={handleProductReviewsChange}
 					/>
 					<br />
 

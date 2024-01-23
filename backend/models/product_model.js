@@ -22,6 +22,10 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    
+
+
+    // System generated
     productRating: {
         type: Number,
         default: 0,
@@ -30,14 +34,15 @@ const ProductSchema = mongoose.Schema({
         type: Array,
         default: [],
     },
-
-
-    // System generated
     productStatus: {
+        type: String,
+        required: false,
+    },
+    productImagePath: {
         type: String,
         required: true,
     },
-    productImagePath: {
+    productFileName: {
         type: String,
         required: true,
     },

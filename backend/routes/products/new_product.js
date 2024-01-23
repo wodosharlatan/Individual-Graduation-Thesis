@@ -19,6 +19,12 @@ const storage = new Storage({
 	credentials: parsedCredentials,
 });
 
+async function deleteFile(fileName) {
+	await storage.bucket(bucketName).file(fileName).delete();
+
+	console.log(`gs://${bucketName}/${fileName} deleted`);
+}
+
 router.post("/", async (req, res) => {
 	try {
 		const productName = req.body.productName;
@@ -70,8 +76,6 @@ router.post("/", async (req, res) => {
 		const productPrice = req.body.productPrice;
 		const productCategory = req.body.productCategory;
 		const productQuantity = req.body.productQuantity;
-		const productRating = req.body.productRating;
-		const productReviews = req.body.productReviews;
 		const productStatus = req.body.productStatus;
 		const productImagePath = finalURL;
 
@@ -81,10 +85,9 @@ router.post("/", async (req, res) => {
 			productPrice: productPrice,
 			productCategory: productCategory,
 			productQuantity: productQuantity,
-			productRating: productRating,
-			productReviews: productReviews,
 			productStatus: productStatus,
 			productImagePath: productImagePath,
+			productFileName: gcsFileName,
 		});
 
 		const savedProduct = await product.save();
@@ -103,13 +106,18 @@ router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 	if ((await verify(req.params.CODE)) !== true) {
 		return res.status(400).json({ message: "User not authorized" });
 	}
-
 	try {
-		const product = await Products.findOneAndDelete({productName: req.params.PRODUCT_NAME,});
+		const product = await Products.findOneAndDelete({
+			productName: req.params.PRODUCT_NAME,
+		});
+
 		if (!product) {
 			return res.status(400).json({ message: "Product does not exist" });
 		}
-		return res.json({ message: "Product deleted" });
+	
+		deleteFile(`${product.productFileName}`).catch(console.error);
+
+		return res.json({ message: "Product deleted from SGC" });
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}

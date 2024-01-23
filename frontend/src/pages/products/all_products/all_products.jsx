@@ -66,8 +66,6 @@ function All_Products() {
 	}
 
 	function HandleDelete(productName) {
-		
-
 		const requestOptions = {
 			method: "DELETE",
 			redirect: "follow",
@@ -94,7 +92,9 @@ function All_Products() {
 						<h1>Cena: {product.productPrice}</h1>
 						<h1>Kategorie: {product.productCategory}</h1>
 						<h1>Mnozstvi: {product.productQuantity}</h1>
-						<button onClick={() => HandleDelete(product.productName)}>Smazat</button>
+						<button onClick={() => HandleDelete(product.productName)}>
+							Smazat
+						</button>
 
 						{product.productReviews && product.productReviews.length > 0 && (
 							<>
@@ -102,7 +102,6 @@ function All_Products() {
 								{product.productReviews.map((rating, index) => (
 									<div key={index}>
 										<h1>
-											{" "}
 											Rating {index}: {rating}
 										</h1>
 									</div>
