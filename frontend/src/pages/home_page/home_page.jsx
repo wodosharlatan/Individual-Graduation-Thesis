@@ -46,7 +46,7 @@ function Home() {
 						<h1 className="nadpis">Kategorie</h1>
 						{categories.map((Category,index) => (
 							<div key={index}>
-								<a href="/">{Category}</a>
+								<a className="text1_kat" href="/">{Category}</a>
 								<br></br>
 							</div>
 						))}
