@@ -20,7 +20,7 @@ function All_Products() {
 		fetch(path, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.message == "true") {
+				if (data == true) {
 					setIsAdmin(true);
 					fetchProducts();
 				} else {
@@ -65,6 +65,24 @@ function All_Products() {
 			.catch((error) => alert("Error:", error));
 	}
 
+	function HandleDelete(productName) {
+		
+
+		const requestOptions = {
+			method: "DELETE",
+			redirect: "follow",
+		};
+
+		const userCookieValue = getCookie("UserToken");
+
+		fetch(`/API/products/${userCookieValue}/${productName}`, requestOptions)
+			.then((response) => response.json())
+			.then((result) => {
+				fetchProducts();
+			})
+			.catch((error) => alert("Error:", error.toString()));
+	}
+
 	return (
 		<>
 			{isAdmin &&
@@ -76,14 +94,17 @@ function All_Products() {
 						<h1>Cena: {product.productPrice}</h1>
 						<h1>Kategorie: {product.productCategory}</h1>
 						<h1>Mnozstvi: {product.productQuantity}</h1>
+						<button onClick={() => HandleDelete(product.productName)}>Smazat</button>
 
 						{product.productReviews && product.productReviews.length > 0 && (
 							<>
 								<h1>Hodnocení:</h1>
 								{product.productReviews.map((rating, index) => (
 									<div key={index}>
-										<h1> Rating {index}: {rating}</h1>
-									
+										<h1>
+											{" "}
+											Rating {index}: {rating}
+										</h1>
 									</div>
 								))}
 							</>

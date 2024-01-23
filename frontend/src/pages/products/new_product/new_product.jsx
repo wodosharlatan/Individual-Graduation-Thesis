@@ -28,7 +28,7 @@ function New_Product() {
 		fetch(path, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.message == "true") {
+				if (data == true) {
 					setIsAdmin(true);
 				} else {
 					alert("Nemáte přístup k této stránce");

@@ -30,6 +30,9 @@ router.post("/:CODE", async (req, res) => {
 	if(result !== true) {
 		return res.status(400).json(result);
 	}
+	else{
+		return res.status(200).json(result);
+	}
 });
 
 

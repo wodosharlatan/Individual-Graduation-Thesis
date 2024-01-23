@@ -6,6 +6,7 @@ const Products = require("../../models/product_model");
 const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const fs = require("fs");
+const verify = require("../../functions/verify");
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
 const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
@@ -39,7 +40,7 @@ router.post("/", async (req, res) => {
 		const destinationPath = path.join(__dirname, "images", image.name);
 		const gcsFileName = `${Date.now()}-${image.name}`;
 
-		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`
+		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
 
 		image.mv(destinationPath, (err) => {
 			if (err) return res.status(500).json({ status: "Error saving file" });
@@ -96,6 +97,22 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
 	return res.json(await Products.find());
+});
+
+router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
+	if ((await verify(req.params.CODE)) !== true) {
+		return res.status(400).json({ message: "User not authorized" });
+	}
+
+	try {
+		const product = await Products.findOneAndDelete({productName: req.params.PRODUCT_NAME,});
+		if (!product) {
+			return res.status(400).json({ message: "Product does not exist" });
+		}
+		return res.json({ message: "Product deleted" });
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
 });
 
 module.exports = router;
