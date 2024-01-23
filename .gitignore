@@ -143,3 +143,5 @@ data
 # VSCode files
 .vscode
 backend/routes/new_product/key.json
+frontend/public/API/categories.json
+frontend/public/API/products.json
