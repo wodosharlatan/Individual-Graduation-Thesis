@@ -14,6 +14,15 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.get("/:category", async (req, res) => {
+	try {
+		const products = await Product.find({ productCategory: req.params.category });
+		return res.status(200).json(products);
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+});
+
 
 
 module.exports = router;

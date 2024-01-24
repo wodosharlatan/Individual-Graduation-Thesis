@@ -102,6 +102,15 @@ router.get("/", async (req, res) => {
 	return res.json(await Products.find());
 });
 
+router.get("/:CODE", async (req, res) => {
+	try {
+		const result = await Products.find({productName: req.params.CODE});
+		return res.json(result);
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+});
+
 router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 	if ((await verify(req.params.CODE)) !== true) {
 		return res.status(400).json({ message: "User not authorized" });
@@ -114,7 +123,7 @@ router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 		if (!product) {
 			return res.status(400).json({ message: "Product does not exist" });
 		}
-	
+
 		deleteFile(`${product.productFileName}`).catch(console.error);
 
 		return res.json({ message: "Product deleted from SGC" });
