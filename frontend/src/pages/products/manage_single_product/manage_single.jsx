@@ -56,8 +56,8 @@ function Manage_Single_Product() {
 		}
 		return cookieValue;
 	}
+
 	function fetchProduct(name) {
-		
 		const requestOptions = {
 			method: "GET",
 			redirect: "follow",
@@ -67,45 +67,24 @@ function Manage_Single_Product() {
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result);
-				setProduct(result);
+
+				const productData = result[0];
+				setProductName(productData.productName);
+				setProductDescription(productData.productDescription);
+				setProductPrice(productData.productPrice);
+				setProductCategory(productData.productCategory);
+				setProductQuantity(productData.productQuantity);
+				setProductStatus(productData.productStatus);
 			})
 			.catch((error) => console.log("error", error));
-	} 
+	}
 
 	const handleFile = (event) => {
 		setFile(event.target.files[0]);
 	};
 
-	const handleProductNameChange = (event) => {
-		setProductName(event.target.value);
-	};
-
-	const handleProductDescriptionChange = (event) => {
-		setProductDescription(event.target.value);
-	};
-
-	const handleProductPriceChange = (event) => {
-		setProductPrice(event.target.value);
-	};
-
-	const handleProductCategory = (event) => {
-		setProductCategory(event.target.value);
-	};
-
-	const handleProductQuantityChange = (event) => {
-		setProductQuantity(event.target.value);
-	};
-	const handleProductStatusChange = (event) => {
-		setProductStatus(event.target.value);
-	};
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		if (!file) {
-			console.log("No file selected");
-			return;
-		}
 
 		const formData = new FormData();
 
@@ -128,70 +107,63 @@ function Manage_Single_Product() {
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result);
-				setProduct(result);
+				window.location.href = "/manage/products";
 			})
 			.catch((error) => console.log("error", error));
 	};
 
 	return (
 		<>
-			{product &&
-				product.map((item, index) => {
-					return (
-					
-							<form onSubmit={handleSubmit} key={index}>
-								<input type="file" onChange={handleFile} />
-								<br />
+			<form onSubmit={handleSubmit}>
+				<input type="file" onChange={handleFile} />
+				<br />
 
-								<label>Product Name</label>
-								<input
-									type="text"
-									onChange={handleProductNameChange}
-									value={item.productName}
-									required
-								/>
-								<br />
-								<label>Product Description</label>
-								<input
-									id="productDesc"
-									type="text"
-									onChange={handleProductDescriptionChange}
-									value={item.productDescription}
-								/>
-								<br />
-								<label>Product Price</label>
-								<input
-									type="text"
-									onChange={handleProductPriceChange}
-									value={item.productPrice}
-								/>
-								<br />
-								<label>Product Category</label>
-								<input
-									type="text"
-									onChange={handleProductCategory}
-									value={item.productCategory}
-								/>
-								<br />
-								<label>Product Quantity</label>
-								<input
-									type="text"
-									onChange={handleProductQuantityChange}
-									value={item.productQuantity}
-								/>
-								<br />
-								<label>Product Status</label>
-								<input
-									type="text"
-									onChange={handleProductStatusChange}
-									value={item.productStatus}
-								/>
+				<label>Product Name</label>
+				<input
+					type="text"
+					onChange={(e) => setProductName(e.target.value)}
+					value={productName}
+					required
+				/>
+				<br />
+				<label>Product Description</label>
+				<input
+					id="productDesc"
+					type="text"
+					onChange={(e) => setProductDescription(e.target.value)}
+					value={productDescription}
+				/>
+				<br />
+				<label>Product Price</label>
+				<input
+					type="text"
+					onChange={(e) => setProductPrice(e.target.value)}
+					value={productPrice}
+				/>
+				<br />
+				<label>Product Category</label>
+				<input
+					type="text"
+					onChange={(e) => setProductCategory(e.target.value)}
+					value={productCategory}
+				/>
+				<br />
+				<label>Product Quantity</label>
+				<input
+					type="text"
+					onChange={(e) => setProductQuantity(e.target.value)}
+					value={productQuantity}
+				/>
+				<br />
+				<label>Product Status</label>
+				<input
+					type="text"
+					onChange={(e) => setProductStatus(e.target.value)}
+					value={productStatus}
+				/>
 
-								<button type="submit">Save</button>
-							</form>
-						
-					);
-				})}
+				<button type="submit">Save</button>
+			</form>
 		</>
 	);
 }

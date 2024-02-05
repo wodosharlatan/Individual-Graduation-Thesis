@@ -151,56 +151,61 @@ router.put("/:CODE/:PRODUCT_NAME", async (req, res) => {
 			return res.status(400).json({ message: "Product does not exist" });
 		}
 
-		const { image } = req.files;
-		if (!image) return res.status(400).json({ status: "No image found" });
+		let finalURL = product.productImagePath;
+		let gcsFileName = product.productFileName;
 
-		if (!/^image/.test(image.mimetype))
-			return res.status(400).json({ status: "Wrong file type" });
 
-		const destinationPath = path.join(__dirname, "images", image.name);
-		const gcsFileName = `${Date.now()}-${image.name}`;
+		if(req.files != null) {
+			const { image } = req.files;		
 
-		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
+			if (!/^image/.test(image.mimetype))
+				return res.status(400).json({ status: "Wrong file type" });
 
-		image.mv(destinationPath, (err) => {
-			if (err) return res.status(500).json({ status: "Error saving file" });
-			const bucket = storage.bucket(bucketName);
-			const file = bucket.file(gcsFileName);
+			const destinationPath = path.join(__dirname, "images", image.name);
+			gcsFileName = `${Date.now()}-${image.name}`;
 
-			fs.createReadStream(destinationPath)
-				.pipe(file.createWriteStream())
-				.on("error", (err) => {
-					console.log("Error uploading image to GCS", err);
-					console.log();
-					return res.status(500).json({ status: "Error uploading image" });
-				})
-				.on("finish", () => {
-					deleteFile(`${product.productFileName}`).catch(console.error);
-				});
-		});
+			finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
 
+			image.mv(destinationPath, (err) => {
+				if (err) return res.status(500).json({ status: "Error saving file" });
+				const bucket = storage.bucket(bucketName);
+				const file = bucket.file(gcsFileName);
+
+				fs.createReadStream(destinationPath)
+					.pipe(file.createWriteStream())
+					.on("error", (err) => {
+						console.log("Error uploading image to GCS", err);
+						return res.status(500).json({ status: "Error uploading image" });
+					})
+					.on("finish", () => {
+						deleteFile(`${product.productFileName}`).catch(console.error);
+					});
+			});
+		}
+
+		const productName = req.body.productName;
+		const productDescription = req.body.productDescription;
 		const productPrice = req.body.productPrice;
 		const productCategory = req.body.productCategory;
 		const productQuantity = req.body.productQuantity;
 		const productStatus = req.body.productStatus;
 		const productImagePath = finalURL;
 
-		const updatedProduct = new Products({
-			productName: productName,
-			productDescription: productDescription,
-			productPrice: productPrice,
-			productCategory: productCategory,
-			productQuantity: productQuantity,
-			productStatus: productStatus,
-			productImagePath: productImagePath,
-			productFileName: gcsFileName,
-		});
-
 		await Products.findOneAndUpdate(
 			{ productName: req.params.PRODUCT_NAME },
-			updatedProduct
+			{
+				$set: {
+					productName: productName,
+					productDescription: productDescription,
+					productPrice: productPrice,
+					productCategory: productCategory,
+					productQuantity: productQuantity,
+					productStatus: productStatus,
+					productImagePath: productImagePath,
+					productFileName: gcsFileName,
+				},
+			}
 		);
-		
 
 		return res.json({ message: "Product updated successfully" });
 	} catch (error) {

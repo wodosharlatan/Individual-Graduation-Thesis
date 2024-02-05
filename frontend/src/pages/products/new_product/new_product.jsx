@@ -13,6 +13,7 @@ function New_Product() {
 	useEffect(() => {
 		handleAccess();
 	}, []);
+	
 
 	function handleAccess() {
 		const UserTokenValue = getCookie("UserToken");
@@ -115,7 +116,7 @@ function New_Product() {
 
 	return (
 		<>
-			{" "}
+
 			{isAdmin && (
 				<form onSubmit={handleSubmit}>
 					<label>Select File</label>
