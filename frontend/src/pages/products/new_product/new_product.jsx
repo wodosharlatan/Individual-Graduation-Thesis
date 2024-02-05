@@ -8,8 +8,6 @@ function New_Product() {
 	const [productPrice, setProductPrice] = useState("");
 	const [productCategory, setProductCategory] = useState("");
 	const [productQuantity, setProductQuantity] = useState("");
-	const [productRating, setProductRating] = useState("");
-	const [productReviews, setProductReviews] = useState("");
 	const [productStatus, setProductStatus] = useState("");
 
 	useEffect(() => {

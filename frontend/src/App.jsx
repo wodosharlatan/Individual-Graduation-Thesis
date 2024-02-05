@@ -9,6 +9,7 @@ import Login from "./pages/login/login_page";
 import All_Products from "./pages/products/all_products/all_products";
 import Category from "./pages/category/category";
 import Single_Product from "./pages/products/single_product/single.jsx";
+import All_Users from "./pages/users/user.jsx";
 
 function App() {
 
@@ -21,11 +22,13 @@ function App() {
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/password-reset" element={<Password_reset/>}/>
         <Route path="/login" element={<Login/>}/>
+        
         <Route path="/category/:CATEGORY_NAME" element={<Category/>}/>
 
         <Route path="/product/:PRODUCT_NAME" element={<Single_Product/>}/>
 
         <Route path="/manage/products" element={<All_Products/>}/>
+        <Route path="/manage/users" element={<All_Users/>}/>
         <Route path="/manage/new-product" element={<New_Product/>}/>
         
         <Route path="/API/password-reseted/:CODE" element={<Password_reseted/>}/>

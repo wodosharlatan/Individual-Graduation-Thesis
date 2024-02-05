@@ -6,6 +6,7 @@ const User = require("../../models/user_model");
 const SHA256 = require("crypto-js/sha256");
 const SendEmail = require("../../functions/send_email");
 const GenerateHash = require("../../functions/generate_hash");
+const verify = require("../../functions/verify");
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -184,5 +185,40 @@ router.post("/login", async (req, res) => {
 		return res.status(500).json({ message: error.toString()});
 	}
 });
+
+router.post("/get-all/:CODE", async (req, res) => {
+	try {
+		const result = await verify(req.params.CODE);
+		if(result !== true) {
+			return res.status(400).json(result);
+		}
+		else{
+			const users = await User.find();
+			return res.status(200).json(users);
+		}
+	}catch (error) {
+		return res.status(500).json({ message: error.toString()});
+	}
+});
+
+router.delete("/:USER_ID/:CODE", async (req, res) => {
+	try {
+		const result = await verify(req.params.CODE);
+		if(result !== true) {
+			return res.status(400).json(result);
+		}
+		else{
+			const user = await User.findOneAndDelete(req.params.USER_ID);
+			if (!user) {
+				return res.status(400).json({ message: "User does not exist" });
+			}
+			return res.status(200).json({ message: "User deleted successfully" });
+		}
+	}
+	catch (error) {
+		return res.status(500).json({ message: error.toString()});
+	}
+});
+
 
 module.exports = router;

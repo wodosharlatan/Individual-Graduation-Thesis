@@ -44,11 +44,11 @@ const ProductRoute = require("./routes/products/new_product");
 const CategoryRoute = require("./routes/categories/category");
 
 // Use routes
-app.use("/API/users", userRoute);
-app.use("/API/verify", verificationRoute);
+app.use("/API/users",	 		 userRoute);
+app.use("/API/verify", 	 		 verificationRoute);
 app.use("/API/password-reseted", passwordResetRoute);
-app.use("/API/products", ProductRoute);
-app.use("/API/categories", CategoryRoute);
+app.use("/API/products", 		 ProductRoute);
+app.use("/API/categories",  	 CategoryRoute);
 
 // Home route
 app.get("/", (req, res) => {
