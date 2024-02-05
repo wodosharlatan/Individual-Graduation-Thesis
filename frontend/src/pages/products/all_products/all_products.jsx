@@ -96,6 +96,8 @@ function All_Products() {
 							Smazat
 						</button>
 
+						<a href={`/manage/product/${product.productName}`}>Editovat</a>
+
 						{product.productReviews && product.productReviews.length > 0 && (
 							<>
 								<h1>Hodnocení:</h1>

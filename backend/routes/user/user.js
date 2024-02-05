@@ -16,8 +16,7 @@ router.post("/", async (req, res) => {
 		if (user) {
 			return res.status(400).json({ message: "User already exists" });
 		}
-
-		console.log(req.body);
+		
 
 		// Declare all User Data fields
 		const validPassword = req.body.Password;

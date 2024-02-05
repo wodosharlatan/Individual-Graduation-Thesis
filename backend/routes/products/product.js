@@ -99,12 +99,16 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-	return res.json(await Products.find());
+	try {
+		return res.json(await Products.find());
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
 });
 
 router.get("/:CODE", async (req, res) => {
 	try {
-		const result = await Products.find({productName: req.params.CODE});
+		const result = await Products.find({ productName: req.params.CODE });
 		return res.json(result);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
@@ -112,10 +116,11 @@ router.get("/:CODE", async (req, res) => {
 });
 
 router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
-	if ((await verify(req.params.CODE)) !== true) {
-		return res.status(400).json({ message: "User not authorized" });
-	}
 	try {
+		if ((await verify(req.params.CODE)) !== true) {
+			return res.status(400).json({ message: "User not authorized" });
+		}
+
 		const product = await Products.findOneAndDelete({
 			productName: req.params.PRODUCT_NAME,
 		});
@@ -127,6 +132,77 @@ router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 		deleteFile(`${product.productFileName}`).catch(console.error);
 
 		return res.json({ message: "Product deleted from SGC" });
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+});
+
+router.put("/:CODE/:PRODUCT_NAME", async (req, res) => {
+	try {
+		if ((await verify(req.params.CODE)) !== true) {
+			return res.status(400).json({ message: "User not authorized" });
+		}
+
+		const product = await Products.findOne({
+			productName: req.params.PRODUCT_NAME,
+		});
+
+		if (!product) {
+			return res.status(400).json({ message: "Product does not exist" });
+		}
+
+		const { image } = req.files;
+		if (!image) return res.status(400).json({ status: "No image found" });
+
+		if (!/^image/.test(image.mimetype))
+			return res.status(400).json({ status: "Wrong file type" });
+
+		const destinationPath = path.join(__dirname, "images", image.name);
+		const gcsFileName = `${Date.now()}-${image.name}`;
+
+		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
+
+		image.mv(destinationPath, (err) => {
+			if (err) return res.status(500).json({ status: "Error saving file" });
+			const bucket = storage.bucket(bucketName);
+			const file = bucket.file(gcsFileName);
+
+			fs.createReadStream(destinationPath)
+				.pipe(file.createWriteStream())
+				.on("error", (err) => {
+					console.log("Error uploading image to GCS", err);
+					console.log();
+					return res.status(500).json({ status: "Error uploading image" });
+				})
+				.on("finish", () => {
+					deleteFile(`${product.productFileName}`).catch(console.error);
+				});
+		});
+
+		const productPrice = req.body.productPrice;
+		const productCategory = req.body.productCategory;
+		const productQuantity = req.body.productQuantity;
+		const productStatus = req.body.productStatus;
+		const productImagePath = finalURL;
+
+		const updatedProduct = new Products({
+			productName: productName,
+			productDescription: productDescription,
+			productPrice: productPrice,
+			productCategory: productCategory,
+			productQuantity: productQuantity,
+			productStatus: productStatus,
+			productImagePath: productImagePath,
+			productFileName: gcsFileName,
+		});
+
+		await Products.findOneAndUpdate(
+			{ productName: req.params.PRODUCT_NAME },
+			updatedProduct
+		);
+		
+
+		return res.json({ message: "Product updated successfully" });
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}

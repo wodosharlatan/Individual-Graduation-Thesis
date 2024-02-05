@@ -10,6 +10,7 @@ import All_Products from "./pages/products/all_products/all_products";
 import Category from "./pages/category/category";
 import Single_Product from "./pages/products/single_product/single.jsx";
 import All_Users from "./pages/users/user.jsx";
+import Manage_Single_Product from "./pages/products/manage_single_product/manage_single.jsx";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/product/:PRODUCT_NAME" element={<Single_Product/>}/>
 
         <Route path="/manage/products" element={<All_Products/>}/>
+        <Route path="/manage/product/:PRODUCT_NAME" element={<Manage_Single_Product/>}/>
         <Route path="/manage/users" element={<All_Users/>}/>
         <Route path="/manage/new-product" element={<New_Product/>}/>
         

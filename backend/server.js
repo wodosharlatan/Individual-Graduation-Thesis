@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
-const ProductRoute = require("./routes/products/new_product");
+const ProductRoute = require("./routes/products/product");
 const CategoryRoute = require("./routes/categories/category");
 
 // Use routes
