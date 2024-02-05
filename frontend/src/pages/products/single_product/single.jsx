@@ -12,7 +12,6 @@ function Single_Product() {
 	}, []);
 
 	function fetchProduct(product) {
-		
 		const requestOptions = {
 			method: "GET",
 			redirect: "follow",
@@ -59,16 +58,19 @@ function Single_Product() {
 								<a className="productNameText">{product.productName}</a>
 							</div>
 							<div className="productDesc">
-								<a className="productDescText">Popis: {product.productDescription}</a>
+								<a className="productDescText">An alternative syntax that alloction, which value of 0 is used, meaning e
+								 the next event cycle. Note that in either case, the actualdelay may be longer than intended; see Reasons for d
+								 elays longer than specified below. {product.productDescription}</a>
+							</div>
+							
+							<div className="productCat">
+								<a className="productCatText">Kategorie: {product.productCategory}</a>
 							</div>
 							<div className="productPrice">
 								<a className="productPriceText">{product.productPrice},- Kč</a>
 							</div>
-							<div className="productCat">
-								<a className="productCatText">Kategorie: {product.productCategory}</a>
-							</div>
 							<div className="productAmount">
-								<a className="productAmountText">Množství: {product.productQuantity}</a>
+								<a className="productAmountText">Skladem: {product.productQuantity}</a>
 							</div>
 
 							{product.productReviews && product.productReviews.length > 0 && (
@@ -85,10 +87,11 @@ function Single_Product() {
 							)}
 
 							<div className="productRating">
-								<a className="productRatingText">Recenze: {product.productRating}</a>
+								<a className="productRatingText">Recenze {product.productRating}</a>
+								<a className="productRatingStarts">★★★★★</a>
 							</div>
-							<div className="productStat">
-								<a className="productStatText">Skladem: {product.productStatus}</a>
+							<div onClick="toCart()" className="productToCart">
+								<a className="addToCartText">Do košíku</a>
 							</div>
 						</div>
 					</>
