@@ -123,7 +123,7 @@ function New_Product() {
 					<br />
 					<label>Product Name</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productName}
@@ -132,7 +132,7 @@ function New_Product() {
 					<br />
 					<label>Product Description</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productDescription}
@@ -141,7 +141,7 @@ function New_Product() {
 					<br />
 					<label>Product Price</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productPrice}
@@ -150,7 +150,7 @@ function New_Product() {
 					<br />
 					<label>Product Category</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productCategory}
@@ -159,7 +159,7 @@ function New_Product() {
 					<br />
 					<label>Product Quantity</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productQuantity}
@@ -169,7 +169,7 @@ function New_Product() {
 
 					<label>Product Status</label>
 					<input
-						id="productName"
+						 
 						type="text"
 						required
 						value={productStatus}

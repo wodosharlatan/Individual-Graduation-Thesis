@@ -1,19 +1,18 @@
-
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Navbar from "../../../components/navbar/navbar";
+import "./_mainstyle.scss";
 
 function Single_Product() {
 	const [products, setProducts] = useState([]);
 	const { PRODUCT_NAME } = useParams();
-
-	console.log(PRODUCT_NAME);
 
 	useEffect(() => {
 		fetchProduct(PRODUCT_NAME);
 	}, []);
 
 	function fetchProduct(product) {
+		
 		const requestOptions = {
 			method: "GET",
 			redirect: "follow",
@@ -26,40 +25,74 @@ function Single_Product() {
 				console.log(result);
 			})
 			.catch((error) => alert("Error:", error));
+			
 	}
 
 	return (
 		<>
-			<h1>Product</h1>
-			{products.map((product, index) => (
-				<div key={index}>
-					<img src={product.productImagePath} alt="product image" />
-					<h1>Nazev: {product.productName}</h1>
-					<h1>Popisek: {product.productDescription}</h1>
-					<h1>Cena: {product.productPrice}</h1>
-					<h1>Kategorie: {product.productCategory}</h1>
-					<h1>Mnozstvi: {product.productQuantity}</h1>
-						
+			<Navbar />
 
-					{product.productReviews && product.productReviews.length > 0 && (
-						<>
-							<h1>Hodnocení:</h1>
-							{product.productReviews.map((rating, index) => (
-								<div key={index}>
-									<h1>
-										Rating {index}: {rating}
-									</h1>
-								</div>
-							))}
-						</>
-					)}
+			{products &&
+				products.map((product, index) => (
+					<>
+						<div className="divnav">
+							<a href="/category" className="textnav">
+								Kategorie -{" "}
+							</a>
+							<a
+								href={"/category/" + product.productCategory}
+								className="textnav"
+							>
+								{product.productCategory} -
+							</a>
+							<a href={"/product/" + product.productName} className="textnav">
+								{product.productName}
+							</a>
+						</div>
+						<div className="divproduct1" key={index}>
+							<img
+								className="productImg"
+								src={product.productImagePath}
+								alt="product image"
+							/>
+							<div className="productName">
+								<a className="productNameText">{product.productName}</a>
+							</div>
+							<div className="productDesc">
+								<a className="productDescText">Popis: {product.productDescription}</a>
+							</div>
+							<div className="productPrice">
+								<a className="productPriceText">{product.productPrice},- Kč</a>
+							</div>
+							<div className="productCat">
+								<a className="productCatText">Kategorie: {product.productCategory}</a>
+							</div>
+							<div className="productAmount">
+								<a className="productAmountText">Množství: {product.productQuantity}</a>
+							</div>
 
-					<h1>Recenze: {product.productRating}</h1>
-					<h1>Dostupnost: {product.productStatus}</h1>
-				
-					<hr />
-				</div>
-			))}
+							{product.productReviews && product.productReviews.length > 0 && (
+								<>
+									<div>Hodnocení:</div>
+									{product.productReviews.map((rating, index) => (
+										<div key={index}>
+											<div>
+												Rating {index}: {rating}
+											</div>
+										</div>
+									))}
+								</>
+							)}
+
+							<div className="productRating">
+								<a className="productRatingText">Recenze: {product.productRating}</a>
+							</div>
+							<div className="productStat">
+								<a className="productStatText">Skladem: {product.productStatus}</a>
+							</div>
+						</div>
+					</>
+				))}
 		</>
 	);
 }

@@ -148,5 +148,5 @@ backend/routes/new_product/key.json
 backend/routes/products/images
 
 # Frontend files
-frontend/public/API/categories.json
-frontend/public/API/products.json
+frontend/public/API/*
+
