@@ -1,5 +1,7 @@
 import "./_mainstyle.scss";
 
+
+
 function Navbar() {
   return (
     <>
@@ -13,6 +15,7 @@ function Navbar() {
         </div>
 
         <div className="div_user">
+          <img className="hamburger" src="../more.png"/>
           <div>
             <i className="uil uil-shopping-basket"></i>
           </div>
@@ -24,17 +27,17 @@ function Navbar() {
               <br></br>
               <a href="/registration" className="text1">Registrovat</a>
             </div>
-            <div>
+          </div>
+          <div>
               <i className="uil uil-user-circle"></i>
             </div>
-
-
-          </div>
         </div>
+
       </div>
-      <hr></hr>
+
     </>
   );
 }
+
 
 export default Navbar;
