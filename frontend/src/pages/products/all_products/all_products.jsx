@@ -99,13 +99,15 @@ function All_Products() {
             <a href={`/manage/product/${product.productName}`}>Editovat</a>
 
             <h1>Recenze:</h1>
-            {product.productReviews.length > 0 &&  product.productReviews.map((rating, index) => (
-              <div key={index}>
-                <h1>
-                  Rating {index}: {rating}
-                </h1>
-              </div>
-            ))}
+            { product.productReviews.map((rating, index) => (
+                <div key={index}>
+                  <h1>
+                    Rating {index}: {rating.message}
+                  </h1>
+				  <p> {rating.userName}, {rating.stars}⭐ </p>
+
+                </div>
+              ))}
 
             <h1>Hodnoceni: {product.productRating}</h1>
             <h1>Dostupnost: {product.productStatus}</h1>
