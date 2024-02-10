@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require("fs");
 const verify = require("../../functions/verify");
 const isNull = require("../../functions/is_empty");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
 const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
@@ -157,6 +157,19 @@ router.get("/", async (req, res) => {
       if (element.productQuantity != 0) {
         filtredResults.push(element);
       }
+
+      let counter = 0;
+      let stars = 0;
+
+      element.productReviews.forEach((rating) => {
+        stars += rating.stars;
+        counter++;
+      });
+
+
+	  const rating = stars/counter;
+
+      element.productRating = rating.toFixed(2);
     });
 
     return res.status(200).json(filtredResults);
@@ -165,10 +178,28 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:CODE", async (req, res) => {
+router.get("/:PRODUCT_NAME", async (req, res) => {
   try {
-    const result = await Products.find({ productName: req.params.CODE });
-    return res.json(result);
+    const result = await Products.find({
+      productName: req.params.PRODUCT_NAME,
+    });
+
+	const reviews = result[0].productReviews;
+
+	
+	let stars = 0;
+	let count = 0;
+
+	reviews.forEach((element) => {
+		count++;
+		stars += element.stars;
+	})
+
+	const rating = stars/count
+
+	result[0].productRating = rating.toFixed(2);
+
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ message: error.toString() });
   }
@@ -198,7 +229,7 @@ router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 
 router.put("/:CODE", async (req, res) => {
   try {
-	const session = await mongoose.startSession();
+    const session = await mongoose.startSession();
     session.startTransaction();
     if ((await verify(req.params.CODE)) !== true) {
       return res.status(400).json({ message: "User not authorized" });
