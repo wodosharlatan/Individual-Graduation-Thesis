@@ -7,6 +7,7 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const fs = require("fs");
 const verify = require("../../functions/verify");
+const isNull = require("../../functions/is_empty");
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
 const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
@@ -15,202 +16,304 @@ const keyFilename = process.env.GCLOUD_APPLICATION_CREDENTIALS;
 const parsedCredentials = JSON.parse(keyFilename);
 
 const storage = new Storage({
-	projectId: projectId,
-	credentials: parsedCredentials,
+  projectId: projectId,
+  credentials: parsedCredentials,
 });
 
 async function deleteFile(fileName) {
-	await storage.bucket(bucketName).file(fileName).delete();
+  await storage.bucket(bucketName).file(fileName).delete();
 
-	console.log(`gs://${bucketName}/${fileName} deleted`);
+  console.log(`gs://${bucketName}/${fileName} deleted`);
 }
 
 router.post("/", async (req, res) => {
-	try {
-		const productName = req.body.productName;
+  try {
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-		const existingProduct = await Products.findOne({
-			productName: productName,
-		});
+    const productName = req.body.productName;
 
-		if (existingProduct) {
-			return res.status(400).json({ message: "Product already exists" });
-		}
+    if (isNull(productName)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Product name cannot be empty" });
+    }
 
-		const { image } = req.files;
-		if (!image) return res.status(400).json({ status: "No image found" });
+    const existingProduct = await Products.findOne({
+      productName: productName,
+    });
 
-		if (!/^image/.test(image.mimetype))
-			return res.status(400).json({ status: "Wrong file type" });
+    if (existingProduct) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Product already exists" });
+    }
 
-		const destinationPath = path.join(__dirname, "images", image.name);
-		const gcsFileName = `${Date.now()}-${image.name}`;
+    const { image } = req.files;
+    if (!image) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ status: "No image found" });
+    }
 
-		const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
+    if (!/^image/.test(image.mimetype))
+      return res.status(400).json({ status: "Wrong file type" });
 
-		image.mv(destinationPath, (err) => {
-			if (err) return res.status(500).json({ status: "Error saving file" });
-			const bucket = storage.bucket(bucketName);
-			const file = bucket.file(gcsFileName);
+    const destinationPath = path.join(__dirname, "images", image.name);
+    const gcsFileName = `${Date.now()}-${image.name}`;
 
-			fs.createReadStream(destinationPath)
-				.pipe(file.createWriteStream())
-				.on("error", (err) => {
-					console.log("Error uploading image to GCS", err);
-					console.log();
-					return res.status(500).json({ status: "Error uploading image" });
-				})
-				.on("finish", () => {
-					console.log(finalURL);
-				});
-		});
+    const finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
 
-		const productDescription = req.body.productDescription;
+    const productDescription = req.body.productDescription;
 
-		if (!productDescription) {
-			return res
-				.status(400)
-				.json({ message: "Product description is required" });
-		}
+    if (isNull(productDescription)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res
+        .status(400)
+        .json({ message: "Product description is required" });
+    }
 
-		const productPrice = req.body.productPrice;
-		const productCategory = req.body.productCategory;
-		const productQuantity = req.body.productQuantity;
-		const productStatus = req.body.productStatus;
-		const productImagePath = finalURL;
+    const productPrice = req.body.productPrice;
 
-		const product = new Products({
-			productName: productName,
-			productDescription: productDescription,
-			productPrice: productPrice,
-			productCategory: productCategory,
-			productQuantity: productQuantity,
-			productStatus: productStatus,
-			productImagePath: productImagePath,
-			productFileName: gcsFileName,
-		});
+    if (isNull(productPrice)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Price Not Specified" });
+    }
 
-		const savedProduct = await product.save();
+    const productCategory = req.body.productCategory;
 
-		return res.json(savedProduct);
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
+    if (isNull(productCategory)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Category Not Specified" });
+    }
+
+    const productQuantity = req.body.productQuantity;
+
+    if (isNull(productCategory)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Category Not Specified" });
+    }
+
+    let productStatus = "";
+
+    if (productQuantity > 0) {
+      productStatus = "Dostupne";
+    } else {
+      productStatus = "Nedostupne";
+    }
+
+    const productImagePath = finalURL;
+
+    const product = new Products({
+      productName: productName,
+      productDescription: productDescription,
+      productPrice: productPrice,
+      productCategory: productCategory,
+      productQuantity: productQuantity,
+      productStatus: productStatus,
+      productImagePath: productImagePath,
+      productFileName: gcsFileName,
+    });
+
+    const savedProduct = await product.save();
+
+    image.mv(destinationPath, (err) => {
+      if (err) return res.status(500).json({ status: "Error saving file" });
+      const bucket = storage.bucket(bucketName);
+      const file = bucket.file(gcsFileName);
+
+      fs.createReadStream(destinationPath)
+        .pipe(file.createWriteStream())
+        .on("error", (err) => {
+          console.log("Error uploading image to GCS", err);
+          console.log();
+          return res.status(500).json({ status: "Error uploading image" });
+        })
+        .on("finish", () => {
+          console.log(finalURL);
+        });
+    });
+
+    return res.json(savedProduct);
+  } catch (error) {
+    session.endSession();
+    await session.abortTransaction();
+    return res.status(500).json({ message: error.toString() });
+  }
 });
 
 router.get("/", async (req, res) => {
-	try {
-		return res.json(await Products.find());
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
+  try {
+    const result = await Products.find();
+
+    const filtredResults = [];
+
+    result.forEach((element) => {
+      if (element.productQuantity != 0) {
+        filtredResults.push(element);
+      }
+    });
+
+    return res.status(200).json(filtredResults);
+  } catch (error) {
+    return res.status(500).json({ message: error.toString() });
+  }
 });
 
 router.get("/:CODE", async (req, res) => {
-	try {
-		const result = await Products.find({ productName: req.params.CODE });
-		return res.json(result);
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
+  try {
+    const result = await Products.find({ productName: req.params.CODE });
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.toString() });
+  }
 });
 
 router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
-	try {
-		if ((await verify(req.params.CODE)) !== true) {
-			return res.status(400).json({ message: "User not authorized" });
-		}
+  try {
+    if ((await verify(req.params.CODE)) !== true) {
+      return res.status(400).json({ message: "User not authorized" });
+    }
 
-		const product = await Products.findOneAndDelete({
-			productName: req.params.PRODUCT_NAME,
-		});
+    const product = await Products.findOneAndDelete({
+      productName: req.params.PRODUCT_NAME,
+    });
 
-		if (!product) {
-			return res.status(400).json({ message: "Product does not exist" });
-		}
+    if (!product) {
+      return res.status(400).json({ message: "Product does not exist" });
+    }
 
-		deleteFile(`${product.productFileName}`).catch(console.error);
+    deleteFile(`${product.productFileName}`).catch(console.error);
 
-		return res.json({ message: "Product deleted from SGC" });
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
+    return res.json({ message: "Product deleted from SGC" });
+  } catch (error) {
+    return res.status(500).json({ message: error.toString() });
+  }
 });
 
-router.put("/:CODE/:PRODUCT_NAME", async (req, res) => {
-	try {
-		if ((await verify(req.params.CODE)) !== true) {
-			return res.status(400).json({ message: "User not authorized" });
-		}
+router.put("/:CODE", async (req, res) => {
+  try {
+    if ((await verify(req.params.CODE)) !== true) {
+      return res.status(400).json({ message: "User not authorized" });
+    }
 
-		const product = await Products.findOne({
-			productName: req.params.PRODUCT_NAME,
-		});
+    const product = await Products.findOne({
+      productName: req.body.productNameOld,
+    });
 
-		if (!product) {
-			return res.status(400).json({ message: "Product does not exist" });
-		}
+    if (!product) {
+      return res.status(400).json({ message: "Product does not exist" });
+    }
 
-		let finalURL = product.productImagePath;
-		let gcsFileName = product.productFileName;
+    let finalURL = product.productImagePath;
+    let gcsFileName = product.productFileName;
+
+    if (req.files != null) {
+      const { image } = req.files;
+
+      if (!/^image/.test(image.mimetype))
+        return res.status(400).json({ status: "Wrong file type" });
+
+      const destinationPath = path.join(__dirname, "images", image.name);
+      gcsFileName = `${Date.now()}-${image.name}`;
+
+      finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
+
+      image.mv(destinationPath, (err) => {
+        if (err) return res.status(500).json({ status: "Error saving file" });
+        const bucket = storage.bucket(bucketName);
+        const file = bucket.file(gcsFileName);
+
+        fs.createReadStream(destinationPath)
+          .pipe(file.createWriteStream())
+          .on("error", (err) => {
+            console.log("Error uploading image to GCS", err);
+            return res.status(500).json({ status: "Error uploading image" });
+          })
+          .on("finish", () => {
+            deleteFile(`${product.productFileName}`).catch(console.error);
+          });
+      });
+    }
+
+    const productImagePath = finalURL;
+
+	const productName = req.body.productNameNew;
+
+    if (isNull(productName)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Product name cannot be empty" });
+    }
 
 
-		if(req.files != null) {
-			const { image } = req.files;		
+	const productDescription = req.body.productDescription;
 
-			if (!/^image/.test(image.mimetype))
-				return res.status(400).json({ status: "Wrong file type" });
+    if (isNull(productDescription)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res
+        .status(400)
+        .json({ message: "Product description is required" });
+    }
 
-			const destinationPath = path.join(__dirname, "images", image.name);
-			gcsFileName = `${Date.now()}-${image.name}`;
+    const productPrice = req.body.productPrice;
 
-			finalURL = `https://storage.cloud.google.com/${bucketName}/${gcsFileName}`;
+    if (isNull(productPrice)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Price Not Specified" });
+    }
 
-			image.mv(destinationPath, (err) => {
-				if (err) return res.status(500).json({ status: "Error saving file" });
-				const bucket = storage.bucket(bucketName);
-				const file = bucket.file(gcsFileName);
+    const productCategory = req.body.productCategory;
 
-				fs.createReadStream(destinationPath)
-					.pipe(file.createWriteStream())
-					.on("error", (err) => {
-						console.log("Error uploading image to GCS", err);
-						return res.status(500).json({ status: "Error uploading image" });
-					})
-					.on("finish", () => {
-						deleteFile(`${product.productFileName}`).catch(console.error);
-					});
-			});
-		}
+    if (isNull(productCategory)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Category Not Specified" });
+    }
 
-		const productName = req.body.productName;
-		const productDescription = req.body.productDescription;
-		const productPrice = req.body.productPrice;
-		const productCategory = req.body.productCategory;
-		const productQuantity = req.body.productQuantity;
-		const productStatus = req.body.productStatus;
-		const productImagePath = finalURL;
+    const productQuantity = req.body.productQuantity;
 
-		await Products.findOneAndUpdate(
-			{ productName: req.params.PRODUCT_NAME },
-			{
-				$set: {
-					productName: productName,
-					productDescription: productDescription,
-					productPrice: productPrice,
-					productCategory: productCategory,
-					productQuantity: productQuantity,
-					productStatus: productStatus,
-					productImagePath: productImagePath,
-					productFileName: gcsFileName,
-				},
-			}
-		);
+    if (isNull(productCategory)) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({ message: "Category Not Specified" });
+    }
 
-		return res.json({ message: "Product updated successfully" });
-	} catch (error) {
-		return res.status(500).json({ message: error.toString() });
-	}
+    let productStatus = "";
+
+    if (productQuantity > 0) {
+      productStatus = "Dostupne";
+    } else {
+      productStatus = "Nedostupne";
+    }
+
+	
+
+    await Products.findOneAndUpdate(
+      { productName: req.body.productNameOld },
+      {
+        $set: {
+          productName: productName,
+          productDescription: productDescription,
+          productPrice: productPrice,
+          productCategory: productCategory,
+          productQuantity: productQuantity,
+          productImagePath: productImagePath,
+          productFileName: gcsFileName,
+        },
+      }
+    );
+
+    return res.json({ message: "Product updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.toString() });
+  }
 });
 
 module.exports = router;

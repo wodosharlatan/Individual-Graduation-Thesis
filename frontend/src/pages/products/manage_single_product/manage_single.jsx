@@ -89,7 +89,8 @@ function Manage_Single_Product() {
 		const formData = new FormData();
 
 		formData.append("image", file);
-		formData.append("productName", productName);
+		formData.append("productNameNew", productName);
+		formData.append("productNameOld", PRODUCT_NAME);
 		formData.append("productDescription", productDescription);
 		formData.append("productPrice", productPrice);
 		formData.append("productCategory", productCategory);
@@ -103,11 +104,11 @@ function Manage_Single_Product() {
 			redirect: "follow",
 		};
 
-		fetch(`/API/products/${UserTokenValue}/${PRODUCT_NAME}`, requestOptions)
+		fetch(`/API/products/${UserTokenValue}`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result);
-				window.location.href = "/manage/products";
+				// window.location.href = "/manage/products";
 			})
 			.catch((error) => console.log("error", error));
 	};
