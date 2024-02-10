@@ -8,7 +8,6 @@ function New_Product() {
 	const [productPrice, setProductPrice] = useState("");
 	const [productCategory, setProductCategory] = useState("");
 	const [productQuantity, setProductQuantity] = useState("");
-	const [productStatus, setProductStatus] = useState("");
 
 	useEffect(() => {
 		handleAccess();
@@ -79,9 +78,7 @@ function New_Product() {
 	const handleProductQuantityChange = (event) => {
 		setProductQuantity(event.target.value);
 	};
-	const handleProductStatusChange = (event) => {
-		setProductStatus(event.target.value);
-	};
+
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -99,7 +96,6 @@ function New_Product() {
 		formData.append("productPrice", productPrice);
 		formData.append("productCategory", productCategory);
 		formData.append("productQuantity", productQuantity);
-		formData.append("productStatus", productStatus);
 
 		const requestOptions = {
 			method: "POST",
@@ -165,16 +161,6 @@ function New_Product() {
 						required
 						value={productQuantity}
 						onChange={handleProductQuantityChange}
-					/>
-					<br />
-
-					<label>Product Status</label>
-					<input
-						 
-						type="text"
-						required
-						value={productStatus}
-						onChange={handleProductStatusChange}
 					/>
 
 					<br />

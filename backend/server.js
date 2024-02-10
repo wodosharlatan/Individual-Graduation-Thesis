@@ -40,15 +40,17 @@ app.use(express.static(path.join(__dirname, 'dist')));
 const userRoute = require("./routes/user/user");
 const passwordResetRoute = require("./routes/password_reset/password_reset");
 const verificationRoute = require("./routes/verification/verify");
-const ProductRoute = require("./routes/products/product");
-const CategoryRoute = require("./routes/categories/category");
+const productRoute = require("./routes/products/product");
+const categoryRoute = require("./routes/categories/category");
+const reviewRoute = require("./routes/products/review");
 
 // Use routes
 app.use("/API/users",	 		 userRoute);
 app.use("/API/verify", 	 		 verificationRoute);
 app.use("/API/password-reseted", passwordResetRoute);
-app.use("/API/products", 		 ProductRoute);
-app.use("/API/categories",  	 CategoryRoute);
+app.use("/API/products", 		 productRoute);
+app.use("/API/categories",  	 categoryRoute);
+app.use("/API/reviews", 		 reviewRoute)
 
 // Home route
 app.get("/", (req, res) => {

@@ -8,6 +8,7 @@ const path = require("path");
 const fs = require("fs");
 const verify = require("../../functions/verify");
 const isNull = require("../../functions/is_empty");
+const mongoose = require("mongoose")
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
 const bucketName = process.env.GCLOUD_STORAGE_BUCKET_NAME;
@@ -140,8 +141,8 @@ router.post("/", async (req, res) => {
 
     return res.json(savedProduct);
   } catch (error) {
-    session.endSession();
     await session.abortTransaction();
+    session.endSession();
     return res.status(500).json({ message: error.toString() });
   }
 });
@@ -197,6 +198,8 @@ router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
 
 router.put("/:CODE", async (req, res) => {
   try {
+	const session = await mongoose.startSession();
+    session.startTransaction();
     if ((await verify(req.params.CODE)) !== true) {
       return res.status(400).json({ message: "User not authorized" });
     }
@@ -242,7 +245,7 @@ router.put("/:CODE", async (req, res) => {
 
     const productImagePath = finalURL;
 
-	const productName = req.body.productNameNew;
+    const productName = req.body.productNameNew;
 
     if (isNull(productName)) {
       await session.abortTransaction();
@@ -250,8 +253,7 @@ router.put("/:CODE", async (req, res) => {
       return res.status(400).json({ message: "Product name cannot be empty" });
     }
 
-
-	const productDescription = req.body.productDescription;
+    const productDescription = req.body.productDescription;
 
     if (isNull(productDescription)) {
       await session.abortTransaction();
@@ -293,8 +295,6 @@ router.put("/:CODE", async (req, res) => {
       productStatus = "Nedostupne";
     }
 
-	
-
     await Products.findOneAndUpdate(
       { productName: req.body.productNameOld },
       {
@@ -312,6 +312,8 @@ router.put("/:CODE", async (req, res) => {
 
     return res.json({ message: "Product updated successfully" });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     return res.status(500).json({ message: error.toString() });
   }
 });

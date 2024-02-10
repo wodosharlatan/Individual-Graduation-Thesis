@@ -10,7 +10,6 @@ function Manage_Single_Product() {
 	const [productPrice, setProductPrice] = useState("");
 	const [productCategory, setProductCategory] = useState("");
 	const [productQuantity, setProductQuantity] = useState("");
-	const [productStatus, setProductStatus] = useState("");
 
 	useEffect(() => {
 		handleAccess();
@@ -74,7 +73,6 @@ function Manage_Single_Product() {
 				setProductPrice(productData.productPrice);
 				setProductCategory(productData.productCategory);
 				setProductQuantity(productData.productQuantity);
-				setProductStatus(productData.productStatus);
 			})
 			.catch((error) => console.log("error", error));
 	}
@@ -95,7 +93,6 @@ function Manage_Single_Product() {
 		formData.append("productPrice", productPrice);
 		formData.append("productCategory", productCategory);
 		formData.append("productQuantity", productQuantity);
-		formData.append("productStatus", productStatus);
 
 		const UserTokenValue = getCookie("UserToken");
 		const requestOptions = {
@@ -156,12 +153,7 @@ function Manage_Single_Product() {
 					value={productQuantity}
 				/>
 				<br />
-				<label>Product Status</label>
-				<input
-					type="text"
-					onChange={(e) => setProductStatus(e.target.value)}
-					value={productStatus}
-				/>
+
 
 				<button type="submit">Save</button>
 			</form>
