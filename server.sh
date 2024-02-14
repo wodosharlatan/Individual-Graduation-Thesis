@@ -1,4 +1,5 @@
 cd frontend
+npm i
 npm run build
 cd ..
 cp -r frontend/dist backend

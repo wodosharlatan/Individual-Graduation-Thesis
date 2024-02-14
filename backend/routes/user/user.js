@@ -194,7 +194,14 @@ router.post("/get-all/:CODE", async (req, res) => {
 		}
 		else{
 			const users = await User.find();
+			users.forEach(element => {
+				if(element.IsAdmin){
+					users.splice(users.indexOf(element), 1);
+				}
+			});
+
 			return res.status(200).json(users);
+
 		}
 	}catch (error) {
 		return res.status(500).json({ message: error.toString()});
