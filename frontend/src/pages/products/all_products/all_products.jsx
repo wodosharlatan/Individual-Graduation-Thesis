@@ -68,12 +68,13 @@ function All_Products() {
   function HandleDelete(productName) {
     const requestOptions = {
       method: "DELETE",
+      body: JSON.stringify({ productName: productName }),
       redirect: "follow",
     };
 
     const userCookieValue = getCookie("UserToken");
 
-    fetch(`/API/products/${userCookieValue}/${productName}`, requestOptions)
+    fetch(`/API/products/${userCookieValue}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         fetchProducts();

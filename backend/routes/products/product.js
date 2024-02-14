@@ -205,14 +205,14 @@ router.get("/:PRODUCT_NAME", async (req, res) => {
   }
 });
 
-router.delete("/:CODE/:PRODUCT_NAME", async (req, res) => {
+router.delete("/:CODE", async (req, res) => {
   try {
     if ((await verify(req.params.CODE)) !== true) {
       return res.status(400).json({ message: "User not authorized" });
     }
 
     const product = await Products.findOneAndDelete({
-      productName: req.params.PRODUCT_NAME,
+      productName: req.body.productName,
     });
 
     if (!product) {

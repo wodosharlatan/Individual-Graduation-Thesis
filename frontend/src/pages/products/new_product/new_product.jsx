@@ -97,6 +97,7 @@ function New_Product() {
 		formData.append("productCategory", productCategory);
 		formData.append("productQuantity", productQuantity);
 
+
 		const requestOptions = {
 			method: "POST",
 			body: formData,
