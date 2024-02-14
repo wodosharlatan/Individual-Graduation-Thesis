@@ -7,6 +7,7 @@ const SHA256 = require("crypto-js/sha256");
 const SendEmail = require("../../functions/send_email");
 const GenerateHash = require("../../functions/generate_hash");
 const verify = require("../../functions/verify");
+const isNull = require("../../functions/is_empty");
 
 // Save user to database
 router.post("/", async (req, res) => {
@@ -33,7 +34,7 @@ router.post("/", async (req, res) => {
 		// Check all User Data fields are provided and valid
 
 		if (
-			validPassword == undefined ||
+			isNull(validPassword) ||
 			validPassword.trim().length < 8 ||
 			validPassword.trim().length > 20
 		) {
@@ -42,7 +43,7 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		if (verification == undefined || verification.trim().length < 8) {
+		if (isNull(verification) || verification.trim().length < 8) {
 			return res.status(400).json({
 				message: "Verification must be at least 8 characters long",
 			});
@@ -53,7 +54,7 @@ router.post("/", async (req, res) => {
 		}
 
 		if (
-			validEmail == undefined ||
+			isNull(validEmail) ||
 			validEmail.trim().length < 8 ||
 			validEmail.trim().length > 100
 		) {
@@ -72,7 +73,7 @@ router.post("/", async (req, res) => {
 		}
 
 		if (
-			validName == undefined ||
+			isNull(validName) ||
 			validName.trim().length < 2 ||
 			validName.trim().length > 100
 		) {
@@ -81,20 +82,20 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		if (validTelephone == undefined || validTelephone.trim().length < 9) {
+		if (isNull(validTelephone) || validTelephone.trim().length < 9) {
 			return res.status(400).json({
 				message: "Telephone must be at least 9 characters long",
 			});
 		}
 
-		if (validStreetNumber == undefined || validStreetNumber.trim().length < 2) {
+		if (isNull(validStreetNumber) || validStreetNumber.trim().length < 2) {
 			return res.status(400).json({
 				message: "Street Number must be at least 2 characters long",
 			});
 		}
 
 		if (
-			validZipCode == undefined ||
+			isNull(validZipCode) ||
 			validZipCode.trim().length < 5 ||
 			validZipCode.trim().length > 7
 		) {
@@ -103,19 +104,19 @@ router.post("/", async (req, res) => {
 			});
 		}
 
-		if (validCity == undefined || validCity.trim().length < 2) {
+		if (isNull(validCity) || validCity.trim().length < 2) {
 			return res.status(400).json({
 				message: "City must be at least 2 characters long",
 			});
 		}
 
 		// check if is empty or not
-		if (validGender === undefined) {
+		if (isNull(validGender)){
 			validGender = "Not Specified";
 		}
 
 		// check if is empty or not AND if is valid date
-		if (validBirthDate === undefined) {
+		if (isNull(validBirthDate)) {
 			validBirthDate = "Not Specified";
 		}
 
@@ -154,7 +155,7 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res) => {
 	try {
 		// Check if user exists by email
-		if (req.body.Email == undefined || req.body.Password == undefined) {
+		if (isNull(req.body.Email) || isNull(req.body.Password)) {
 			return res.status(400).json({
 				message: "Email or Password is not provided",
 
@@ -200,14 +201,14 @@ router.post("/get-all/:CODE", async (req, res) => {
 	}
 });
 
-router.delete("/:USER_ID/:CODE", async (req, res) => {
+router.delete("/:CODE", async (req, res) => {
 	try {
 		const result = await verify(req.params.CODE);
 		if(result !== true) {
 			return res.status(400).json(result);
 		}
 		else{
-			const user = await User.findOneAndDelete(req.params.USER_ID);
+			const user = await User.findOneAndDelete(req.body.userID);
 			if (!user) {
 				return res.status(400).json({ message: "User does not exist" });
 			}

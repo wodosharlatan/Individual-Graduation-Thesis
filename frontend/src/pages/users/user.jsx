@@ -71,10 +71,11 @@ function All_Users() {
 
 		const requestOptions = {
 			method: "DELETE",
+			body: JSON.stringify({ userID: username }),
 			headers: { "Content-Type": "application/json" },
 		};
 
-		fetch(`/API/users/${username}/${UserTokenValue}`, requestOptions)
+		fetch(`/API/users/${UserTokenValue}`, requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);

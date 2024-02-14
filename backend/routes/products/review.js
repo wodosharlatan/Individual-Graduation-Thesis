@@ -24,6 +24,12 @@ router.put("/", async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
+    for (let i = 0; i < productName.productReviews.length; i++) {
+      if (productName.productReviews[i].name == user.Name) {
+        return res.status(400).json({ message: "User has already reviewed" });
+      }
+    }
+
     if (stars > 5 || stars < 1) {
       return res.status(400).json({ message: "Stars must be between 1-5" });
     }
@@ -47,7 +53,7 @@ router.put("/", async (req, res) => {
           productReviews: {
             message: message,
             stars: stars,
-            userName: user.Name,
+            name: user.Name,
           },
         },
       }
