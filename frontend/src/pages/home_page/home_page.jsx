@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/navbar/navbar";
 import "./_mainstyle.scss";
+import Footer from "../../components/navbar/footer/footer";
 
 function Home() {
 	const [products, setProducts] = useState([]);
@@ -84,6 +85,8 @@ function Home() {
 					))}
 				</div>
 			</div>
+
+			<Footer />
 		</>
 	);
 }

@@ -12,14 +12,15 @@ function Registration() {
   const [street_number, setstreet_number] =  useState("");
   const [zipcode, setzipcode] =  useState("");
   const [city, setcity] =  useState("");
+  const [newsletter, setnewsletter] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    var myHeaders = new Headers();
+    let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
+    let raw = JSON.stringify({
       Password: password,
       Verification: password_again,
       Email: email,
@@ -30,9 +31,10 @@ function Registration() {
       City: city,
       BirthDate: dateOfBirth,
       Gender: gender,
+      Newsletter: newsletter,
     });
 
-    var requestOptions = {
+    let requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
@@ -87,6 +89,10 @@ function Registration() {
 
   const handlecity = (event) => {
     setcity(event.target.value);
+  };
+
+  const handlenewsletter = (event) => {
+    setnewsletter(event.target.value);
   };
 
   return (
@@ -237,6 +243,14 @@ function Registration() {
                   required
                   value={city}
                   onChange={handlecity}
+                />
+                <input
+                  className="inputclass_reg"
+                  id="newsletter"
+                  type="checkbox"
+                  required
+                  value={newsletter}
+                  onChange={handlenewsletter}
                 />
               </div>
             </div>
