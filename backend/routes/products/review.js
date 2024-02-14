@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../../models/user_model");
 const Products = require("../../models/product_model");
 const isNull = require("../../functions/is_empty");
+const GenerateHash = require("../../functions/generate_hash");
 
 router.put("/", async (req, res) => {
   try {
@@ -54,6 +55,7 @@ router.put("/", async (req, res) => {
             message: message,
             stars: stars,
             name: user.Name,
+            uniqueId: GenerateHash(),
           },
         },
       }
