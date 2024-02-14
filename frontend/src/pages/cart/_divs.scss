@@ -1,0 +1,45 @@
+.divcart{
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+}
+.cartitems{
+    background-color: aqua;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1%;
+    
+}
+
+.totalprice{
+    width: 100%;
+    margin-top: 1%;
+    text-align: right;
+    
+}
+
+
+.nextbtn{
+    background-color: green;
+    display: flex;
+    justify-content: center;
+
+    width: 100px;
+    height: 50px;
+    margin-left: auto;
+
+
+
+}
+img {
+    border-radius: 20px;
+		width: 200px;
+		height: auto;
+		object-fit: contain;
+		-webkit-object-fit: contain;
+		-moz-object-fit: contain;
+		-o-object-fit: contain;
+}
