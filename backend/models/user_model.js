@@ -55,6 +55,10 @@ const userSchema = mongoose.Schema({
 		type: String,
 		default: "",
 	},
+	Newsletter: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 module.exports = mongoose.model("Users", userSchema);

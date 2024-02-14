@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
 		const validStreetNumber = req.body.StreetNumber;
 		const validZipCode = req.body.ZipCode;
 		const validCity = req.body.City;
+		let newsletter = req.body.Newsletter;
 		let validBirthDate = req.body.BirthDate;
 		let validGender = req.body.Gender;
 
@@ -110,6 +111,13 @@ router.post("/", async (req, res) => {
 			});
 		}
 
+		if(isNull(newsletter)){
+			newsletter = false;
+		}
+		else{
+			newsletter = true;
+		}
+
 		// check if is empty or not
 		if (isNull(validGender)){
 			validGender = "Not Specified";
@@ -135,6 +143,7 @@ router.post("/", async (req, res) => {
 			DateOfBirth: validBirthDate.trim(),
 			VerificationCode: verificationCode,
 			Gender: validGender.trim(),
+			Newsletter: newsletter,
 		});
 
 		const fullUrl = req.protocol + "://" + req.get("host");
