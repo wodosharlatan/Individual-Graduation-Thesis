@@ -10,7 +10,7 @@ function Navbar() {
 
 	const fetchCategories = async () => {
 		try {
-			const response = await fetch("/API/categories.json");
+			const response = await fetch("/API/categories");
 			const result = await response.json();
 
 			console.log(result);
