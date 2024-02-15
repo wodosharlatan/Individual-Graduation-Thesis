@@ -38,3 +38,31 @@
   font-style: normal;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media only screen and (max-width: 700px) {
+
+  .text1_kat
+  {
+      margin-left: 5%;
+      margin-top: 5%;
+      padding-bottom: 5%;
+      font-family: Inter;
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .nadpis
+  {
+      margin-left: 5%;
+      margin-top: 0;
+      margin-bottom: 5%;
+      font-family: Inter;
+    color: #000;
+    font-size: 18px;
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+}

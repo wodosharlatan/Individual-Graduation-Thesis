@@ -1,4 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
 import Registration from './pages/registration/registration';
 import Password_reset from './pages/password_reset/password_reset';
 import Password_reseted from "./pages/email_responses/password_reseted/password_reseted";
