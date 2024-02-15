@@ -67,20 +67,24 @@ function All_Products() {
 	}
 
 	function HandleDelete(productName) {
+
+		const formdata = new FormData();
+		formdata.append("productName",productName) 
+
 		const requestOptions = {
-			method: "DELETE",
-			body: JSON.stringify({productName: productName}),
+			method: "POST",
+			body: formdata,
 			redirect: "follow"
 		};
 
 		const userCookieValue = getCookie("UserToken");
 
-		fetch(`/API/products/${userCookieValue}`, requestOptions)
+		fetch(`/API/products/delete/${userCookieValue}`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
 				fetchProducts();
 			})
-			.catch((error) => alert("Error:", error.toString()));
+			.catch((error) => console.log("Error:", error.toString()));
 	}
 
 	return (

@@ -219,7 +219,7 @@ router.get("/:PRODUCT_NAME", async (req, res) => {
 	}
 });
 
-router.delete("/:CODE", async (req, res) => {
+router.post("/delete/:CODE", async (req, res) => {
 	try {
 		if ((await verify(req.params.CODE)) !== true) {
 			return res.status(400).json({ message: "User not authorized" });

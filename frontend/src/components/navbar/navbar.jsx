@@ -44,18 +44,7 @@ function Navbar() {
 									Domů
 								</a>
 							</li>
-							{categories.length > 0 &&
-								categories.map((Category, index) => (
-									<li class="nav-item nav-item-hidden" key={index}>
-										<a
-											class="nav-link active"
-											aria-current="page"
-											href={`/category/${Category}`}
-										>
-											{Category}
-										</a>
-									</li>
-								))}
+							
 						</ul>
 						<form class="d-flex" role="search">
 							<input
@@ -69,6 +58,20 @@ function Navbar() {
 							</button>
 						</form>
 						<i className="uil uil-user-circle"></i>
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						{categories.length > 0 &&
+								categories.map((Category, index) => (
+									<li class="nav-item nav-item-hidden" key={index}>
+										<a
+											class="nav-link active"
+											aria-current="page"
+											href={`/category/${Category}`}
+										>
+											{Category}
+										</a>
+									</li>
+								))}
+								</ul>
 					</div>
 				</div>
 			</nav>
