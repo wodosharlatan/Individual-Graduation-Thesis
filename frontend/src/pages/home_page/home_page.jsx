@@ -11,39 +11,8 @@ function Home() {
 		fetchData();
 		fetchCategories();
 
-		/*
-
 		setProducts([
-			{
-				_id: "65b017f15e8df60f1a1a46f7",
-				productName: "e22",
-				productDescription: "",
-				productPrice: 132,
-				productCategory: "3",
-				productQuantity: 2,
-				productRating: 2.5,
-				productReviews: [
-					{
-						message: "Super Komentar 78",
-						stars: 1,
-						name: "Tomas Bosak",
-						uniqueId:
-							"6d240bc6808be3747577cb0a411650beaa59901eb954fc1551de6e87f641de66",
-					},
-					{
-						message: "Super Komentar 7",
-						stars: 4,
-						name: "Marek Hejral",
-						uniqueId:
-							"e74d21caffe16a058db26f79a53566d143b9f248285646be9ef0e5c29a7575c9",
-					},
-				],
-				productStatus: "dostupne",
-				productImagePath:
-					"https://storage.cloud.google.com/image-server-bucket-24/1707169289662-telephone.jpg",
-				productFileName: "1707169289662-telephone.jpg",
-				__v: 0,
-			},
+			
 			{
 				_id: "65b018095e8df60f1a1a46fa",
 				productName: "Ctenarsky Denik",
@@ -469,19 +438,15 @@ function Home() {
 			"okkhf",
 			"tiggers",
 		]);
-*/
-
 	}, []);
 
-	
+	function fetchData() {}
+	function fetchCategories() {}
+	function handleDirect(productName) {
+		window.location.href = `/product/${productName}`;
+	}
 
-	// function fetchData() {}
-	// function fetchCategories() {}
-
-	
-	function handleDirect(productName) {window.location.href=`/product/${productName}`}
-
-	
+	/*
 
 	const fetchData = async () => {
 		try {
@@ -508,10 +473,11 @@ function Home() {
 		}
 	};
 
-	
+	*/
+
 	return (
 		<>
-			<Navbar categories={categories} />
+			<Navbar />
 
 			<div className="divhome">
 				<div className="divcat">
@@ -548,7 +514,12 @@ function Home() {
 							<div className="divproduct_price">
 								<p>{product.productPrice},- Kč</p>
 							</div>
-							<div onClick={() => {handleDirect(product.productName)}} className="divproduct_add">
+							<div
+								onClick={() => {
+									handleDirect(product.productName);
+								}}
+								className="divproduct_add"
+							>
 								<p>Podrobnosti</p>
 							</div>
 						</div>

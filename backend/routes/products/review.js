@@ -6,7 +6,7 @@ const isNull = require("../../functions/is_empty");
 const GenerateHash = require("../../functions/generate_hash");
 const verify = require("../../functions/verify");
 
-router.put("/", async (req, res) => {
+router.post("/", async (req, res) => {
 	try {
 		const stars = Math.ceil(req.body.stars);
 		const message = req.body.message;

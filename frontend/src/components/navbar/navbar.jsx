@@ -25,7 +25,7 @@ function Navbar() {
 		<>
 			<nav class="navbar navbar-expand-lg ">
 				<div class="container-fluid">
-					<img className="img-logo" src="./logo.png"></img>
+					<img className="img-logo" src="../logo.png"></img>
 					<button
 						class="navbar-toggler"
 						type="button"
