@@ -46,10 +46,11 @@ function Login() {
       .then((data) => {
         if(data.VerificationCode){
           setCookie("UserToken", data.VerificationCode, 7);
-          alert("Přihlášení proběhlo úspěšně");
+          //alert("Přihlášení proběhlo úspěšně");
+          location.href = "/"
         }
         else{
-          alert("Přihlášení se nezdařilo" + data.message);
+          alert("Přihlášení se nezdařilo " + data.message);
         }
       })
       .catch((error) => console.error("Error:", error));

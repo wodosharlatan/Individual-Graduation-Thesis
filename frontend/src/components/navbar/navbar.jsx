@@ -1,6 +1,12 @@
 import "./_mainstyle.scss";
 import { useState, useEffect } from "react";
 
+
+function handleDirect() {
+	window.location.href = `/cart`;
+}
+
+
 function Navbar() {
 	const [categories, setCategories] = useState([]);
 
@@ -44,7 +50,6 @@ function Navbar() {
 									Domů
 								</a>
 							</li>
-							
 						</ul>
 						<form class="d-flex" role="search">
 							<input
@@ -58,8 +63,14 @@ function Navbar() {
 							</button>
 						</form>
 						<i className="uil uil-user-circle"></i>
+						<i
+							className="uil uil-shopping-bag"
+							onClick={() => {
+								handleDirect();
+							}}
+						></i>
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						{categories.length > 0 &&
+							{categories.length > 0 &&
 								categories.map((Category, index) => (
 									<li class="nav-item nav-item-hidden" key={index}>
 										<a
@@ -71,7 +82,7 @@ function Navbar() {
 										</a>
 									</li>
 								))}
-								</ul>
+						</ul>
 					</div>
 				</div>
 			</nav>

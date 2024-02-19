@@ -12,7 +12,6 @@ function Home() {
 		fetchCategories();
 
 		setProducts([
-			
 			{
 				_id: "65b018095e8df60f1a1a46fa",
 				productName: "Ctenarsky Denik",
@@ -499,7 +498,7 @@ function Home() {
 					{products.map((product, index) => (
 						<div className="divproduct" key={index}>
 							<div className="divproduct_img">
-								<img
+								<img className="imgh"
 									src={product.productImagePath}
 									alt={`Image for ${product.productName}`}
 								/>
@@ -520,7 +519,7 @@ function Home() {
 								}}
 								className="divproduct_add"
 							>
-								<p>Podrobnosti</p>
+								<p className="textadd">Podrobnosti</p>
 							</div>
 						</div>
 					))}

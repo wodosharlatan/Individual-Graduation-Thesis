@@ -45,8 +45,8 @@ function Category() {
 		<>
 			<Navbar />
 
-			<div className="divhome">
-				<div className="divcat">
+			<div className="divcategorypage">
+				<div className="divcat_categorypage">
 					<aside className="kategorie">
 						<h1 className="nadpis">Kategorie</h1>
 						{categories.map((Category, index) => (
@@ -61,27 +61,32 @@ function Category() {
 					</aside>
 				</div>
 
-				<div className="divproductspage2">
+				<div className="divproductspage2_categorypage">
 					{products.map((product) => (
-						<div className="divproduct" key={product.id}>
-							<div className="divproduct_img">
-								<img
+						<div className="divproduct_categorypage" key={product.id}>
+							<div className="divproduct_img_categorypage">
+								<img className="imgc"
 									src={product.productImagePath}
 									alt={`Image for ${product.productName}`}
 								/>
 							</div>
 
-							<div className="divproduct_rating">
+							<div className="divproduct_rating_categorypage">
 								<p>{product.productRating}</p>
 							</div>
-							<div className="divproduct_name">
+							<div className="divproduct_name_categorypage">
 								<p>{product.productName}</p>
 							</div>
-							<div className="divproduct_price">
+							<div className="divproduct_price_categorypage">
 								<p>{product.productPrice},- Kč</p>
 							</div>
-							<div className="divproduct_add">
-								<p>Do košíku</p>
+							<div
+								onClick={() => {
+									handleDirect(product.productName);
+								}}
+								className="divproduct_add_categorypage"
+							>
+								<p className="textadd_categorypage">Podrobnosti</p>
 							</div>
 						</div>
 					))}

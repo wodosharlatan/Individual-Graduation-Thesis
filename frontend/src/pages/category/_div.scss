@@ -1,4 +1,4 @@
-.divhome {
+.divcategorypage {
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
@@ -6,7 +6,7 @@
 	height: 100%;
 }
 
-.divcat {
+.divcat_categorypage {
 	height: 100%;
 	display: flex;
 	flex-direction: row;
@@ -17,22 +17,19 @@
 	margin-right: 1vw;
 }
 
-.divproductspage2 {
-	//background-color: #dddada !important;
+.divproductspage2_categorypage {
 	border-radius: 20px;
 	display: inline-grid;
-	row-gap: 2%;
+	row-gap: 0% !important;
 	column-gap: 2%;
 	grid-template-columns: 22% 22% 22% 22%;
 	justify-content: space-evenly;
 	align-items: center;
 	width: 80%;
-	height: fit-content;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	height: fit-content !important;
 }
 
-.divproduct {
+.divproduct_categorypage {
 	display: grid;
 	height: fit-content;
 	grid-template-columns: 90%;
@@ -42,68 +39,69 @@
 	padding-top: 2%;
 	background-color: #dddada;
 	border-radius: 20px;
+	margin-top: 5%;
+	margin-bottom: 5%;
 
-	.divproduct_img {
+	.divproduct_img_categorypage {
 		overflow: hidden;
 		grid-row: 1;
 		text-align: center;
+		justify-content: center;
+		height: 400px;
+		border-radius: 20px;
+		display: flex;
 
-		display: inline-block;
-
-		img {
-			height: 300px;
+		.imgc {
+			height: 250px;
 			border-radius: 20px;
 			width: auto;
 			object-fit: contain;
 			-webkit-object-fit: contain;
 			-moz-object-fit: contain;
 			-o-object-fit: contain;
+			margin-left: auto;
+			margin-right: auto;
 		}
 	}
 
-	.divproduct_rating {
+	.divproduct_rating_categorypage {
 		grid-row: 2;
 		text-align: center;
-    color: black;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: bolder;
-    line-height: normal;
-    margin-top: -5% !important; 
-    
+		color: black;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 18px;
+		font-style: normal;
+		font-weight: bolder;
+		line-height: normal;
+		padding-top: 5%;
 	}
 
-	.divproduct_name {
+	.divproduct_name_categorypage {
 		grid-row: 3;
 		text-align: center;
 		color: black;
-		font-weight: bold;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 20px;
 		font-style: normal;
 		font-weight: bolder;
 		line-height: normal;
-    margin-top: -10% !important; 
+		padding-top: 5%;
 	}
 
-	.divproduct_price {
+	.divproduct_price_categorypage {
 		grid-row: 4;
 		text-align: center;
 		color: black;
-		font-weight: bold;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 25px;
 		font-style: normal;
 		font-weight: bolder;
-		line-height: normal; 
+		line-height: normal;
 	}
 
-	.divproduct_add {
+	.divproduct_add_categorypage {
 		grid-row: 5;
 		background-color: #5f6f52;
-		text-align: center;
 		border-radius: 20px;
 		color: white;
 		font-family: Arial, Helvetica, sans-serif;
@@ -111,62 +109,51 @@
 		font-style: normal;
 		font-weight: 400;
 		line-height: normal;
+		display: table;
+	}
+
+	.textadd_categorypage {
+		font-size: 22px;
+		text-align: center;
+		vertical-align: middle;
+		display: table-cell;
+		font-weight: bold;
 	}
 }
 
-@media only screen and (max-width: 1350px) {
-	.div_products_page2 {
-		border-radius: 20px;
-		display: inline-grid;
-		row-gap: 2%;
-		column-gap: 2%;
-		grid-template-columns: 29% 29% 29%;
-		justify-content: space-evenly;
-		align-items: center;
-		width: 80%;
-		height: auto !important;
-	}
-  }
+.divproduct_add_categorypage :hover {
+	background: #5f6f52;
+	background: linear-gradient(0deg, #4b5543 0%, #49573c 100%);
+	border-radius: 20px;
+}
 
-  @media only screen and (max-width: 1000px) {
-	.div_products_page2 {
-		border-radius: 20px;
-		display: inline-grid;
-		row-gap: 2%;
-		column-gap: 2%;
+@media only screen and (max-width: 1350px) {
+	.divproductspage2_categorypage {
+		grid-template-columns: 29% 29% 29%;
+	}
+}
+
+@media only screen and (max-width: 992px) {
+	.divcat_categorypage {
+		display: none;
+	}
+	.divproductspage2_categorypage {
 		grid-template-columns: 44% 44%;
 		justify-content: space-evenly;
 		align-items: center;
-		width: 80%;
-		height: auto !important;
-	}
-  }
-
-  @media only screen and (max-width: 700px) {
-	.div_products_page2 {
-		border-radius: 20px;
-		display: inline-grid;
-		row-gap: 2%;
-		column-gap: 2%;
-		grid-template-columns: 100%;
-		justify-content: space-evenly;
-		align-items: center;
-		width: 60%;
-		height: auto !important;
-	}
-	.divcat {
-		height: fit-content;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		width: 40%;
-		overflow: hidden;
-		margin-right: 1vw;
-	}
-
-	.divproduct {
 		width: 100%;
 	}
+}
 
-  }
+@media only screen and (max-width: 600px) {
+	.divcat_categorypage {
+		display: none;
+	}
+		.divproductspage2_categorypage {
+			grid-template-columns: 90%;
+			justify-content: space-evenly;
+			align-items: center;
+			width: 100%;
+		}
+	}
+

@@ -11,7 +11,32 @@ function Single_Product() {
 
 	useEffect(() => {
 		fetchProduct(PRODUCT_NAME);
+		setProducts([{
+			_id: "65b0379b3070f8420dae75d4",
+			productName: "Zaklinac",
+			productDescription: "obrazek 2",
+			productPrice: 554,
+			productCategory: "Knihy",
+			productQuantity: 3,
+			productRating: 0,
+			productReviews: [],
+			productStatus: "dostupne",
+			productImagePath:
+				"https://storage.cloud.google.com/image-server-bucket-24/1707573151382-MainPicture.png",
+			productFileName: "1707573151382-MainPicture.png",
+			__v: 0,
+		}]);
 	}, []);
+
+
+	function handleStars(){}
+	function handleReview(){}
+
+	function fetchProduct(product) {
+		
+	}
+
+	/*
 
 	function fetchProduct(product) {
 		const requestOptions = {
@@ -80,6 +105,8 @@ function Single_Product() {
 			.catch((error) => console.log(error));
 	}
 
+	*/
+
 	return (
 		<>
 			<Navbar />
@@ -89,13 +116,13 @@ function Single_Product() {
 					<>
 						<div className="divnav">
 							<a href="/category" className="textnav">
-								Kategorie -{" "}
+								Kategorie {" "}
 							</a>
 							<a
 								href={"/category/" + product.productCategory}
 								className="textnav"
 							>
-								{product.productCategory} -
+								{product.productCategory} 
 							</a>
 							<a href={"/product/" + product.productName} className="textnav">
 								{product.productName}
@@ -108,30 +135,30 @@ function Single_Product() {
 								alt="product image"
 							/>
 							<div className="productName">
-								<a className="productNameText">{product.productName}</a>
+								<p className="productNameText">{product.productName}</p>
 							</div>
 							<div className="productDesc">
-								<a className="productDescText">
+								<p className="productDescText">
 									An alternative syntax that alloction, which value of 0 is
 									used, meaning e the next event cycle. Note that in either
 									case, the actualdelay may be longer than intended; see Reasons
 									for d elays longer than specified below.{" "}
 									{product.productDescription}
-								</a>
+								</p>
 							</div>
 
 							<div className="productCat">
-								<a className="productCatText">
+								<p className="productCatText">
 									Kategorie: {product.productCategory}
-								</a>
+								</p>
 							</div>
 							<div className="productPrice">
-								<a className="productPriceText">{product.productPrice},- Kč</a>
+								<p className="productPriceText">{product.productPrice},- Kč</p>
 							</div>
 							<div className="productAmount">
-								<a className="productAmountText">
+								<p className="productAmountText">
 									Skladem: {product.productQuantity}
-								</a>
+								</p>
 							</div>
 
 							{product.productReviews && product.productReviews.length > 0 && (
@@ -148,13 +175,13 @@ function Single_Product() {
 							)}
 
 							<div className="productRating">
-								<a className="productRatingText">
+								<p className="productRatingText">
 									Recenze {product.productRating}
-								</a>
-								<a className="productRatingStarts">★★★★★</a>
+								</p>
+								<p className="productRatingStarts">★★★★★</p>
 							</div>
 							<div onClick="toCart()" className="productToCart">
-								<a className="addToCartText">Do košíku</a>
+								<p className="addToCartText">Do košíku</p>
 							</div>
 						</div>
 						<div className="divproductspage2"></div>
@@ -181,8 +208,6 @@ function Single_Product() {
 								Click me
 							</button>
 						</form>
-
-						<iframe width="893" height="502" src="https://www.youtube.com/embed/saekf1zI64o" title="Fat Nigga Twerking to epic indian paki music 1080p awesome" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 						<h1 className="otherProductsText">Podobné produkty</h1>
 						<div className="otherProducts">
