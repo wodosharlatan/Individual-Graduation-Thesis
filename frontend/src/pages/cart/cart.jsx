@@ -7,30 +7,103 @@ function Cart() {
 		<>
 			<Navbar />
 			<div className="divcart">
+
+
+
 				<div className="cartitems">
-					<img className="" src="./logo.png"></img>
-					<p>Název produktu</p>
-					<p>
-						množství <input type="number"></input>
-					</p>
-					<p>Cena: 150,- kč/ks</p>
+					<div className="cartimg">
+						<img className="" src="./logo.png"></img>
+					</div>
+					<div className="cartname">
+						<p>Název produktu</p>
+					</div>
+					<div className="cartquantity">
+						<p>
+						<input type="number"></input>
+						</p>
+							
+					</div>
+
+					<div className="cartdelete">
+						<p>Odebrat</p>
+					</div>
+					<div className="cartprice">
+						<p>Cena: 150,- kč/ks</p>
+					</div>
 				</div>
+
+				
 				<div className="cartitems">
-					<img className="" src="./logo.png"></img>
-					<p>Název produktu2</p>
-					<p>
-						množství <input type="number"></input>
-					</p>
-					<p>Cena: 1340,- kč/ks</p>
+					<div className="cartimg">
+						<img className="" src="./logo.png"></img>
+					</div>
+					<div className="cartname">
+						<p>Název produktu</p>
+					</div>
+					<div className="cartquantity">
+						<p>
+						<input type="number"></input>
+						</p>
+							
+					</div>
+
+					<div className="cartdelete">
+						<p>Odebrat</p>
+					</div>
+					<div className="cartprice">
+						<p>Cena: 150,- kč/ks</p>
+					</div>
 				</div>
+
+				
 				<div className="cartitems">
-					<img className="" src="./logo.png"></img>
-					<p>Název produktu23</p>
-					<p>
-						množství <input type="number"></input>
-					</p>
-					<p>Cena: 140,- kč/ks</p>
+					<div className="cartimg">
+						<img className="" src="./logo.png"></img>
+					</div>
+					<div className="cartname">
+						<p>Název produktu</p>
+					</div>
+					<div className="cartquantity">
+						<p>
+						<input type="number"></input>
+						</p>
+							
+					</div>
+
+					<div className="cartdelete">
+						<p>Odebrat</p>
+					</div>
+					<div className="cartprice">
+						<p>Cena: 150,- kč/ks</p>
+					</div>
 				</div>
+
+				
+				<div className="cartitems">
+					<div className="cartimg">
+						<img className="" src="./logo.png"></img>
+					</div>
+					<div className="cartname">
+						<p>Název produktu</p>
+					</div>
+					<div className="cartquantity">
+						<p>
+						<input type="number"></input>
+						</p>
+							
+					</div>
+
+					<div className="cartdelete">
+						<p>Odebrat</p>
+					</div>
+					<div className="cartprice">
+						<p>Cena: 150,- kč/ks</p>
+					</div>
+				</div>
+
+
+
+				
 				<div className="totalprice">
 					<p>Celkem: 1432,- kč</p>
 				</div>

@@ -15,6 +15,29 @@
 
 }
 
+.btn-outline-success
+{
+  border-color: #ced4da;
+  color: black;
+}
+
+.btn-outline-success:hover
+{
+  border-color: #a9b388;
+  color: white;
+  background-color: #a9b388;
+}
+
+.form-control
+{
+  border-color: #ced4da;
+}
+
+.nav-link:hover
+{
+  font-weight: bold;
+}
+
 
 .form-inline {
   display: flex;
@@ -27,9 +50,19 @@
   padding-right: 1vw;
 }
 
+.uil-user-circle:hover {
+  font-size: 45px;
+  padding-right: 1vw;
+}
+
 .uil-shopping-bag
 {
   font-size: 40px;
+}
+
+.uil-shopping-bag:hover
+{
+  font-size: 45px;
 }
 
 .d-flex{
