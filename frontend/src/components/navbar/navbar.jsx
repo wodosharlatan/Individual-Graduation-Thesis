@@ -6,6 +6,10 @@ function handleDirect() {
 	window.location.href = `/cart`;
 }
 
+function handleDirect1() {
+	window.location.href = `/user_setting`;
+}
+
 
 function Navbar() {
 	const [categories, setCategories] = useState([]);
@@ -62,7 +66,11 @@ function Navbar() {
 								Hledat
 							</button>
 						</form>
-						<i className="uil uil-user-circle"></i>
+						<i 
+							className="uil uil-user-circle"
+							onClick={() => {
+								handleDirect1();
+							}}></i>
 						<i
 							className="uil uil-shopping-bag"
 							onClick={() => {

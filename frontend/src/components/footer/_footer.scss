@@ -1,8 +1,55 @@
 .divfoot{
-background-color: yellow;
-padding-bottom: 2rem;
+background-color: #dddada;
 text-align: center;
 width: 100%;
+display: grid;
+grid-template-columns: 33% 33% 33%;
+height: fit-content;
+padding-bottom: 2vw;
+padding-top: 2vw;
+}
+
+.contacts{
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+
+.about{
+    grid-column-start: 3;
+    grid-column-end: 4;
 
 
+}
+
+.delivery_payment{
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    .dopravaimg{
+        border-radius: 0;
+        height: 25px;
+        margin-top: 30px;
+    }
+    
+    .dopravaimgcz{
+        border-radius: 0;
+        height: 40px;
+        margin-top: 30px;
+    }
+    
+}
+
+
+
+
+.uil-facebook-f{
+    font-size: 40px;
+    
+    margin-left: 20px;
+}
+
+.uil-instagram{
+    font-size: 40px;
+    margin-right: 20px;
 }

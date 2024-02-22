@@ -17,6 +17,7 @@ import All_Users from "./pages/users/user.jsx";
 import Manage_Single_Product from "./pages/products/manage_single_product/manage_single.jsx";
 import Cart from "./pages/cart/cart.jsx";
 import Payment_delivery from "./pages/payment_delivery/payment_delivery.jsx";
+import User_setting from "./pages/usersettings/usersetting.jsx";
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/payment_delivery" element={<Payment_delivery/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/user_setting" element={<User_setting/>}/>
         
         <Route path="/category/:CATEGORY_NAME" element={<Category/>}/>
 
