@@ -11,32 +11,9 @@ function Single_Product() {
 
 	useEffect(() => {
 		fetchProduct(PRODUCT_NAME);
-		setProducts([{
-			_id: "65b0379b3070f8420dae75d4",
-			productName: "Zaklinac",
-			productDescription: "obrazek 2",
-			productPrice: 554,
-			productCategory: "Knihy",
-			productQuantity: 3,
-			productRating: 0,
-			productReviews: [],
-			productStatus: "dostupne",
-			productImagePath:
-				"https://storage.cloud.google.com/image-server-bucket-24/1707573151382-MainPicture.png",
-			productFileName: "1707573151382-MainPicture.png",
-			__v: 0,
-		}]);
 	}, []);
 
 
-	function handleStars(){}
-	function handleReview(){}
-
-	function fetchProduct(product) {
-		
-	}
-
-	/*
 
 	function fetchProduct(product) {
 		const requestOptions = {
@@ -105,7 +82,6 @@ function Single_Product() {
 			.catch((error) => console.log(error));
 	}
 
-	*/
 
 	return (
 		<>
