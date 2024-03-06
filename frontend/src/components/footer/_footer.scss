@@ -1,55 +1,110 @@
-.divfoot{
-background-color: #dddada;
-text-align: center;
-width: 100%;
-display: grid;
-grid-template-columns: 33% 33% 33%;
-height: fit-content;
-padding-bottom: 2vw;
-padding-top: 2vw;
+.info{
+	//text-decoration: none;
+	color: black;
 }
 
-.contacts{
-    grid-column-start: 1;
-    grid-column-end: 2;
-
+.linksoc{
+	text-decoration: none;
+	color: black;
 }
 
-.about{
-    grid-column-start: 3;
-    grid-column-end: 4;
-
-
+.divfoot {
+	background-color: #dddada;
+	text-align: center;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 33% 33% 33%;
+	height: fit-content;
+	padding-bottom: 2vw;
+	padding-top: 2vw;
 }
 
-.delivery_payment{
-    grid-column-start: 2;
-    grid-column-end: 3;
+.contacts {
+	grid-column-start: 1;
+	grid-column-end: 2;
+}
 
-    .dopravaimg{
-        border-radius: 0;
-        height: 25px;
-        margin-top: 30px;
+.about {
+	grid-column-start: 3;
+	grid-column-end: 4;
+}
+
+.delivery_payment {
+	grid-column-start: 2;
+	grid-column-end: 3;
+
+	.dopravaimg {
+		border-radius: 0;
+		height: 25px;
+		margin-top: 30px;
+	}
+
+	.dopravaimgcz {
+		border-radius: 0;
+		height: 40px;
+		margin-top: 30px;
+	}
+}
+
+.uil-facebook-f {
+	font-size: 40px;
+
+	margin-left: 20px;
+}
+
+.uil-instagram {
+	font-size: 40px;
+	margin-right: 20px;
+}
+
+@media only screen and (max-width: 700px) {
+	.divfoot {
+		grid-template-columns: 50% 50%;
+		grid-template-rows: 50% 50%;
+		height: 600px;
+	}
+
+	.about {
+		grid-column-start: 1;
+		grid-column-end: 3;
+		grid-row-start: 2;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.divfoot {
+		grid-template-columns: 100%;
+		grid-template-rows: auto auto auto;
+		height: 600px;
+	}
+
+	.about {
+		grid-column-start: 1;
+		grid-row-start: 3;
+	}
+
+    .contacts {
+        grid-column-start: 1;
+        grid-row-start: 1;
+    }
+
+    .delivery_payment {
+        grid-column-start: 1;
+        grid-row-start: 2;
+        
+    
+        .dopravaimg {
+            border-radius: 0;
+            height: 25px;
+            margin-top: 30px;
+        }
+    
+        .dopravaimgcz {
+            border-radius: 0;
+            height: 40px;
+            margin-top: 30px;
+        }
     }
     
-    .dopravaimgcz{
-        border-radius: 0;
-        height: 40px;
-        margin-top: 30px;
-    }
     
-}
-
-
-
-
-.uil-facebook-f{
-    font-size: 40px;
-    
-    margin-left: 20px;
-}
-
-.uil-instagram{
-    font-size: 40px;
-    margin-right: 20px;
 }

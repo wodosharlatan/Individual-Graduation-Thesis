@@ -100,8 +100,8 @@ function Registration() {
       <div className="body_reg">
         <h1 className="Nadpis_Stranky1_reg">Dárky z Pedigu</h1>
 
-        <div className="Tabulka_1_reg">
-          <a className="Nadpis_Stranky2_reg">Registrace</a>
+        <div className="ttabulka_1_reg">
+          <a className="nnadpis_Stranky2_reg">Registrace</a>
 
           <div className="divok2_reg">
             <div className="divok_reg">

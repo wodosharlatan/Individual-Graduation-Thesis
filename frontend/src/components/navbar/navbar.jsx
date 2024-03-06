@@ -35,7 +35,7 @@ function Navbar() {
 		<>
 			<nav class="navbar navbar-expand-lg ">
 				<div class="container-fluid">
-					<img className="img-logo" src="../logo.png"></img>
+					<a href="/"><img className="img-logo" src="../logo.png"></img></a>
 					<button
 						class="navbar-toggler"
 						type="button"
@@ -50,9 +50,7 @@ function Navbar() {
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="/">
-									Domů
-								</a>
+								
 							</li>
 						</ul>
 						<form class="d-flex" role="search">

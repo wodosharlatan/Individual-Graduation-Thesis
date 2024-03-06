@@ -16,7 +16,6 @@ function Home() {
 		window.location.href = `/product/${productName}`;
 	}
 
-
 	const fetchData = async () => {
 		try {
 			const response = await fetch("/API/products");
@@ -42,8 +41,6 @@ function Home() {
 		}
 	};
 
-
-
 	return (
 		<>
 			<Navbar />
@@ -68,7 +65,8 @@ function Home() {
 					{products.map((product, index) => (
 						<div className="divproduct" key={index}>
 							<div className="divproduct_img">
-								<img className="imgh"
+								<img
+									className="imgh"
 									src={product.productImagePath}
 									alt={`Image for ${product.productName}`}
 								/>
@@ -95,7 +93,6 @@ function Home() {
 					))}
 				</div>
 			</div>
-
 			<Footer />
 		</>
 	);
