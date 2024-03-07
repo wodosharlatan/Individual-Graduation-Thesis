@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^apple-touch.*\.png$ .public/logomalebez.png [R=301,L]
