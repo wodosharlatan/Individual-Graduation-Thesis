@@ -25,6 +25,7 @@
 .nnadpis_Stranky2_reg {
   position: inherit;
   margin-top: -100px;
+  margin-bottom: 20px;
 }
 
 .Nadpis_Stranky3_reg {
@@ -36,6 +37,23 @@
   font-weight: 400;
   line-height: normal;
   text-decoration: none;
+}
+
+.Nadpis_Stranky4_reg {
+  color: #000;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  
+}
+.check{
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 1700px) {
@@ -100,9 +118,9 @@
     margin-left: 0px;
   }
   
-  .Nadpis_Stranky2_reg {
+  .nnadpis_Stranky2_reg {
     position: inherit;
-    margin-top: -300px;
+    margin-top: -400px !important ;
   }
   
   .Nadpis_Stranky3_reg {
