@@ -1,49 +1,37 @@
-
-
-
-.img-logo{
+.img-logo {
   height: 100px;
   width: auto;
 }
 
 @media screen and (min-width: 992px) {
-  .nav-item-hidden{
+  .nav-item-hidden {
     display: none;
   }
-  
-
-
 }
 
-.btn-outline-success
-{
+.btn-outline-success {
   border-color: #ced4da;
   color: black;
 }
 
-.btn-outline-success:hover
-{
+.btn-outline-success:hover {
   border-color: #a9b388;
   color: white;
   background-color: #a9b388;
 }
 
-.form-control
-{
+.form-control {
   border-color: #ced4da;
 }
 
-.nav-link:hover
-{
+.nav-link:hover {
   font-weight: bold;
 }
-
 
 .form-inline {
   display: flex;
   flex-direction: row;
 }
-
 
 .uil-user-circle {
   font-size: 40px;
@@ -55,26 +43,23 @@
   padding-right: 1vw;
 }
 
-.uil-shopping-bag
-{
+.uil-shopping-bag {
   font-size: 40px;
 }
 
-.uil-shopping-bag:hover
-{
+.uil-shopping-bag:hover {
   font-size: 45px;
 }
 
-.d-flex{
+.d-flex {
   padding-right: 30px;
 }
 
-.nav-item{
+.nav-item {
   padding-left: 2vw;
 }
 
-
-.btn-outline-success{
+.btn-outline-success {
   --bs-btn-active-border-color: #848b6a;
-  --bs-btn-active-bg:#848b6a;
+  --bs-btn-active-bg: #848b6a;
 }

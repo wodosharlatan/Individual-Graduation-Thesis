@@ -7,8 +7,10 @@ function Footer() {
 				<h2>Kontakty</h2>
 				<p>+420 123 648 273</p>
 				<p>darkyzpedigu@gmail.com</p>
-				<a target="_blank" className="linksoc" href="https://www.instagram.com/darkyzpedigu/"><i className="uil uil-instagram"></i></a>
-				<a target="_blank" className="linksoc" href="https://www.facebook.com/groups/442086279211061/"><i className="uil uil-facebook-f"></i></a>
+				<a target="_blank" className="linksoc" href="https://www.instagram.com/darkyzpedigu/">
+					<i className="uil uil-instagram"></i></a>
+				<a target="_blank" className="linksoc" href="https://www.facebook.com/groups/442086279211061/">
+					<i className="uil uil-facebook-f"></i></a>
 			</div>
 			<div className="delivery_payment">
 				<h2>Možnosti dopravy</h2>

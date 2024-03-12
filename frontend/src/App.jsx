@@ -26,6 +26,22 @@ import HomePage2 from "./pages/homepage2/homepage2.jsx";
 
 function App() {
 
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
   return (
     <>
      <Router>
@@ -40,7 +56,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/payment_delivery" element={<Payment_delivery/>}/>
         <Route path="/cart" element={<Cart/>}/>
-        <Route path="/user_setting" element={<User_setting/>}/>
+        <Route path={getCookie("UserToken") ? "/user_setting" : "/"} element={<User_setting/>}/>
         <Route path="/delivery_data" element={<Delivery_data/>}/>
         <Route path="/delivery_option" element={<Delivery_option/>}/>
         <Route path="/delivery_summary" element={<Delivery_summary/>}/>

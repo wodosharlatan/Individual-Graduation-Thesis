@@ -61,6 +61,7 @@ function Single_Product() {
 
 		let raw = JSON.stringify({
 			stars: stars,
+			productName: PRODUCT_NAME,
 			message: review,
 			userToken: getCookie("UserToken"),
 		});
@@ -72,12 +73,10 @@ function Single_Product() {
 			redirect: "follow",
 		};
 
-		console.log(requestOptions);
 
 		fetch(`/API/reviews`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
-				setProducts(result);
 				console.log(result);
 			})
 			.catch((error) => console.log(error));
@@ -153,7 +152,7 @@ function Single_Product() {
 
 							<div className="productRating">
 								<p className="productRatingText">
-									Recenze {product.productRating}
+									Recenze {product.productReviews}
 								</p>
 								<p className="productRatingStarts">★★★★★</p>
 							</div>

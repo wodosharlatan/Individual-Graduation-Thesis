@@ -14,6 +14,11 @@ function Category() {
 		fetchCategories();
 	}, []);
 
+	function handleDirect(productName) {
+		window.location.href = `/product/${productName}`;
+	}
+
+
 	function fetchProducts(category) {
 		const requestOptions = {
 			method: "GET",
@@ -29,6 +34,7 @@ function Category() {
 			.catch((error) => alert("Error:", error));
 	}
 
+	
 	const fetchCategories = async () => {
 		try {
 			const response = await fetch("/API/categories");
