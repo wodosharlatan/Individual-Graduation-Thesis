@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 		});
 
 		if (!productName) {
-			return res.status(400).json({ message: "User not found" });
+			return res.status(400).json({ message: "Product not found" });
 		}
 
 		for (let i = 0; i < productName.productReviews.length; i++) {
