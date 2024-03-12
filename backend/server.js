@@ -95,7 +95,7 @@ else {
 
 	// Connect to MongoDB based on environment
 	mongoose
-		.connect(process.env.DB_CONNECTION_DEV, { useNewUrlParser: true })
+		.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
 		.then(() => console.log("Connected to MongoDB!"))
 		.catch((error) => console.error("Error connecting to MongoDB", error));
 }

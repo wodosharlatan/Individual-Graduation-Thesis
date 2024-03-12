@@ -152,7 +152,7 @@ router.post("/", async (req, res) => {
 
 		await newUser.save();
 		await SendEmail(validEmail, `Ahoj ${validName}`, "verification", context);
-
+		
 		res.json({
 			message: "User created successfully, Check your email",
 		});
