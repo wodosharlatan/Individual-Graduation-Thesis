@@ -52,9 +52,9 @@ app.use("/API/products", 		 productRoute);
 app.use("/API/categories",  	 categoryRoute);
 app.use("/API/reviews", 		 reviewRoute)
 
-// Home route
+// Render react app on server side
 app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "dist", "index.html"));
+	res.render(path.join(__dirname, "dist", "index.html"));
 });
 
 // 404 route
