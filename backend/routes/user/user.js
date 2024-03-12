@@ -250,7 +250,7 @@ router.get("/zmena-udaju/:CODE", async (req, res) => {
 router.post("/zmena-udaju", async (req, res) => {
 	try {
 		// Check if user already exists by email
-		const user = await User.findOne({ Email: req.body.Email });
+		const user = await User.findOne({ VerificationCode: req.body.UserToken });
 		if (user) {
 			return res.status(400).json({ message: "User already exists" });
 		}
@@ -259,7 +259,6 @@ router.post("/zmena-udaju", async (req, res) => {
 		// Declare all User Data fields
 		const validPassword = req.body.Password;
 		const verification = req.body.Verification;
-		const validEmail = req.body.Email;
 		const validName = req.body.Name;
 		const validTelephone = req.body.Telephone;
 		const validStreetNumber = req.body.StreetNumber;
@@ -371,7 +370,7 @@ router.post("/zmena-udaju", async (req, res) => {
 		// Update The User
 		await User.findOneAndUpdate(
 			{
-				Email: req.body.Email
+				Email: user.Email
 			},
 			{
 				Password: hashedPassword,
