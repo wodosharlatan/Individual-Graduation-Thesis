@@ -1,9 +1,16 @@
+.divtext{
+	display: grid;
+	grid-column-start: 1;
+	grid-column-end: 5;
+}
+
 .divhome {
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
 	width: 100%;
 	height: fit-content;
+	
 }
 
 .divcat {
@@ -14,6 +21,7 @@
 	justify-content: center;
 	width: 20%;
 	overflow: hidden;
+
 }
 
 .div_products_page2 {

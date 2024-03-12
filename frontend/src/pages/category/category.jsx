@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
 import "./_mainstyle.scss";
+import Footer from "../../components/footer/footer";
 
 function Category() {
 	const [products, setProducts] = useState([]);
@@ -65,7 +66,8 @@ function Category() {
 					{products.map((product) => (
 						<div className="divproduct_categorypage" key={product.id}>
 							<div className="divproduct_img_categorypage">
-								<img className="imgc"
+								<img
+									className="imgc"
 									src={product.productImagePath}
 									alt={`Image for ${product.productName}`}
 								/>
@@ -92,6 +94,7 @@ function Category() {
 					))}
 				</div>
 			</div>
+			<Footer />
 		</>
 	);
 }

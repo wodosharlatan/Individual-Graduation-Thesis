@@ -1,0 +1,32 @@
+.nadpis_del{
+    margin: auto;
+    width: 90%;
+}
+
+.delidiv{
+    width: 90%;
+    margin: auto;
+    height: fit-content;
+    padding: 2%;
+}
+
+.delidiv_item{
+    display: grid;
+    grid-template-columns: 5% 45% 50%;
+    margin: auto;
+    a{
+        font-weight: 600;
+        justify-self: start;
+    }
+    input{
+        justify-self: start;
+    }
+    .imgdel{
+        width: 100px;
+        border-radius: 0;
+    }
+    .imgdelcz{
+        width: 40px;
+        border-radius: 0;
+    }
+}

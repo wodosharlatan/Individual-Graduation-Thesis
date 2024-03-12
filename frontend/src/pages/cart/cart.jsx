@@ -19,7 +19,7 @@ function Cart() {
 					</div>
 					<div className="cartquantity">
 						<p>
-						<input type="number"></input>
+						<input type="number" min={1}></input>
 						</p>
 							
 					</div>
