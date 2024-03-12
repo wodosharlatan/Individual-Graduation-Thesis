@@ -114,4 +114,21 @@ router.delete("/", async (req, res) => {
 	}
 });
 
+router.post("/list-reviews", async (req, res) => {
+	try {
+		const product = await Products.findOne({
+			productName: req.body.productName,
+		});
+
+		if (!product) {
+			return res.status(400).json({ message: "Product not found" });
+		}
+
+		return res.status(200).json({ reviews: product.productReviews });
+
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+});
+
 module.exports = router;
