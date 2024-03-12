@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 		});
 
 		if (!productName) {
-			return res.status(400).json({ message: "User not found" });
+			return res.status(400).json({ message: "Product not found" });
 		}
 
 		for (let i = 0; i < productName.productReviews.length; i++) {
@@ -108,6 +108,23 @@ router.delete("/", async (req, res) => {
       return res.status(200).json({ message: "Review Deleted" });
     }
 
+
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+});
+
+router.post("/list-reviews", async (req, res) => {
+	try {
+		const product = await Products.findOne({
+			productName: req.body.productName,
+		});
+
+		if (!product) {
+			return res.status(400).json({ message: "Product not found" });
+		}
+
+		return res.status(200).json({ reviews: product.productReviews });
 
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });

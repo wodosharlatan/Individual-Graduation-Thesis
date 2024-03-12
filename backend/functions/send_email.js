@@ -33,7 +33,8 @@ async function SendEmail(user, subject, template, context) {
 	};
 
 	try {
-		await transporter.sendMail(mailOptions);
+		const result = await transporter.sendMail(mailOptions);
+		return result;
 	} catch (error) {
 		console.log(error);
 	}
