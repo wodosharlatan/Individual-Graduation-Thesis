@@ -29,10 +29,17 @@ async function deleteFile(fileName) {
 	console.log(`gs://${bucketName}/${fileName} deleted`);
 }
 
+ 
+
 router.post("/", async (req, res) => {
 	const session = await mongoose.startSession();
 	session.startTransaction();
 	try {
+
+		if ((await verify(req.body.UserToken)) !== true) {
+			return res.status(400).json({ message: "User not authorized" });
+		}
+
 		const productName = req.body.productName;
 
 		if (isNull(productName)) {
