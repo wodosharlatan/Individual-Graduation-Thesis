@@ -63,6 +63,9 @@ function Home() {
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="keywords" content="Dárky, Pedigu, Pedig, Košík, Výrobek, Přírodní materiál, Ruční výroba, Malá dílnička"></meta>
+		<meta name="author" content="Tomáš Bosák"></meta>
+		<meta name="author" content="Marek Hejral"></meta>
         <title>Dárky z pedigu | vlastnoruční produkce výrobků z pedigu</title>
         <meta
           name="description"
@@ -92,25 +95,25 @@ function Home() {
         <div className="div_products_page2">
           <div className="divtext">
             <div className="texthomepage">
-              <h1>Ahoj, my jsme Dárky z pediguuu!</h1>
+              <h1>Ahoj, my jsme Dárky z pedigu!</h1>
               <br></br>
-              <h4>
+              <p className="paragrapfhome">
                 U nás si vybere každý. Produkty jsou určené jak pro muže tak pro
                 ženy.
-              </h4>
-              <h4>
+              </p>
+              <p className="paragrapfhome">
                 Chcete svým nejbližším udělat radost, nebo si jen vydekorovat
                 byt? Zde najdete to co hledáte.
-              </h4>
-              <h4>
+              </p>
+              <p className="paragrapfhome">
                 Všechny produkty jsou ručně vyrobené v malé dílničce v
                 podkrkonoší mnou, Bárou.
-              </h4>
+              </p>
             </div>
             <br></br>
             <br></br>
             <div className="akcetext">
-              <h1>Termíny akcí, kde mě a mé výrobky můžete potkat.</h1>
+              <h1>Termíny akcí, kde mě a mé výrobky můžete potkatttt.</h1>
               <br></br>
               <h4>14.3. - Kino 70 Nové Město nad Metují velikonoční jarmark</h4>
               <h4>16.3. - Dolní Bousov Josefský trh</h4>
