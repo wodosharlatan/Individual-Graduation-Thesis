@@ -251,8 +251,8 @@ router.post("/zmena-udaju", async (req, res) => {
 	try {
 		// Check if user already exists by email
 		const user = await User.findOne({ VerificationCode: req.body.UserToken });
-		if (user) {
-			return res.status(400).json({ message: "User already exists" });
+		if (!user) {
+			return res.status(400).json({ message: "User does not exist" });
 		}
 		
 
@@ -305,6 +305,9 @@ router.post("/zmena-udaju", async (req, res) => {
 
 		const verificationCode = GenerateHash();
 
+
+		console.log(user)
+
 		// Update The User
 		await User.findOneAndUpdate(
 			{
@@ -316,7 +319,7 @@ router.post("/zmena-udaju", async (req, res) => {
 				StreetNumber: validStreetNumber.trim(),
 				ZipCode: validZipCode.trim(),
 				City: validCity.trim(),
-				VerificationCode: verificationCode
+				VerificationCode: verificationCode,
 			}
 		);
 
