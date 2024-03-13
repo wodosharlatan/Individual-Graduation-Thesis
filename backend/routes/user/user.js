@@ -239,8 +239,8 @@ router.delete("/:CODE", async (req, res) => {
 
 router.get("/zmena-udaju/:CODE", async (req, res) => {
 	try {
-		const result = User.findOne({ VerificationCode: req.params.CODE });
-		return res.status(200).json(result);
+		const user = await User.findOne({ VerificationCode: req.params.CODE });
+		return res.status(200).json(user);
 	}
 	catch (error) {
 		return res.status(500).json({ message: error.toString()});
@@ -257,57 +257,13 @@ router.post("/zmena-udaju", async (req, res) => {
 		
 
 		// Declare all User Data fields
-		const validPassword = req.body.Password;
-		const verification = req.body.Verification;
 		const validName = req.body.Name;
 		const validTelephone = req.body.Telephone;
 		const validStreetNumber = req.body.StreetNumber;
 		const validZipCode = req.body.ZipCode;
 		const validCity = req.body.City;
-		let newsletter = req.body.Newsletter;
-		let validBirthDate = req.body.BirthDate;
-		let validGender = req.body.Gender;
 
 		// Check all User Data fields are provided and valid
-
-		if (
-			isNull(validPassword) ||
-			validPassword.trim().length < 8 ||
-			validPassword.trim().length > 20
-		) {
-			return res.status(400).json({
-				message: "Password must be at between 8 and 20 characters long",
-			});
-		}
-
-		if (isNull(verification) || verification.trim().length < 8) {
-			return res.status(400).json({
-				message: "Verification must be at least 8 characters long",
-			});
-		}
-
-		if (verification != validPassword) {
-			return res.status(400).json({ message: "Passwords do not match" });
-		}
-
-		if (
-			isNull(validEmail) ||
-			validEmail.trim().length < 8 ||
-			validEmail.trim().length > 100
-		) {
-			return res.status(400).json({
-				message: "Email must be between 8 and 100 characters long",
-			});
-		}
-
-		// Check if email is valid using this regex [a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-		// https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-		const regexPattern =
-			/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
-		if (regexPattern.test(validEmail.trim()) !== true) {
-			return res.status(400).json({ message: "Email is not valid" });
-		}
 
 		if (
 			isNull(validName) ||
@@ -347,24 +303,6 @@ router.post("/zmena-udaju", async (req, res) => {
 			});
 		}
 
-		if(isNull(newsletter)){
-			newsletter = false;
-		}
-		else{
-			newsletter = true;
-		}
-
-		// check if is empty or not
-		if (isNull(validGender)){
-			validGender = "Not Specified";
-		}
-
-		// check if is empty or not AND if is valid date
-		if (isNull(validBirthDate)) {
-			validBirthDate = "Not Specified";
-		}
-
-		const hashedPassword = SHA256(validPassword.trim()).toString();
 		const verificationCode = GenerateHash();
 
 		// Update The User
@@ -373,19 +311,16 @@ router.post("/zmena-udaju", async (req, res) => {
 				Email: user.Email
 			},
 			{
-				Password: hashedPassword,
-				Email: validEmail.trim(),
 				Name: validName.trim(),
 				Telephone: validTelephone.trim(),
 				StreetNumber: validStreetNumber.trim(),
 				ZipCode: validZipCode.trim(),
 				City: validCity.trim(),
-				DateOfBirth: validBirthDate.trim(),
 				VerificationCode: verificationCode
 			}
 		);
 
-		return res.json({message: "User updated successfully" });
+		return res.json({message: verificationCode});
 	
 	} catch (error) {
 		return res.status(500).json({ message: error.toString()});
