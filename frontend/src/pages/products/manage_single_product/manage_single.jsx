@@ -65,7 +65,6 @@ function Manage_Single_Product() {
 		fetch(`/API/products/${name}`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
 
 				const productData = result[0];
 				setProductName(productData.productName);
@@ -104,7 +103,6 @@ function Manage_Single_Product() {
 		fetch(`/API/products/${UserTokenValue}`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
-				console.log(result);
 				// window.location.href = "/manage/products";
 			})
 			.catch((error) => console.log("error", error));

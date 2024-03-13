@@ -16,6 +16,7 @@ function Usersetting() {
   const [address, setNewAddress] = useState("");
   const [zipcodee, setNewZipcodee] = useState("");
   const [city, setNewCity] = useState("");
+  const [email, setMail] = useState("");
 
   const handleChange = (event) => {
     if (event.target.clicked) {
@@ -66,7 +67,7 @@ function Usersetting() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(tel);
+
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -92,10 +93,14 @@ function Usersetting() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        setCookie("UserToken",data.message)
       })
       .catch((error) => console.error("Error:", error));
   };
+
+  function setCookie(cname, cvalue) {
+	document.cookie = cname + "=" + cvalue + ";"
+  }
 
   function getCookie(name) {
     let cookieValue = null;
@@ -129,13 +134,12 @@ function Usersetting() {
       })
       .then((response) => {
 
-		console.log(response)
-
         setNewTel(response.Telephone);
         setNewNameSur(response.Name);
         setNewAddress(response.StreetNumber);
         setNewZipcodee(response.ZipCode);
         setNewCity(response.City);
+		setMail(response.Email)
       })
       .catch((error) => {
         console.log(error);
@@ -153,7 +157,7 @@ function Usersetting() {
         <br></br>
         <div className="itemdiv">
           <a>Email</a>
-          <p className="userInput">{data.Email}</p>
+          <p className="userInput">{email}</p>
           <i class="uil uil-pen"></i>
         </div>
         <br></br>

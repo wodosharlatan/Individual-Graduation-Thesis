@@ -23,7 +23,7 @@ function Home() {
       const result = await response.json();
 
       setProducts(result);
-      console.log(result);
+
     } catch (error) {
       console.error(error);
     }
@@ -50,7 +50,7 @@ function Home() {
       const response = await fetch("/API/categories");
       const result = await response.json();
 
-      console.log(result);
+
 
       setCategories(result);
     } catch (error) {

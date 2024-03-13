@@ -61,7 +61,6 @@ function All_Products() {
 			.then((response) => response.json())
 			.then((result) => {
 				setProducts(result);
-				console.log(result);
 			})
 			.catch((error) => alert("Error:", error));
 	}

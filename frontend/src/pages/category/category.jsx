@@ -29,7 +29,6 @@ function Category() {
 			.then((response) => response.json())
 			.then((result) => {
 				setProducts(result);
-				console.log(result);
 			})
 			.catch((error) => alert("Error:", error));
 	}
@@ -40,7 +39,7 @@ function Category() {
 			const response = await fetch("/API/categories");
 			const result = await response.json();
 
-			console.log(result);
+
 
 			setCategories(result);
 		} catch (error) {

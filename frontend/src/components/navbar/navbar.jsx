@@ -22,7 +22,7 @@ function Navbar() {
       const response = await fetch("/API/categories");
       const result = await response.json();
 
-      console.log(result);
+
 
       setCategories(result);
     } catch (error) {

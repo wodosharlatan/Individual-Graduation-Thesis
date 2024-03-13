@@ -306,7 +306,6 @@ router.post("/zmena-udaju", async (req, res) => {
 		const verificationCode = GenerateHash();
 
 
-		console.log(user)
 
 		// Update The User
 		await User.findOneAndUpdate(
