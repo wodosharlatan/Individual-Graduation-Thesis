@@ -14,6 +14,19 @@ function Password_reseted() {
 
   return (
     <>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="keywords" content="Dárky, Pedigu, Pedig, Košík, Výrobek, Přírodní materiál, Ruční výroba, Malá dílnička"></meta>
+		<meta name="author" content="Tomáš Bosák"></meta>
+		<meta name="author" content="Marek Hejral"></meta>
+        <title>Dárky z pedigu | Heslo bylo úspěšně změněno</title>
+        <meta
+          name="description"
+          content="Dárky z pedigu - Vlastnoruční výroba kvalitních produktů z pedigu z malé dílničky v podkrkonoší
+   | Košíky | Dekorace | Figurky | Hrníčky | Hodiny | Podnosy"
+        />
+      </Helmet>
       <div className="body_verify">
         <h1 className="Nadpis_Stranky1_verify">Dárky z Pedigu</h1>
         <div className="Tabulka_1_verify">
