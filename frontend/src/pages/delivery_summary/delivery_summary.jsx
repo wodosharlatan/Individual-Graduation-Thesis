@@ -4,14 +4,17 @@ import Footer from "../../components/footer/footer";
 import { Helmet } from "react-helmet";
 
 function Delivery_summary() {
-	return (
-		<>
-		<Helmet>
+  return (
+    <>
+      <Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="keywords" content="Dárky, Pedigu, Pedig, Košík, Výrobek, Přírodní materiál, Ruční výroba, Malá dílnička"></meta>
-		<meta name="author" content="Tomáš Bosák"></meta>
-		<meta name="author" content="Marek Hejral"></meta>
+        <meta
+          name="keywords"
+          content="Dárky, Pedigu, Pedig, Košík, Výrobek, Přírodní materiál, Ruční výroba, Malá dílnička"
+        ></meta>
+        <meta name="author" content="Tomáš Bosák"></meta>
+        <meta name="author" content="Marek Hejral"></meta>
         <title>Dárky z pedigu | Zhrnutí objednávky</title>
         <meta
           name="description"
@@ -19,11 +22,11 @@ function Delivery_summary() {
    | Košíky | Dekorace | Figurky | Hrníčky | Hodiny | Podnosy"
         />
       </Helmet>
-			<Navbar />
+      <Navbar />
 
-            <Footer />
-		</>
-	);
+      <Footer />
+    </>
+  );
 }
 
 export default Delivery_summary;
