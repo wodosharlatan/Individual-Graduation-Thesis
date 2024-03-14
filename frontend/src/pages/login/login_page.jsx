@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./_mainstyle.scss";
+import { Helmet } from "react-helmet";
 
 function Login() {
   const [email, setEmail] = useState("");

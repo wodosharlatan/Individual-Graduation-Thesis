@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./_mainstyle.scss";
+import { Helmet } from "react-helmet";
 
 function All_Products() {
 	const [isAdmin, setIsAdmin] = useState(false);

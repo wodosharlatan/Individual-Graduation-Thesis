@@ -1,6 +1,7 @@
 import Navbar from "../../components/navbar/navbar";
 import "./_mainstyle.scss";
 import Footer from "../../components/footer/footer";
+import { Helmet } from "react-helmet";
 
 function Cart() {
 	return (

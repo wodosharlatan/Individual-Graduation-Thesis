@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 function New_Product() {
 	const [isAdmin, setIsAdmin] = useState(false);

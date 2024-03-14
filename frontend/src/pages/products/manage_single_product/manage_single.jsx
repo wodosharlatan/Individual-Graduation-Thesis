@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function Manage_Single_Product() {
 	const [file, setFile] = useState(null);

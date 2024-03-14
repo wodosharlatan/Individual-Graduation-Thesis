@@ -1,5 +1,6 @@
 import React from "react";
 import "./_mainstyle.scss";
+import { Helmet } from "react-helmet";
 
 function Password_reset() {
   const [email, setEmail] = React.useState("");
