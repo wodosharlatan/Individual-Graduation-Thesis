@@ -95,7 +95,7 @@ function All_Products() {
 		<meta name="keywords" content="Dárky, Pedigu, Pedig, Košík, Výrobek, Přírodní materiál, Ruční výroba, Malá dílnička"></meta>
 		<meta name="author" content="Tomáš Bosák"></meta>
 		<meta name="author" content="Marek Hejral"></meta>
-        <title>Dárky z pedigu | Všechny produkty</title>
+        <title>Všechny produkty | Dárky z pedigu</title>
         <meta
           name="description"
           content="Dárky z pedigu - Vlastnoruční výroba kvalitních produktů z pedigu z malé dílničky v podkrkonoší
