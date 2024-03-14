@@ -40,6 +40,15 @@ function Single_Product() {
 		setStars(event.target.value);
 	};
 
+
+	function setCookie(cname, cvalue, exMinutes) {
+		const d = new Date();
+		d.setTime(d.getTime() + (exMinutes * 60 * 1000));
+		let expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	  
 	function getCookie(name) {
 		let cookieValue = null;
 		if (document.cookie && document.cookie !== "") {
@@ -54,6 +63,10 @@ function Single_Product() {
 			}
 		}
 		return cookieValue;
+	}
+
+	function setProductCookie(productName, productValue, exMinutes){
+		setCookie(productName, productValue, exMinutes);
 	}
 
 	function handleSubmit() {
@@ -291,7 +304,7 @@ function Single_Product() {
 									<div className="divproduct_price">
 										<p>{product.productPrice},- Kč</p>
 									</div>
-									<div className="divproduct_add">
+									<div className="divproduct_add" onClick={setProductCookie(`${product.productName}`, `${product.productPrice}`, 15)}>
 										<p>Do košíku</p>
 									</div>
 								</div>

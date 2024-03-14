@@ -172,9 +172,8 @@ function Usersetting() {
         <div className="itemdiv">
           <a>Email</a>
           <p className="userInput">{email}</p>
-          <i class="uil uil-pen"></i>
         </div>
-        <br></br>
+        <br/>
         <div className="itemdiv">
           <a>Tel. číslo</a>
           <input
