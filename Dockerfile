@@ -16,3 +16,4 @@ COPY --from=frontend /app/frontend/dist /app/backend/dist
 EXPOSE 3000
 
 CMD [ "npm", "start" ]
+
