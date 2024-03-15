@@ -21,10 +21,10 @@ const ProductSchema = mongoose.Schema({
     productQuantity: {
         type: Number,
         required: true,
-    },
+    },    
+
+
     
-
-
     // System generated
     productRating: {
         type: Number,

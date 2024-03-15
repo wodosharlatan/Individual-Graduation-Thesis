@@ -43,6 +43,7 @@ const verificationRoute = require("./routes/verification/verify");
 const productRoute = require("./routes/products/product");
 const categoryRoute = require("./routes/categories/category");
 const reviewRoute = require("./routes/products/review");
+const checkoutRoute = require("./routes/cart/checkout");
 
 // Use routes
 app.use("/API/users",	 		 userRoute);
@@ -51,6 +52,7 @@ app.use("/API/password-reseted", passwordResetRoute);
 app.use("/API/products", 		 productRoute);
 app.use("/API/categories",  	 categoryRoute);
 app.use("/API/reviews", 		 reviewRoute)
+app.use("/API/checkout", 		 checkoutRoute);
 
 // Render react app on server side
 app.get("/", (req, res) => {
