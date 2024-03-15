@@ -17,6 +17,10 @@ function Cart() {
     setPrice(event.target.value);
   }
 
+  function handleAccept() {
+    window.location.href = `/delivery_option`;
+  }
+
   function fetchProducts(productArray) {
     const requestOptions = {
       method: "GET",
@@ -107,7 +111,7 @@ function Cart() {
         <p>Celkem: ,- kč</p>
       </div>
 
-      <div className="nextbtn">
+      <div onClick={() => {handleAccept();}} className="nextbtn">
         <p>Další</p>
       </div>
 

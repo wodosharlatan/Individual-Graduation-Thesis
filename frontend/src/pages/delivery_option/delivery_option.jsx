@@ -3,6 +3,10 @@ import "./_mainstyle.scss";
 import Footer from "../../components/footer/footer";
 import { Helmet } from "react-helmet";
 
+function handleAccept() {
+    window.location.href = `/delivery_data`;
+  }
+
 function Delivery_option() {
 	return (
 		<>
@@ -45,7 +49,7 @@ function Delivery_option() {
 				</div>
 			</div>
 
-			<div className="nextbtn">
+			<div onClick={() => {handleAccept();}} className="nextbtn">
 				<p>Další</p>
 			</div>
 

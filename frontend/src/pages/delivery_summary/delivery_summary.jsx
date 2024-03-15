@@ -3,6 +3,8 @@ import "./_mainstyle.scss";
 import Footer from "../../components/footer/footer";
 import { Helmet } from "react-helmet";
 
+
+
 function Delivery_summary() {
   return (
     <>
@@ -23,6 +25,10 @@ function Delivery_summary() {
         />
       </Helmet>
       <Navbar />
+
+      <div onClick={() => {handleAccept();}} className="nextbtn">
+				<p>Dokončit</p>
+			</div>
 
       <Footer />
     </>
