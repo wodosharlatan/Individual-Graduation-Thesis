@@ -113,7 +113,7 @@ function Home() {
             <br></br>
             <br></br>
             <div className="akcetext">
-              <h1>Termíny akcí, kde mě a mé výrobky můžete potkatttt.</h1>
+              <h1>Termíny akcí, kde mě a mé výrobky můžete potkat.</h1>
               <br></br>
               <h4>14.3. - Kino 70 Nové Město nad Metují velikonoční jarmark</h4>
               <h4>16.3. - Dolní Bousov Josefský trh</h4>
