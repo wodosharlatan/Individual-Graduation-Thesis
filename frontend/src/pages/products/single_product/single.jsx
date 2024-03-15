@@ -118,7 +118,7 @@ function Single_Product() {
 				products.map((product, index) => (
 					<>
 						<div className="divnav">
-							<a href="/category" className="textnav">
+							<a className="textnav">
 								Kategorie {" "}
 							</a>
 							<a
@@ -186,7 +186,11 @@ function Single_Product() {
 						</div>
 						<div className="divproductspage2"></div>
 
+						<div className="divrecenze">
+							<h2 className="h2recenze">Recenze</h2>
+							<br></br>
 						<form>
+							<a className="arecenze">Napiš recenzi</a>
 							<input
 								onChange={handleStars}
 								type="number"
@@ -208,13 +212,40 @@ function Single_Product() {
 								Odeslat
 							</button>
 						</form>
+						<hr></hr>
+						</div>
+						
 
 						<h1 className="otherProductsText">Podobné produkty</h1>
 						<div className="otherProducts">
 							{products.map((product) => (
 								<div className="otherProductsItem" key={product.id}>
-									<div className="divproduct_img">
-										<img
+									<div className="divproductsingle_img">
+										<img className="imgs"
+											src={product.productImagePath}
+											alt={`Image for ${product.productName}`}
+										/>
+									</div>
+
+									<div className="divproduct_rating">
+										<p>{product.productRating}</p>
+									</div>
+									<div className="divproduct_name">
+										<p>{product.productName}</p>
+									</div>
+									<div className="divproduct_price">
+										<p>{product.productPrice},- Kč</p>
+									</div>
+									<div className="divproduct_add">
+										<p>Podrobnosti</p>
+									</div>
+								</div>
+							))}
+
+							{products.map((product) => (
+								<div className="otherProductsItem" key={product.id}>
+									<div className="divproductsingle_img">
+										<img className="imgs"
 											src={product.productImagePath}
 											alt={`Image for ${product.productName}`}
 										/>
@@ -237,8 +268,8 @@ function Single_Product() {
 
 							{products.map((product) => (
 								<div className="otherProductsItem" key={product.id}>
-									<div className="divproduct_img">
-										<img
+									<div className="divproductsingle_img">
+										<img className="imgs"
 											src={product.productImagePath}
 											alt={`Image for ${product.productName}`}
 										/>
@@ -261,32 +292,8 @@ function Single_Product() {
 
 							{products.map((product) => (
 								<div className="otherProductsItem" key={product.id}>
-									<div className="divproduct_img">
-										<img
-											src={product.productImagePath}
-											alt={`Image for ${product.productName}`}
-										/>
-									</div>
-
-									<div className="divproduct_rating">
-										<p>{product.productRating}</p>
-									</div>
-									<div className="divproduct_name">
-										<p>{product.productName}</p>
-									</div>
-									<div className="divproduct_price">
-										<p>{product.productPrice},- Kč</p>
-									</div>
-									<div className="divproduct_add">
-										<p>Do košíku</p>
-									</div>
-								</div>
-							))}
-
-							{products.map((product) => (
-								<div className="otherProductsItem" key={product.id}>
-									<div className="divproduct_img">
-										<img
+									<div className="divproductsingle_img">
+										<img className="imgs"
 											src={product.productImagePath}
 											alt={`Image for ${product.productName}`}
 										/>
