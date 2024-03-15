@@ -97,6 +97,7 @@ function New_Product() {
 		formData.append("productPrice", productPrice);
 		formData.append("productCategory", productCategory);
 		formData.append("productQuantity", productQuantity);
+		formData.append("UserToken", getCookie("UserToken"))
 
 
 		const requestOptions = {

@@ -142,10 +142,7 @@ function Single_Product() {
 							</div>
 							<div className="productDesc">
 								<p className="productDescText">
-									An alternative syntax that alloction, which value of 0 is
-									used, meaning e the next event cycle. Note that in either
-									case, the actualdelay may be longer than intended; see Reasons
-									for d elays longer than specified below.{" "}
+									{" "}
 									{product.productDescription}
 								</p>
 							</div>

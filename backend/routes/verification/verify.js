@@ -14,10 +14,10 @@ router.get("/:CODE", async (req, res) => {
 			return res.status(404).json({ message: "User not found" });
 		}
 
-		await User.updateOne(
-			{ VerificationCode: req.params.CODE },
-			{ $set: { Verified: true } }
-		);
+		await User.findOneAndUpdate(
+            { VerificationCode: req.params.CODE },
+            { $set: { Verified: true } }
+        );
 
 		res.sendFile(path.join(__dirname, "..", "..", "dist", "index.html"));
 	} catch (error) {
