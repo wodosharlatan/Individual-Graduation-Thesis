@@ -9,7 +9,7 @@ const fs = require("fs");
 const verify = require("../../functions/verify");
 const isNull = require("../../functions/is_empty");
 const mongoose = require("mongoose");
-const SendEmail = require("../../functions/send_email");
+const {SendEmail} = require("../../functions/send_email");
 const Users = require("../../models/user_model");
 
 const projectId = process.env.GCLOUD_PROJECT_ID;

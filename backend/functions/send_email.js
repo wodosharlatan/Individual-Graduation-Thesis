@@ -40,4 +40,26 @@ async function SendEmail(user, subject, template, context) {
 	}
 }
 
-module.exports = SendEmail;
+async function SendEmailWithFile(user, subject, template, fileName, filePath){
+	const mailOptions = {
+		from: '"Dárky z pedigu" <darky_z_pedigu@gmail.com>',
+		template: template,
+		to: user,
+		subject: subject,
+		attachments: [{
+			filename: fileName,
+			path: filePath,
+			contentType: 'application/pdf'
+		}],
+	};
+
+	try {
+		const result = await transporter.sendMail(mailOptions);
+		return result;
+	} catch (error) {
+		console.log(error);
+	}
+
+}
+
+module.exports = {SendEmail,SendEmailWithFile};
