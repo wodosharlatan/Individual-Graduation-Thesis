@@ -3,7 +3,7 @@ require("dotenv/config");
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/user_model");
-const SendEmail = require("../../functions/send_email");
+const {SendEmail} = require("../../functions/send_email");
 const GenerateHash = require("../../functions/generate_hash");
 const path = require("path");
 const SHA256 = require("crypto-js/sha256");
