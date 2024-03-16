@@ -25,9 +25,14 @@ function Delivery_summary() {
         />
       </Helmet>
       <Navbar />
+      <h1 className="nadpis_del">Shrnutí objednávky</h1>
+      <hr></hr>
+      <div className="div_del_sum_grid">
+        
+      </div>
 
       <div onClick={() => {handleAccept();}} className="nextbtn">
-				<p>Dokončit</p>
+				<p>Dokončit a zaplatit</p>
 			</div>
 
       <Footer />
