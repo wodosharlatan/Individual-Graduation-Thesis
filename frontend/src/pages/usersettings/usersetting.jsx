@@ -82,6 +82,8 @@ function Usersetting() {
       UserToken: getCookie("UserToken"),
     });
 
+    console.log(raw)
+
     let requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -93,8 +95,9 @@ function Usersetting() {
       .then((response) => {
         return response.json();
       })
-      .then((data) => {
-        setCookie("UserToken",data.message)
+      .then((result) => {
+        setCookie("UserToken",result.message)
+        console.log(result.message)
       })
       .catch((error) => console.error("Error:", error));
   };
