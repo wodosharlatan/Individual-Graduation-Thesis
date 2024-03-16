@@ -22,7 +22,6 @@ import Delivery_data from "./pages/delivery_data/delivery_data.jsx";
 import Delivery_option from "./pages/delivery_option/delivery_option.jsx";
 import Delivery_summary from "./pages/delivery_summary/delivery_summary.jsx";
 import Information from "./pages/information/information.jsx";
-import HomePage2 from "./pages/homepage2/homepage2.jsx";
 
 function App() {
 
@@ -46,8 +45,6 @@ function App() {
     <>
      <Router>
         <Routes>
-
-        <Route path="/2" element={<HomePage2/>}/>
 
         <Route path="/" element={<HomePage/>}/>
         
